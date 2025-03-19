@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets'
+import img500 from '../assets/imgs/Logo-500px.webp'
+import img200 from '../assets/imgs/Logo-200px.webp'
+---
+
+<header class="header">
+  <a class="containerLeft" href="/" aria-label="Ir a inicio">
+    <Image src={img200} alt="Logo de CompuAudio" loading="eager" />
+  </a>
+  <nav class="containerRight" aria-label="Menú principal">
+    <h2 class="siteName" aria-label="Nombre de la empresa">
+      Compu<span>Audio Pereira</span>
+    </h2>
+    <ul>
+      <li>
+        <a href="/">Inicio</a>
+      </li>
+      <li>
+        <a href="/about">Nosotros</a>
+      </li>
+      <li>
+        <a href="/contact">Contacto</a>
+      </li>
+      <li>
+        <a href="/products">Productos</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+---
