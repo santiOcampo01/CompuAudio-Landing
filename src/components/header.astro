@@ -166,8 +166,8 @@ import imageLogo from '../assets/imgs/logo.webp'
     }
 
     .header .containerLeft::after {
-      content: 'CompuAudio Pereira';
-      display: none;
+      content: '';
+      display: none !important;
       width: 0;
       background: #050505;
       font-size: 2rem;
@@ -177,6 +177,13 @@ import imageLogo from '../assets/imgs/logo.webp'
       white-space: nowrap;
       color: #ffffff;
     }
+
+    .header .containerRight ul li a:not(.products):hover::after {
+    width: 0;
+    display: none;
+    color: #c55600;
+  }
+
 
     .containerRight {
       display: none;
