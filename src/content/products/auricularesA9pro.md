@@ -1,6 +1,6 @@
 ---
 title: "Audífonos A9 Pro"
-image: src\assets\productsImages\Audífonos_inalámbricos_A9pro.jpg
+image: src/assets/productsImages/Audífonos_inalámbricos_A9pro.jpg
 price: 79900
 description: "Audífonos inalámbricos A9 Pro con cancelación de ruido, pantalla táctil y larga duración de batería."
 category: "Audífonos"

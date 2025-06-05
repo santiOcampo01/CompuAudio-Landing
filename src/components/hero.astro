@@ -2,13 +2,13 @@
   <article class="heroText">
     <h1>Soluciones Tecnológicas para Cada Espacio</h1>
     <div class="heroDescription">
-      <p>Equipos de audio, computo y accesorios con garantia.</p>
-      <p>Soporte tecnico especializado.</p>
+      <p>Equipos de audio, computo y accesorios con garantía.</p>
+      <p>Soporte técnico especializado.</p>
     </div>
   </article>
   <div class="buttonsHero">
-    <a class="buttonSeeProducts" href="#sectionMap">Ver productos</a>
-    <a class="buttonQuickContact" href="/Productos">Contacto rapido</a>
+    <a class="buttonSeeProducts" href="/productos">Ver productos</a>
+    <a class="buttonQuickContact" href="#sectionMap">Contacto rápido</a>
   </div>
 </section>
 
@@ -33,19 +33,18 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6); /* oscurece la imagen para mejor legibilidad */
+    background: rgba(0, 0, 0, 0.6);
     z-index: -1;
   }
 
   .heroText {
-    max-width: 80%;
+    max-width: 85%;
     margin: 0 auto;
     padding: 1rem;
-    justify-self: center;
   }
 
   .heroText h1 {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     font-weight: 700;
     margin-bottom: 1rem;
   }
@@ -99,6 +98,26 @@
 
     .heroDescription p {
       font-size: 1.25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero {
+      padding: 3rem 1rem;
+    }
+
+    .heroText h1 {
+      font-size: 2rem;
+    }
+
+    .heroDescription p {
+      font-size: 1rem;
+    }
+
+    .buttonSeeProducts,
+    .buttonQuickContact {
+      width: 100%;
+      text-align: center;
     }
   }
 </style>

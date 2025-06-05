@@ -30,7 +30,7 @@ const { testimonios } = Astro.props
 
 <style>
   .testimonios-section {
-    padding: 4rem 2rem;
+    padding: 4rem 1rem;
     background: #ffffff;
     text-align: center;
   }
@@ -43,7 +43,7 @@ const { testimonios } = Astro.props
 
   .testimonios-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     justify-items: center;
   }
@@ -55,20 +55,21 @@ const { testimonios } = Astro.props
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
     text-align: center;
     transition: transform 0.3s ease;
-    max-width: 320px;
+    max-width: 100%;
+    width: 100%;
   }
 
   .testimonio-card:hover {
     transform: translateY(-5px);
   }
+
   .avatar-container {
     display: flex;
-    flex-direction: row;
     align-items: center;
-  }
-
-  .avatar-container .nombre {
-    padding: 10px 10px 10px 40px;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
   }
 
   .avatar {
@@ -76,26 +77,42 @@ const { testimonios } = Astro.props
     height: 60px;
     object-fit: cover;
     border-radius: 50%;
-    margin-bottom: 0.8rem;
   }
-
 
   .nombre {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #222;
-    margin-bottom: 0.3rem;
-  }
-
-  .estrellas {
-    color: #f7b731;
-    font-size: 1rem;
-    margin-bottom: 0.4rem;
+    margin: 0;
   }
 
   .mensaje {
     font-size: 0.95rem;
     color: #555;
     line-height: 1.4;
+    margin-bottom: 0.8rem;
+  }
+
+  .estrellas {
+    color: #f7b731;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 500px) {
+    .testimonios-section {
+      padding: 2rem 1rem;
+    }
+
+    .testimonios-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .avatar-container {
+      flex-direction: column;
+    }
+
+    .nombre {
+      padding: 0;
+    }
   }
 </style>

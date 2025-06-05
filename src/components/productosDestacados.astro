@@ -1,10 +1,9 @@
 ---
 const { desta } = Astro.props
-
 ---
 
-<section class="productosDestacados" arial-label="Productos destacados">
-  <articule>
+<section class="productosDestacados" aria-label="Productos destacados">
+  <article>
     <div class="TextoProductosDestacados">
       <h2>Productos destacados</h2>
     </div>
@@ -15,7 +14,6 @@ const { desta } = Astro.props
           return (
             <div class="productoCard">
               <img src={data.image} alt={data.title} />
-              {console.log(data.image)}
               <h3>{data.title}</h3>
               <span class="precio">${data.price}</span>
               <a href="/Productos" class="buttonSeeProducts">
@@ -26,27 +24,26 @@ const { desta } = Astro.props
         })
       }
     </div>
-  </articule>
+  </article>
 </section>
 
 <style>
   .productosDestacados {
-    padding: 4rem 2rem;
+    padding: 4rem 1.5rem;
     background-color: #f9f9f9;
     text-align: center;
   }
 
   h2 {
     font-size: 2rem;
-    height: 2.5rem;
     font-weight: bold;
     color: #1a1a1a;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
   }
 
   .productosDestacadosContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 2rem;
     justify-items: center;
   }
@@ -60,6 +57,7 @@ const { desta } = Astro.props
       transform 0.3s ease,
       box-shadow 0.3s ease;
     width: 100%;
+    max-width: 320px;
   }
 
   .productoCard:hover {
@@ -69,10 +67,9 @@ const { desta } = Astro.props
 
   .productoCard img {
     width: 100%;
-    min-width: 220px;
-    object-fit: cover;
     height: auto;
     max-height: 250px;
+    object-fit: cover;
     margin-bottom: 1rem;
     border-radius: 8px;
   }
@@ -102,7 +99,33 @@ const { desta } = Astro.props
     transition: background 0.3s ease;
   }
 
-  .buttonSeeProducts a:hover {
+  .buttonSeeProducts:hover {
     background-color: #c93f0c;
+  }
+
+  @media (max-width: 500px) {
+    .productosDestacados {
+      padding: 2rem 1rem;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+    }
+
+    .productoCard {
+      padding: 1rem;
+    }
+
+    .productoCard img {
+      max-height: 200px;
+    }
+
+    .productoCard h3 {
+      font-size: 1rem;
+    }
+
+    .buttonSeeProducts {
+      padding: 0.5rem 1rem;
+    }
   }
 </style>

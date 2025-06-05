@@ -3,20 +3,29 @@ import { Image } from 'astro:assets'
 import imageLogo from '../assets/imgs/logo.webp'
 ---
 
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.querySelector('.hamburger')
+    const nav = document.querySelector('.containerRight')
+
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('open')
+    })
+  })
+</script>
+
 <header class="header">
   <a class="containerLeft" id="containerLeft" href="/" aria-label="Ir a inicio">
     <Image src={imageLogo} alt="Logo de CompuAudio" loading="eager" />
-    <!-- <p class="siteName" id="siteName" aria-label="Nombre de la empresa">
-      Compu<span>Audio Pereira</span>
-    </p> -->
   </a>
+  <button class="hamburger" aria-label="Menú" aria-expanded="false"> ☰ </button>
   <nav class="containerRight" aria-label="Menú principal">
     <ul>
       <li>
         <a href="/">Inicio</a>
       </li>
       <li>
-        <a href="/contact">Contacto</a>
+        <a href="#sectionMap">Contacto</a>
       </li>
       <li>
         <a href="/products" class="products">Productos</a>
@@ -40,7 +49,6 @@ import imageLogo from '../assets/imgs/logo.webp'
   .header .containerLeft {
     display: flex;
     align-items: center;
-    /* box-shadow: 6px 7px 4px 0px rgb(0 0 0 / 32%); */
     border-radius: 10px;
     background-color: black;
   }
@@ -80,16 +88,14 @@ import imageLogo from '../assets/imgs/logo.webp'
     }
   }
 
-  /* .header .containerLeft p {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #c55600;
-}
-
-.header .containerLeft span {
-  color: #ffffff;
-  padding-right: 20px;
-} */
+  .hamburger {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #c55600;
+  }
 
   .containerRight {
     display: flex;
@@ -144,25 +150,70 @@ import imageLogo from '../assets/imgs/logo.webp'
     color: #ffffff;
   }
 
-  /* Hover en el contenedor y que aparezca el texto opcion */
-  /* .header .containerLeft:hover > p {
-  display: block;
-  animation: animate 1s ease-in-out forwards;
-}
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-inline: 1em;
+      position: relative;
+    }
 
+    .hamburger {
+      display: block;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
 
-@keyframes animate {
-  0% {
-    transform: scale(1);
-    opacity: 0;
+    .header .containerLeft::after {
+      content: 'CompuAudio Pereira';
+      display: contents;
+      width: 0;
+      background: #050505;
+      font-size: 2rem;
+      transition: width 0.4s ease;
+      padding: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      color: #ffffff;
+    }
+
+    .containerRight {
+      display: none;
+      width: 100%;
+    }
+
+    .containerRight.open {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      z-index: 9998;
+    }
+
+    .header .containerRight ul li a:not(.products):after {
+      content: '';
+      display: none;
+      width: 0;
+      height: 2px;
+      background: #c55600;
+      transition: width 0.3s;
+    }
+
+    .containerRight ul {
+      flex-direction: column !important;
+      gap: 15px !important;
+      width: 100%;
+      font-size: 1.2rem;
+    }
+
+    .containerRight ul li a {
+      padding: 0.5rem 1rem;
+      width: 100%;
+    }
   }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-} */
 </style>
