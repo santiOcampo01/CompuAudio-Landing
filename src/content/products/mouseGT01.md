@@ -1,6 +1,6 @@
 ---
 title: "Mouse Gamer GT01"
-image: src/assets/productsImages/Mouse_gaming.jpg
+image: /productsImages/Mouse_gaming.jpg
 price: 49900
 description: "Mouse gamer con diseño ergonómico, botones programables y luz LED. Ideal para sesiones de juego prolongadas."
 category: "Accesorios Gamer"

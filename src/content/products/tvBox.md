@@ -1,6 +1,6 @@
 ---
 title: "TV Box 4K Android"
-image: src/assets/productsImages/TvBox.jpg
+image: /productsImages/TvBox.jpg
 price: 139900
 description: "Convierte cualquier televisor en un Smart TV con acceso a tus apps favoritas."
 category: "Smart TV"
