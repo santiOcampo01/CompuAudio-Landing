@@ -1,0 +1,108 @@
+---
+const { desta } = Astro.props
+
+---
+
+<section class="productosDestacados" arial-label="Productos destacados">
+  <articule>
+    <div class="TextoProductosDestacados">
+      <h2>Productos destacados</h2>
+    </div>
+    <div class="productosDestacadosContainer">
+      {
+        desta.map(producto => {
+          const { slug, data } = producto
+          return (
+            <div class="productoCard">
+              <img src={data.image} alt={data.title} />
+              {console.log(data.image)}
+              <h3>{data.title}</h3>
+              <span class="precio">${data.price}</span>
+              <a href="/Productos" class="buttonSeeProducts">
+                Ver productos
+              </a>
+            </div>
+          )
+        })
+      }
+    </div>
+  </articule>
+</section>
+
+<style>
+  .productosDestacados {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 2rem;
+    height: 2.5rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+  }
+
+  .productosDestacadosContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  .productoCard {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    width: 100%;
+  }
+
+  .productoCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .productoCard img {
+    width: 100%;
+    min-width: 220px;
+    object-fit: cover;
+    height: auto;
+    max-height: 250px;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+  }
+
+  .productoCard h3 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: #1a1a1a;
+  }
+
+  .precio {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .buttonSeeProducts {
+    display: inline-block;
+    background-color: #e84a0f;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
+  }
+
+  .buttonSeeProducts a:hover {
+    background-color: #c93f0c;
+  }
+</style>

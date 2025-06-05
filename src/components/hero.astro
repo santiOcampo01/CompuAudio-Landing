@@ -1,0 +1,104 @@
+<section class="hero">
+  <article class="heroText">
+    <h1>Soluciones Tecnológicas para Cada Espacio</h1>
+    <div class="heroDescription">
+      <p>Equipos de audio, computo y accesorios con garantia.</p>
+      <p>Soporte tecnico especializado.</p>
+    </div>
+  </article>
+  <div class="buttonsHero">
+    <a class="buttonSeeProducts" href="#sectionMap">Ver productos</a>
+    <a class="buttonQuickContact" href="/Productos">Contacto rapido</a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2rem;
+    background-image: url('../assets/imgs/heroBackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6); /* oscurece la imagen para mejor legibilidad */
+    z-index: -1;
+  }
+
+  .heroText {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 1rem;
+    justify-self: center;
+  }
+
+  .heroText h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  .heroDescription p {
+    font-size: 1.125rem;
+    margin: 0.3rem 0;
+  }
+
+  .buttonsHero {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .buttonSeeProducts,
+  .buttonQuickContact {
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+  }
+
+  .buttonSeeProducts {
+    background-color: #e84a0f;
+    color: white;
+  }
+
+  .buttonSeeProducts:hover {
+    background-color: #cf3f0d;
+  }
+
+  .buttonQuickContact {
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    color: white;
+  }
+
+  .buttonQuickContact:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (min-width: 768px) {
+    .heroText h1 {
+      font-size: 3rem;
+    }
+
+    .heroDescription p {
+      font-size: 1.25rem;
+    }
+  }
+</style>

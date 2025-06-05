@@ -1,0 +1,101 @@
+---
+const { testimonios } = Astro.props
+---
+
+<section class="testimonios-section" aria-labelledby="titulo-testimonios">
+  <h2 id="titulo-testimonios">Testimonios de Clientes</h2>
+
+  <div class="testimonios-grid">
+    {
+      testimonios.map(testimonio => {
+        const { data } = testimonio
+        const estrellas = Array.from({ length: 5 }, (_, i) => (i < data.rating ? '★' : '☆'))
+
+        return (
+          <article class="testimonio-card" key={data.nombre}>
+            <div class="avatar-container">
+              <img src={data.imagen} alt={`Foto de ${data.nombre}`} class="avatar" />
+              <h3 class="nombre">{data.nombre}</h3>
+            </div>
+            <div class="info">
+              <p class="mensaje">"{data.mensaje}"</p>
+              <div class="estrellas">{estrellas.join(' ')}</div>
+            </div>
+          </article>
+        )
+      })
+    }
+  </div>
+</section>
+
+<style>
+  .testimonios-section {
+    padding: 4rem 2rem;
+    background: #ffffff;
+    text-align: center;
+  }
+
+  .testimonios-section h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #1a1a1a;
+  }
+
+  .testimonios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  .testimonio-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease;
+    max-width: 320px;
+  }
+
+  .testimonio-card:hover {
+    transform: translateY(-5px);
+  }
+  .avatar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .avatar-container .nombre {
+    padding: 10px 10px 10px 40px;
+  }
+
+  .avatar {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 0.8rem;
+  }
+
+
+  .nombre {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.3rem;
+  }
+
+  .estrellas {
+    color: #f7b731;
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .mensaje {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.4;
+  }
+</style>

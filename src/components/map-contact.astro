@@ -1,0 +1,126 @@
+<section id="sectionMap" class="section-contacto">
+  <div class="section-header">
+    <h2>Contacto y Ubicación</h2>
+    <p>Estamos ubicados en la Carrera 7 #15-73 Local 1 Centro, Pereira, Risaralda</p>
+  </div>
+
+  <div class="contacto-grid">
+    <!-- Formulario -->
+    <form class="formulario-contacto">
+      <h3>Contacto / Soporte Rápido</h3>
+
+      <input type="text" name="nombre" placeholder="Nombre" required />
+
+      <div class="form-doble">
+        <input type="email" name="email" placeholder="Correo Electrónico" required />
+        <input type="tel" name="telefono" placeholder="Teléfono" />
+      </div>
+
+      <textarea name="mensaje" rows="4" placeholder="Mensaje" required></textarea>
+
+      <button type="submit">Enviar mensaje</button>
+    </form>
+
+    <!-- Mapa -->
+    <div class="mapa-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.742200895586!2d-75.69413312545522!3d4.814268495161207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3887483d91e58b%3A0x664877d6b7bc59db!2sCompuAudio%20Pereira!5e0!3m2!1ses!2sco!4v1742440407057!5m2!1ses!2sco"
+        width="100%"
+        height="100%"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa de la ubicación de CompuAudio Pereira"
+        aria-label="Mapa de la ubicación de CompuAudio Pereira"></iframe>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-contacto {
+    padding: 4rem 2rem;
+    background-color: #f3f3f3;
+  }
+
+  .section-header {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+    text-align: center;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    color: #e84a0f;
+    margin-bottom: 1rem;
+  }
+
+  .section-header p {
+    font-size: 1rem;
+    color: #222;
+  }
+
+  .contacto-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .formulario-contacto {
+    flex: 1 1 400px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .formulario-contacto h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .formulario-contacto input,
+  .formulario-contacto textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .form-doble {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .form-doble input {
+    flex: 1;
+  }
+
+  .formulario-contacto button {
+    background-color: #e84a0f;
+    color: white;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .formulario-contacto button:hover {
+    background-color: #c93f0c;
+  }
+
+  .mapa-container {
+    flex: 1 1 400px;
+    height: 450px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+</style>

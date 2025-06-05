@@ -1,8 +1,25 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/header.astro';
+import Layout from '../layouts/Layout.astro'
+import Header from '../components/header.astro'
+import Hero from '../components/hero.astro'
+import Map from '../components/map-contact.astro'
+import ProductosDestacados from '../components/productosDestacados.astro'
+import Testimonios from '../components/testimonios.astro'
+// import SeviciosDestacados from '../components/serviciosDestacados.astro'
+import { getCollection } from 'astro:content'
+
+const destacados = await getCollection('products', (product) => {
+  return product.data.featured === true
+});
+
+const testimonios = await getCollection('testimonios')
 ---
 
-<Layout title="Compu Audio">
-		<Header />
+<Layout title="CompuAudio Pereira">
+  <Header />
+  <Hero />
+  <!-- <SeviciosDestacados /> -->
+  <ProductosDestacados desta={destacados} />
+  <Testimonios testimonios={testimonios} />
+  <Map />
 </Layout>
