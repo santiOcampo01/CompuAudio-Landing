@@ -1,26 +1,15 @@
+---
+import WhatsAppForm from '../components/whatsAppForm.astro'
+---
+
 <section id="sectionMap" class="section-contacto">
   <div class="section-header">
     <h2>Contacto y Ubicación</h2>
     <p>Estamos ubicados en la Carrera 7 #15-73 Local 1 Centro, Pereira, Risaralda</p>
   </div>
-
   <div class="contacto-grid">
     <!-- Formulario -->
-    <form class="formulario-contacto">
-      <h3>Contacto / Soporte Rápido</h3>
-
-      <input type="text" name="nombre" placeholder="Nombre" required />
-
-      <div class="form-doble">
-        <input type="email" name="email" placeholder="Correo Electrónico" required />
-        <input type="tel" name="telefono" placeholder="Teléfono" />
-      </div>
-
-      <textarea name="mensaje" rows="4" placeholder="Mensaje" required></textarea>
-
-      <button type="submit">Enviar mensaje</button>
-    </form>
-
+    <WhatsAppForm />
     <!-- Mapa -->
     <div class="mapa-container">
       <iframe
@@ -66,7 +55,6 @@
     flex-wrap: wrap;
     gap: 2rem;
   }
-
   .formulario-contacto {
     flex: 1 1 400px;
     background-color: white;

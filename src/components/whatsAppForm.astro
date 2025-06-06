@@ -1,0 +1,80 @@
+<form class="formulario-contacto">
+  <h3>Contacto vía WhatsApp</h3>
+  <input type="text" id="wa-nombre" name="nombre" placeholder="Nombre" required />
+
+  <div class="form-doble">
+    <input type="text" id="wa-asunto" name="asunto" placeholder="Asunto (opcional)" />
+  </div>
+
+  <textarea id="wa-mensaje" rows="4" name="mensaje" placeholder="Mensaje" required></textarea>
+
+  <button type="submit"> Enviar por WhatsApp </button>
+</form>
+
+<script>
+  const form = document.querySelector('form')
+  if (form) {
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      const data = Object.fromEntries(new FormData(e.target as HTMLFormElement))
+      const whatsAppNumber = '573229651762'
+      const dataJson = JSON.stringify(data)
+      console.log(`Datos enviados: ${dataJson}`)
+
+      const text = `Hola, soy ${data.nombre} %0A${data.asunto !== '' && data.asunto !== undefined ? 'Escribo por el asunto: ' + data.asunto + '%0A' : ''}Mi mensaje:  ${data.mensaje}`
+      const url = `https://api.whatsapp.com/send?phone=${whatsAppNumber}&text=${text}`
+
+      window.open(url, '_blank')
+    })
+  }
+</script>
+<style>
+  .formulario-contacto {
+    flex: 1 1 400px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .formulario-contacto h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .formulario-contacto input,
+  .formulario-contacto textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .form-doble {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .form-doble input {
+    flex: 1;
+  }
+
+  .formulario-contacto button {
+    background-color: #21e80f;
+    color: white;
+    border: none;
+    padding: 0.9rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .formulario-contacto button:hover {
+    background-color: #c93f0c;
+  }
+</style>
