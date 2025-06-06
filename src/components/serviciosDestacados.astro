@@ -2,15 +2,18 @@
   <div class="benefit-card-container">
     <div class="benefit-card">
       <img src="headphones-microphone-svgrepo-com.svg" alt="Icono de audífonos" />
-      <p>Especialistas en<br /><strong>Audio y Computo</strong></p>
+      <p class="textBig">Especialistas en<br /><strong>Audio y Computo</strong></p>
+      <p class="textSmall">Equipos</p>
     </div>
     <div class="benefit-card">
       <img src="lorry-svgrepo-com.svg" alt="Icono de camión" />
-      <p>Envíos a toda<br /><strong>Pereira</strong></p>
+      <p class="textBig">Envíos a toda<br /><strong>Pereira</strong></p>
+      <p class="textSmall">Envios</p>
     </div>
     <div class="benefit-card">
       <img src="tool-01-svgrepo-com.svg" alt="Icono de herramientas" />
-      <p>Soporte Técnico<br /><strong>Local</strong></p>
+      <p class="textBig">Soporte Técnico<br /><strong>Local</strong></p>
+      <p class="textSmall">Soporte</p>
     </div>
   </div>
 </section>
@@ -52,14 +55,43 @@
     margin-right: 10px;
   }
 
-  .benefit-card p {
+  .textBig {
+    display: block;
     font-size: 1rem;
     color: #333;
     line-height: 1.4;
   }
 
+  .textSmall {
+    display: none;
+  }
+
   .benefit-card strong {
     font-weight: 600;
     color: #111;
+  }
+
+  @media (max-width: 600px) {
+    .benefit-card-container {
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem 1rem;
+      top: -2rem;
+    }
+
+    .benefit-card {
+      flex-direction: column;
+    }
+
+    .textBig {
+      display: none;
+    }
+
+    .textSmall {
+      display: block;
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.4;
+    }
   }
 </style>
