@@ -1,5 +1,6 @@
 ---
 const { testimonios } = Astro.props
+import { Image } from 'astro:assets'
 ---
 
 <section class="testimonios-section" aria-labelledby="titulo-testimonios">
@@ -7,14 +8,14 @@ const { testimonios } = Astro.props
 
   <div class="testimonios-grid">
     {
-      testimonios.map(testimonio => {
+      testimonios.map((testimonio: { data: any }) => {
         const { data } = testimonio
         const estrellas = Array.from({ length: 5 }, (_, i) => (i < data.rating ? '★' : '☆'))
 
         return (
           <article class="testimonio-card" key={data.nombre}>
             <div class="avatar-container">
-              <img src={data.imagen} alt={`Foto de ${data.nombre}`} class="avatar" />
+              <Image src={data.imagen} alt={`Foto de ${data.nombre}`} width={60} height={60} loading="lazy" class="avatar" />
               <h3 class="nombre">{data.nombre}</h3>
             </div>
             <div class="info">
