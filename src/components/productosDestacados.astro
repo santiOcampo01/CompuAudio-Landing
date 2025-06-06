@@ -15,10 +15,10 @@ import { lazy } from 'astro:schema'
           const { slug, data } = producto
           return (
             <div class="productoCard">
-              <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80}/>
+              <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
               <span class="precio">${data.price}</span>
-              <a href="/Productos" class="buttonSeeProducts">
+              <a href="/productos" class="buttonSeeProducts">
                 Ver productos
               </a>
             </div>

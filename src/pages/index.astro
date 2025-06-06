@@ -8,12 +8,11 @@ import Testimonios from '../components/testimonios.astro'
 import SeviciosDestacados from '../components/serviciosDestacados.astro'
 import { getCollection } from 'astro:content'
 
-const destacados = await getCollection('products', (product) => {
+const destacados = await getCollection('products', product => {
   return product.data.featured === true
-});
+})
 
 const testimonios = await getCollection('testimonios')
-
 ---
 
 <Layout title="CompuAudio Pereira">
