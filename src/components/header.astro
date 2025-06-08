@@ -29,7 +29,7 @@ import imageLogo from '../assets/imgs/logo.webp'
       </li>
       <li>
         <a href="/carrito" class="carrito"
-          ><img src="cart-shopping-svgrepo-com.svg" alt="carrito de compras" width="30px" height="30px" /></a
+          >Carrito</a
         >
       </li>
     </ul>
@@ -139,18 +139,18 @@ import imageLogo from '../assets/imgs/logo.webp'
   }
 
   .header .containerRight ul li .carrito {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: #ffffff;
+    padding: 0.5rem 2rem;
+    background-color: #c55600;
     border: none;
     border-radius: 5px;
     cursor: pointer;
   }
 
   .header .containerRight ul li .carrito:hover {
-    transform: scale(1.5);
+    background-color: #a84400;
   }
+
 
   @media (max-width: 868px) {
     .header {
@@ -201,7 +201,7 @@ import imageLogo from '../assets/imgs/logo.webp'
       width: 100%;
     }
 
-    .header .containerRight ul li a:not(.products):after {
+    .header .containerRight ul li a:not(.carrito):after {
       display: none;
     }
   }
@@ -259,7 +259,7 @@ import imageLogo from '../assets/imgs/logo.webp'
       width: 100%;
     }
 
-    .header .containerRight ul li a:not(.products):after {
+    .header .containerRight ul li a:not(.carrito):after {
       display: none;
     }
   }

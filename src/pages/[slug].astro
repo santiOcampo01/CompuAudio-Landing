@@ -1,0 +1,12 @@
+---
+import { getCollection } from 'astro:content'
+
+export async function getStaticPaths() {
+  const productos = await getCollection('products')
+  
+  return productos.map(producto => ({
+    params: { slug: producto.slug },
+    props: { producto },
+  }))
+}
+---

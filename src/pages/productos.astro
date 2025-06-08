@@ -1,165 +1,127 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Header from '../components/header.astro'
+import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
 const destacados = await getCollection('products')
-
-const testimonios = await getCollection('testimonios')
 ---
 
 <Layout title="CompuAudio Pereira">
   <Header />
   <section class="productsPage" aria-label="Nuestros productos">
-    <articule class="headerContainer">
+    <div class="headerContainer">
       <div class="headerTitle">
         <h1>Nuestros productos</h1>
         <p>Encuentra los mejores productos de tecnología y audio en CompuAudio Pereira.</p>
       </div>
       <div class="filtersContainer"></div>
-    </articule>
-    <articule class="productsContainer">
-      {
-        destacados.map(producto => {
+    </div>
+    <div class="productsContainer">
+        { 
+        destacados.map((producto: { slug: any; data: any }) => {
           const { slug, data } = producto
+          let key = destacados.indexOf(producto)
           return (
-            <div class="productCard">
-              <img src={data.image} alt={data.title} loading="lazy" width="200" height="200" />
+            <div class="productoCard" key={key}>
+              <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
-              <span class="price">${data.price}</span>
-              <a href={`/productos/${slug}`} class="buttonSeeProducts">
-                Ver producto
+              <span class="precio">${data.price}</span>
+              <a href={`/productos/${slug}`}   class="buttonSeeProducts">
+                Ver productos
               </a>
             </div>
           )
         })
       }
-    </articule>
+    </div>
   </section>
 </Layout>
 
 <style>
-  .productsPage {
-    padding: 4rem 2rem;
-    background-color: #f9f9f9;
-  }
 
-  .headerContainer {
-    max-width: 1200px;
-    margin: 0 auto;
+  .productsPage {
+    background-color: #f9f9f9;
     text-align: center;
+  }
+  .headerContainer {
     margin-bottom: 2rem;
   }
-
   .headerTitle h1 {
     font-size: 2.5rem;
-    color: #333;
+    font-weight: bold;
+    color: #1a1a1a;
     margin-bottom: 0.5rem;
   }
-
   .headerTitle p {
     font-size: 1.2rem;
     color: #666;
   }
-
   .filtersContainer {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
     margin-bottom: 2rem;
   }
-
   .productsContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    justify-items: center;
+    max-width: 80%;
     margin: 0 auto;
+    text-align: center;
   }
 
-  .productCard {
-    background-color: white;
+  .productoCard {
+    background: #ffffff;
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    text-align: center;
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 320px;
   }
 
-  .productCard:hover {
+  .productoCard:hover {
     transform: translateY(-5px);
-    box-shadow:
-      rgba(60, 64, 67, 0.3) -2px -2px,
-      rgba(60, 64, 67, 0.15) -4px -4px,
-      rgba(60, 64, 67, 0.15) -6px -6px,
-      rgba(60, 64, 67, 0.15) -8px -8px,
-      rgba(60, 64, 67, 0.15) -10px -10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   }
 
-  .productCard img {
-    width: auto;
-    max-width: 100%;
+  .productoCard img {
+    width: 100%;
     height: auto;
+    max-height: 250px;
+    object-fit: cover;
+    margin-bottom: 1rem;
     border-radius: 8px;
-    margin-bottom: 1rem;
   }
 
-  .productCard h3 {
-    font-size: 1.25rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-  }
-
-  .price {
-    font-size: 1.125rem;
-    color: #e84a0f;
+  .productoCard h3 {
     font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: #1a1a1a;
+  }
+
+  .precio {
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 0.8rem;
     display: block;
-    margin-bottom: 1rem;
   }
 
   .buttonSeeProducts {
     display: inline-block;
     background-color: #e84a0f;
     color: white;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 0.6rem 1.2rem;
     border-radius: 8px;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    font-weight: 600;
+    transition: background 0.3s ease;
   }
 
   .buttonSeeProducts:hover {
-    background-color: #cf3f0d;
-  }
-  @media (min-width: 768px) {
-    .headerTitle h1 {
-      font-size: 3rem;
-    }
-
-    .headerTitle p {
-      font-size: 1.5rem;
-    }
-  }
-
-  @media (max-width: 500px) {
-    .productsContainer {
-      padding: 1rem;
-    }
-
-    .productCard {
-      padding: 1rem;
-    }
-
-    .productCard h3 {
-      font-size: 1.1rem;
-    }
-
-    .price {
-      font-size: 1rem;
-    }
+    background-color: #c93f0c;
   }
 </style>

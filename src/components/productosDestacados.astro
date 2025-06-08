@@ -1,7 +1,6 @@
 ---
 const { desta } = Astro.props
 import { Image } from 'astro:assets'
-import { lazy } from 'astro:schema'
 ---
 
 <section class="productosDestacados" aria-label="Productos destacados">
@@ -13,8 +12,9 @@ import { lazy } from 'astro:schema'
       {
         desta.map((producto: { slug: any; data: any }) => {
           const { slug, data } = producto
+          let key = desta.indexOf(producto)
           return (
-            <div class="productoCard">
+            <div class="productoCard" key={key} >
               <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
               <span class="precio">${data.price}</span>
