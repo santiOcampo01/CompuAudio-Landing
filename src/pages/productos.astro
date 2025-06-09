@@ -5,6 +5,7 @@ import { Image } from 'astro:assets'
 import { getCollection } from 'astro:content'
 
 const destacados = await getCollection('products')
+const productosDuplicados = Array(3).fill(destacados).flat()
 ---
 
 <Layout title="CompuAudio Pereira">
@@ -18,16 +19,16 @@ const destacados = await getCollection('products')
       <div class="filtersContainer"></div>
     </div>
     <div class="productsContainer">
-        { 
-        destacados.map((producto: { slug: any; data: any }) => {
+      {
+        productosDuplicados.map((producto: { slug: any; data: any }) => {
           const { slug, data } = producto
           let key = destacados.indexOf(producto)
           return (
             <div class="productoCard" key={key}>
               <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
-              <span class="precio">${data.price}</span>
-              <a href={`/productos/${slug}`}   class="buttonSeeProducts">
+              <span class="precio">${data.price.toLocaleString()}</span>
+              <a href={`/productos/${slug}`} class="buttonSeeProducts">
                 Ver productos
               </a>
             </div>
@@ -39,7 +40,6 @@ const destacados = await getCollection('products')
 </Layout>
 
 <style>
-
   .productsPage {
     background-color: #f9f9f9;
     text-align: center;

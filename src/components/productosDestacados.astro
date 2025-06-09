@@ -14,11 +14,11 @@ import { Image } from 'astro:assets'
           const { slug, data } = producto
           let key = desta.indexOf(producto)
           return (
-            <div class="productoCard" key={key} >
+            <div class="productoCard" key={key}>
               <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
-              <span class="precio">${data.price}</span>
-              <a href="/productos" class="buttonSeeProducts">
+              <span class="precio">${data.price.toLocaleString()}</span>
+              <a href={`/productos/${slug}`} class="buttonSeeProducts">
                 Ver productos
               </a>
             </div>

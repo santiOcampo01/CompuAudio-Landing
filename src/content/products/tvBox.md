@@ -4,7 +4,7 @@ image: /productsImages/TvBox.jpg
 price: 139900
 description: 'Convierte cualquier televisor en un Smart TV con acceso a tus apps favoritas.'
 category: 'Smart TV'
-tags: ['TV Box', 'Android', 'Smart TV', 'Netflix', 'YouTube', 'Spotify', 'Prime Video']
+tags: ['TV Box', 'Android', 'Smart TV', 'Netflix', 'YouTube', 'Spotify', 'Prime Video', 'Bluetooth']
 featured: true
 caracteristicas:
   [

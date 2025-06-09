@@ -1,0 +1,167 @@
+---
+import { getCollection } from 'astro:content'
+import { Image } from 'astro:assets'
+
+const { slug, data } = Astro.props
+
+// Traer todos los productos
+const destacados = await getCollection('products')
+
+// Filtrar recomendados (distinto slug y al menos un tag en común)
+const recomendados = destacados.filter(p => p.slug !== slug && p.data.tags?.some(tag => data.tags?.includes(tag)))
+const productosDuplicados = Array(3).fill(recomendados).flat()
+---
+
+<section class="recomendedProducts">
+  <h2>Productos Recomendados</h2>
+  <div class="sliderWrapper">
+    <button class="navArrow left" onclick="scrollSlider(-1)">‹</button>
+    <button class="navArrow right" onclick="scrollSlider(1)">›</button>
+
+    <div class="productsContainer" id="slider">
+      {
+        productosDuplicados.map((producto, index) => {
+          const { slug, data } = producto
+          return (
+            <div class="productoCard" key={index}>
+              <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
+              <h3>{data.title}</h3>
+              <span class="precio">${data.price.toLocaleString()}</span>
+              <a href={`/productos/${slug}`} class="buttonSeeProducts">
+                Ver producto
+              </a>
+            </div>
+          )
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  function scrollSlider(direction) {
+    const slider = document.getElementById('slider')
+    const scrollAmount = 200
+    slider.scrollBy({
+      left: direction * scrollAmount,
+      behavior: 'smooth',
+    })
+  }
+</script>
+<style>
+  .recomendedProducts {
+    text-align: center;
+    max-width: 50rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+  }
+
+  .recomendedProducts h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+  .sliderWrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .productsContainer {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 1rem;
+  }
+
+  .productsContainer::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .productsContainer::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+
+  .productoCard {
+    min-width: 200px;
+    max-width: 220px;
+    flex: 0 0 auto;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+  }
+
+  .productoCard img {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+  }
+
+  .productoCard h3 {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    font-weight: 600;
+  }
+
+  .precio {
+    font-weight: bold;
+    color: #444;
+    font-size: 1rem;
+    display: block;
+    margin: 0.4rem 0;
+  }
+
+  .buttonSeeProducts {
+    display: inline-block;
+    background: #e84a0f;
+    color: #fff;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .buttonSeeProducts:hover {
+    background: #ec7245;
+  }
+
+  .navArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .navArrow.left {
+    left: -12px;
+  }
+
+  .navArrow.right {
+    right: -12px;
+  }
+
+  @media (max-width: 600px) {
+    .productoCard {
+      min-width: 160px;
+      max-width: 180px;
+    }
+
+    .navArrow {
+      display: none;
+    }
+  }
+</style>
