@@ -41,11 +41,12 @@ const { slug, data, body } = Astro.props
           <h3>Descripción</h3>
           <p>{body}</p>
         </div>
-        <button class="buyButton">Comprar</button>
+        <button class="buyButton" onclick={`sendToCart('${slug}')`}>Comprar</button>
         <ProductosRecomendados slug={slug} data={data} />
       </div>
     </div>
   </section>
+  <script type="module" src="/js/cart.js"></script>
 </Layout>
 <style>
   .productDescriptionPage {
@@ -131,7 +132,6 @@ const { slug, data, body } = Astro.props
     font-size: 1rem;
     color: #555;
   }
-
 
   @media (max-width: 1024px) {
     .productMain {

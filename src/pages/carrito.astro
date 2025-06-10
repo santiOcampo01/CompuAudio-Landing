@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Header from '../components/header.astro'
+import { getCollection } from 'astro:content'
+const productos = await getCollection('products')
+const catalogo = productos.map(p => ({
+  slug: p.slug,
+  nombre: p.data.title,
+  precio: p.data.price,
+  imagen: p.data.image,
+}))
+---
+
+<Layout title="Carrito de Compras">
+  <Header />
+
+  <section id="carrito">
+    <h2>Carrito</h2>
+    <ul id="lista-carrito"></ul>
+    <button id="boton-whatsapp" onclick="enviarPorWhatsApp()">Enviar pedido por WhatsApp</button>
+  </section>
+  <script type="module" set:html={`window.catalogo = ${JSON.stringify(catalogo).replace(/</g, '\\u003c')};`} />
+
+  <script type="module" src="/js/cart.js"></script>
+</Layout>
+<style>
+  #lista-carrito {
+    padding: 0;
+    margin: 1rem 0;
+  }
+
+  .item-carrito {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+    list-style: none;
+  }
+
+  .item-carrito img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+
+  .detalles {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .nombre {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .precio {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 0.5rem;
+  }
+
+  .acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .acciones button {
+    background-color: #f60;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .acciones button:hover {
+    background-color: #d45100;
+  }
+
+  #boton-whatsapp {
+    margin-top: 1.5rem;
+    background-color: #25d366;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  #boton-whatsapp:hover {
+    background-color: #1ebe57;
+  }
+</style>
