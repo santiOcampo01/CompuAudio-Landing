@@ -38,16 +38,6 @@ const productosDuplicados = Array(3).fill(recomendados).flat()
   </div>
 </section>
 
-<script is:inline>
-  function scrollSlider(direction) {
-    const slider = document.getElementById('slider')
-    const scrollAmount = 200
-    slider.scrollBy({
-      left: direction * scrollAmount,
-      behavior: 'smooth',
-    })
-  }
-</script>
 <style>
   .recomendedProducts {
     text-align: center;

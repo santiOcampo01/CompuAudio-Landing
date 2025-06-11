@@ -1,6 +1,8 @@
 ---
 const { desta } = Astro.props
 import { Image } from 'astro:assets'
+import IconCart from './cartIcon.astro'
+import Confirmation from './confirmation.astro'
 ---
 
 <section class="productosDestacados" aria-label="Productos destacados">
@@ -15,6 +17,9 @@ import { Image } from 'astro:assets'
           let key = desta.indexOf(producto)
           return (
             <div class="productoCard" key={key}>
+              <button onclick={`sendToCart('${slug}')`} class="iconoCarrito">
+                <img class="svg" src="/cart-shopping-svgrepo-com.svg" alt="Carrito de compras" loading="lazy" />
+              </button>
               <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
               <span class="precio">${data.price.toLocaleString()}</span>
@@ -26,10 +31,64 @@ import { Image } from 'astro:assets'
         })
       }
     </div>
+    <script type="module" src="/js/cart.js"></script>
+    <div class="alerta-carrito">
+      <img class="iconCheck" src="/check-mark-svgrepo-com.svg" alt="Check Mark" />
+      <span>Producto agregado al carrito</span>
+    </div>
   </article>
 </section>
 
 <style>
+  .alerta-carrito {
+    display: none;
+    align-items: center;
+    justify-content: space-around;
+    width: 300px;
+    height: 50px;
+    padding: 0.5rem 1rem;
+    position: fixed;
+    top: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+  }
+  .visible {
+    display: flex;
+  }
+  .alerta-carrito img {
+    max-width: 24px;
+    max-height: 24px;
+  }
+  .productoCard .iconoCarrito {
+    position: absolute;
+    top: 7%;
+    left: 9%;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  .iconoCarrito .svg {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 0;
+  }
+  .productoCard:hover .iconoCarrito {
+    opacity: 1;
+  }
   .productosDestacados {
     padding: 4rem 4rem;
     background-color: #f9f9f9;
