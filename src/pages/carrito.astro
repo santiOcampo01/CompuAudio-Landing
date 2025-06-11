@@ -30,6 +30,13 @@ const catalogo = productos.map(p => ({
 </Layout>
 
 <style is:global>
+  #carrito h2 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
   #lista-carrito {
     padding: 0;
     list-style: none;
@@ -46,12 +53,12 @@ const catalogo = productos.map(p => ({
   .contenedor-producto {
     display: flex;
     gap: 1rem;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .img-producto {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 6px;
     border: 1px solid #ccc;
@@ -63,7 +70,7 @@ const catalogo = productos.map(p => ({
 
   .detalles-producto h4 {
     margin: 0 0 0.25rem 0;
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 
   .cantidad-precio {
@@ -97,7 +104,8 @@ const catalogo = productos.map(p => ({
   }
 
   .total-carrito {
-    text-align: right;
+    padding: 0 2rem;
+    text-align: left;
     font-weight: bold;
     font-size: 1.2rem;
     margin-top: 1rem;
