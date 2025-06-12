@@ -43,7 +43,7 @@ const { slug, data, body } = Astro.props
         </div>
         <button class="buyButton" onclick={`sendToCart('${slug}')`}>Enviar al carrito</button>
         <div class="alerta-carrito">
-          <img class="iconCheck" src="/check-mark-svgrepo-com.svg" alt="Check Mark" />
+          <img class="iconCheck" src="/assets/check-mark-svgrepo-com.svg" alt="Check Mark" />
           <span>Producto agregado al carrito</span>
         </div>
         <ProductosRecomendados slug={slug} data={data} />

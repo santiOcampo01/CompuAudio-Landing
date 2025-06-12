@@ -147,7 +147,7 @@ function showConfirmationMessage() {
 
 function enviarPorWhatsApp() {
   if (!window.catalogo || cart.length === 0) {
-    alert('Tu carrito está vacío o el catálogo no está cargado.')
+    alertCartEmpty()
     return
   }
 
@@ -166,6 +166,22 @@ function enviarPorWhatsApp() {
   const telefono = '573229651762'
   window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank')
 }
+
+function alertCartEmpty() {
+  if (document.querySelector('.cartEmpty')) return
+
+  const alert = document.createElement('div')
+  alert.className = 'cartEmpty'
+  alert.textContent = 'Tu carrito está vacío'
+
+  document.body.appendChild(alert)
+
+  setTimeout(() => {
+    alert.remove()
+  }, 2000)
+}
+
+
 
 window.sendToCart = addToCart
 window.enviarPorWhatsApp = enviarPorWhatsApp

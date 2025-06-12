@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Header from '../components/header.astro'
+import Footer from '../components/footer.astro'
 import { getCollection } from 'astro:content'
 const productos = await getCollection('products')
 const catalogo = productos.map(p => ({
@@ -27,6 +28,7 @@ const catalogo = productos.map(p => ({
 
   <script type="module" set:html={`window.catalogo = ${JSON.stringify(catalogo).replace(/</g, '\\u003c')};`} />
   <script type="module" src="/js/cart.js"></script>
+  <Footer />
 </Layout>
 
 <style is:global>
@@ -126,5 +128,24 @@ const catalogo = productos.map(p => ({
 
   #boton-whatsapp:hover {
     background-color: #1ebe57;
+  }
+
+  .cartEmpty {
+    position: fixed;
+    top: 10%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0.9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    cursor: pointer;
   }
 </style>

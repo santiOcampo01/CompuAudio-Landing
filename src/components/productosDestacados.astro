@@ -18,7 +18,7 @@ import Confirmation from './confirmation.astro'
           return (
             <div class="productoCard" key={key}>
               <button onclick={`sendToCart('${slug}')`} class="iconoCarrito">
-                <img class="svg" src="/cart-shopping-svgrepo-com.svg" alt="Carrito de compras" loading="lazy" />
+                <img class="svg" src="/assets/cart-shopping-svgrepo-com.svg" alt="Carrito de compras" loading="lazy" />
               </button>
               <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
@@ -33,7 +33,7 @@ import Confirmation from './confirmation.astro'
     </div>
     <script type="module" src="/js/cart.js"></script>
     <div class="alerta-carrito">
-      <img class="iconCheck" src="/check-mark-svgrepo-com.svg" alt="Check Mark" />
+      <img class="iconCheck" src="/assets/check-mark-svgrepo-com.svg" alt="Check Mark" />
       <span>Producto agregado al carrito</span>
     </div>
   </article>
@@ -81,6 +81,9 @@ import Confirmation from './confirmation.astro'
     opacity: 0;
   }
 
+  .productosDestacadosContainer .productoCard .iconoCarrito:hover {
+    background-color: #dad8d8
+  }
   .iconoCarrito .svg {
     width: 24px;
     height: 24px;
