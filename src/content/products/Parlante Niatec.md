@@ -1,5 +1,5 @@
 ---
-title: Parlante niatec
+title: Parlante Niatec
 image: /productsImages/Parlante_niatec.jpg
 price: 150000
 description: Parlante Niatec con Bluetooth, USB, SD, Auxiliar y Radio FM, incluye micrófono inalámbrico.

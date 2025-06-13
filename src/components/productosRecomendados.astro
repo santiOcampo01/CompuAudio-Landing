@@ -9,7 +9,6 @@ const destacados = await getCollection('products')
 
 // Filtrar recomendados (distinto slug y al menos un tag en común)
 const recomendados = destacados.filter(p => p.slug !== slug && p.data.tags?.some(tag => data.tags?.includes(tag)))
-const productosDuplicados = Array(3).fill(recomendados).flat()
 ---
 
 <section class="recomendedProducts">
@@ -20,7 +19,7 @@ const productosDuplicados = Array(3).fill(recomendados).flat()
 
     <div class="productsContainer" id="slider">
       {
-        productosDuplicados.map((producto, index) => {
+        recomendados.map((producto, index) => {
           const { slug, data } = producto
           return (
             <div class="productoCard" key={index}>
