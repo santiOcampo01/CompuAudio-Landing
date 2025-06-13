@@ -8,14 +8,14 @@ tags: ['Parlante', 'Bluetooth', 'USB', 'SD', 'Auxiliar', 'Radio FM', 'Micrófono
 featured: true
 caracteristicas:
   [
-    'conexión Bluetooth',
-    'reproducción de música a través de tarjeta SD o USB',
-    'salida Auxiliar',
-    'radio FM',
-    'incluye micrófono inalámbrico',
-    'ideal para karaoke o perifoneo',
-    'posibilidad de adaptar en una base o trípode',
-    'potencia: 30W RMS',
+    'Conexión Bluetooth',
+    'Reproducción de música a través de tarjeta SD o USB',
+    'Salida Auxiliar',
+    'Radio FM',
+    'Incluye micrófono inalámbrico',
+    'Ideal para karaoke o perifoneo',
+    'Posibilidad de adaptar en una base o trípode',
+    'Potencia: 30W RMS',
   ]
 ---
 

@@ -1,48 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
-  if (!window.catalogo) {
-    console.warn('Catálogo no disponible todavía.')
-    return
+  let cart = []
+  if(sessionStorage.getItem('cart') === null) {
+    cart = sessionStorage.setItem('cart', JSON.stringify([]))
+  }else {
+    cart = JSON.parse(sessionStorage.getItem('cart'));
+    if (window.location.pathname.includes('/carrito')) {
+      renderCart(cart) 
+    }
   }
+});
 
-  cart = getCart()
-  renderCart()
-  updateTotal()
-})
-
-let cart = []
-
-function getCart() {
-  try {
-    const data = sessionStorage.getItem('cart')
-    return data ? JSON.parse(data) : []
-  } catch (e) {
-    console.error('Error leyendo el carrito:', e)
-    return []
-  }
-}
-
-function saveCart() {
+function saveCart(cart) {
   sessionStorage.setItem('cart', JSON.stringify(cart))
 }
 
-function renderCart() {
+function renderCart(cart) {
   const list = document.querySelector('#lista-carrito')
   list.innerHTML = ''
 
   if (cart.length === 0) {
     list.innerHTML = '<li>Tu carrito está vacío</li>'
-    updateTotal()
+    updateTotal(cart)
     return
   }
 
   cart.forEach(item => {
-    createOrUpdateItem(item.slug)
+    createOrUpdateItem(item.slug, cart)
   })
 
-  updateTotal()
+  updateTotal(cart)
 }
 
-function createOrUpdateItem(slug) {
+function createOrUpdateItem(slug, cart) {
   const list = document.querySelector('#lista-carrito')
   const producto = window.catalogo.find(p => p.slug === slug)
   const item = cart.find(i => i.slug === slug)
@@ -81,47 +70,50 @@ function createOrUpdateItem(slug) {
 }
 
 function addToCart(slug) {
-  const item = cart.find(i => i.slug === slug)
-  if (item) {
-    item.quantity++
-  } else {
-    cart.push({ slug, quantity: 1 })
+  let carrito = JSON.parse(sessionStorage.getItem('cart')) || []
+    const item = carrito.find(i => i.slug === slug)
+    if (item) {
+      item.quantity++
+    }
+   else {
+    carrito.push({ slug, quantity: 1 })
   }
-  showConfirmationMessage()
-  saveCart()
-  createOrUpdateItem(slug)
-  updateTotal()
+  saveCart(carrito)  
+  if (!window.location.pathname.includes('/carrito')) {
+    showConfirmationMessage()
+  }
+  if (window.location.pathname.includes('/carrito')) {
+  createOrUpdateItem(slug, carrito)
+  }
+  updateTotal(carrito)
 }
 
 function decreaseQuantity(slug) {
-  const item = cart.find(i => i.slug === slug)
+  let carrito = JSON.parse(sessionStorage.getItem('cart')) || []
+  const item = carrito.find(i => i.slug === slug)
   if (item) {
     item.quantity--
     if (item.quantity <= 0) {
-      cart = cart.filter(i => i.slug !== slug)
+      carrito = carrito.filter(i => i.slug !== slug)
       document.querySelector(`[data-item="${slug}"]`)?.remove()
     } else {
-      createOrUpdateItem(slug)
+      createOrUpdateItem(slug, carrito)
     }
-    saveCart()
-    updateTotal()
+    saveCart(carrito)
+    updateTotal(carrito)
   }
 }
 
 function removeFromCart(slug) {
-  cart = cart.filter(i => i.slug !== slug)
+  let carrito = JSON.parse(sessionStorage.getItem('cart')) || []
+  carrito = carrito.filter(i => i.slug !== slug)
   document.querySelector(`[data-item="${slug}"]`)?.remove()
-  saveCart()
-  updateTotal()
+  saveCart(carrito)
+  updateTotal(carrito)
 }
 
-function clearCart() {
-  cart = []
-  sessionStorage.removeItem('cart')
-  renderCart()
-}
 
-function updateTotal() {
+function updateTotal(cart) {
   const totalContainer = document.getElementById('valor-total')
   const total = cart.reduce((acc, item) => {
     const producto = window.catalogo.find(p => p.slug === item.slug)
@@ -145,8 +137,9 @@ function showConfirmationMessage() {
   }, 2500)
 }
 
-function enviarPorWhatsApp() {
-  if (!window.catalogo || cart.length === 0) {
+function enviarPorWhatsApp(slug) {
+  let carrito = JSON.parse(sessionStorage.getItem('cart')) || []
+  if (!window.catalogo || carrito.length === 0) {
     alertCartEmpty()
     return
   }
@@ -154,7 +147,7 @@ function enviarPorWhatsApp() {
   let mensaje = 'Hola, quiero hacer un pedido: \n'
   let total = 0
 
-  cart.forEach(item => {
+  carrito.forEach(item => {
     const producto = window.catalogo.find(p => p.slug === item.slug)
     if (!producto) return
     const subtotal = item.quantity * producto.precio

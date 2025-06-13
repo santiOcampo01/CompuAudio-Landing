@@ -65,33 +65,7 @@ import Confirmation from './confirmation.astro'
     max-width: 24px;
     max-height: 24px;
   }
-  .productoCard .iconoCarrito {
-    position: absolute;
-    top: 7%;
-    left: 9%;
-    background-color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-  }
 
-  .productosDestacadosContainer .productoCard .iconoCarrito:hover {
-    background-color: #dad8d8;
-  }
-  .iconoCarrito .svg {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 0;
-  }
-  .productoCard:hover .iconoCarrito {
-    opacity: 1;
-  }
   .productosDestacados {
     padding: 4rem 4rem;
     background-color: #f9f9f9;
@@ -164,6 +138,34 @@ import Confirmation from './confirmation.astro'
 
   .buttonSeeProducts:hover {
     background-color: #a84400;
+  }
+
+  .productoCard .iconoCarrito {
+    position: absolute;
+    top: 7%;
+    left: 9%;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  .productosDestacadosContainer .productoCard .iconoCarrito:hover {
+    background-color: #dad8d8;
+  }
+  .iconoCarrito .svg {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 0;
+  }
+  .productoCard:hover .iconoCarrito {
+    opacity: 1;
   }
 
   @media (max-width: 500px) {

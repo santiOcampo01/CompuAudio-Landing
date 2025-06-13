@@ -8,10 +8,10 @@ tags: ['Audífonos', 'Bluetooth', 'Cancelación de ruido', 'Batería larga', 'Pa
 featured: true
 caracteristicas:
   [
-    'pantalla táctil',
-    'sonido de calidad',
-    'cancelación de ruido (ANC)',
-    'larga batería',
+    'Pantalla táctil',
+    'Sonido de calidad',
+    'Cancelación de ruido (ANC)',
+    'Larga batería',
     'Ambient Sound',
     'carga rápida',
     'compatible con dispositivos iOS y Android',
