@@ -1,12 +1,12 @@
 ---
 title: 'Auriculares Beast Mode'
-image: /productsImages/beast-mode.jpg
-price: 95000
-description: 'Auriculares con sonido envolvente, micrófono y diseño cómodo para largas sesiones de juego.'
+image: /productsImages/beast-mode.webp
+price: 97000
+description: 'Versióergonomía.'
 category: 'Auriculares'
-tags: ["Gaming","RGB","Micrófono"]
-featured: false
-caracteristicas: ["Sonido estéreo 7.1","Iluminación LED RGB","Micrófono flexible con cancelación de ruido","Compatibilidad con PC y consolas"]
+tags: ["Gamer","Micrófono"]
+featured: true
+caracteristicas: ["Sonido 7.1 mejorado","Micrófono flexible y nítido","Compatibilidad total con consolas y PC","Almohadillas suaves premium"]
 ---
 
-Disfruta de largas partidas con un sonido claro y envolvente gracias a los auriculares Beast Mode. Su diseño ergonómico y micrófono de alta calidad te mantienen siempre conectado.
+La edición 2024 de los auriculares Beast Mode ofrece calidad mejorada en sonido y comodidad prolongada para gaming intenso.
