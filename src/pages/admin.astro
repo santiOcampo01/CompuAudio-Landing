@@ -7,99 +7,370 @@ import Layout from '../layouts/Layout.astro'
     <p>Cargando...</p>
   </section>
 
-  <script type="module">
-    async function checkAuth() {
-      const panel = document.getElementById('adminPanel')
+  <!-- Plantillas para formularios reutilizables -->
+  <template id="productFormTemplate">
+    <h2 id="formTitle"></h2>
+    <form id="productForm" enctype="multipart/form-data">
+      <input type="hidden" name="slug" />
+      <input type="hidden" name="sha" />
 
+      <label
+        >Título
+        <input type="text" name="title" required />
+      </label>
+
+      <label
+        >Precio
+        <input type="number" name="price" step="0.01" required />
+      </label>
+
+      <label
+        >Descripción
+        <textarea name="description" required></textarea>
+      </label>
+
+      <label
+        >Categoría
+        <input type="text" name="category" required />
+      </label>
+
+      <label
+        >Tags (separados por coma)
+        <input type="text" name="tags" />
+      </label>
+
+      <label
+        >Destacado
+        <input type="checkbox" name="featured" />
+      </label>
+
+      <label
+        >Imagen
+        <input type="file" name="image" accept="image/*" />
+      </label>
+
+      <div class="formActions">
+        <button type="submit">Guardar</button>
+        <button type="button" id="cancelForm">Cancelar</button>
+      </div>
+    </form>
+  </template>
+
+  <template id="credFormTemplate">
+    <h2>Cambiar credenciales</h2>
+    <form id="credForm">
+      <label
+        >Nuevo usuario
+        <input type="text" name="username" required />
+      </label>
+
+      <label
+        >Nueva contraseña
+        <input type="password" name="password" required />
+      </label>
+
+      <div class="formActions">
+        <button type="submit">Actualizar</button>
+        <button type="button" id="cancelCred">Cancelar</button>
+      </div>
+    </form>
+  </template>
+
+  <script type="module">
+    const API = 'http://localhost:4000'
+    const panel = document.getElementById('adminPanel')
+
+    /** Util -----------------------------------------------------------------*/
+    const toBase64 = file =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = err => reject(err)
+        reader.readAsDataURL(file)
+      })
+
+    /** Auth ----------------------------------------------------------------*/
+    async function checkAuth() {
       try {
-        const res = await fetch('http://localhost:4000/auth/validate', {
+        const res = await fetch(`${API}/auth/validate`, {
           credentials: 'include',
         })
         const data = await res.json()
 
         if (data.loggedIn) {
-          panel.innerHTML = `
-            <h2>Bienvenido, ${data.username}</h2>
-            <ul>
-              <li><button onclick="crearProducto()">Agregar producto</button></li>
-              <li><button onclick="eliminarProducto()">Eliminar producto</button></li>
-              <li><button onclick="cambiarCredenciales()">Cambiar usuario/clave</button></li>
-            </ul>
-          `
+          renderAdmin(data.username)
         } else {
           showLoginForm(panel)
         }
-      } catch {
+      } catch (err) {
+        console.error(err)
         showLoginForm(panel)
       }
     }
 
+    /** UI -------------------------------------------------------------------*/
+    async function renderAdmin(username) {
+      panel.innerHTML = `
+        <h2>Bienvenido, ${username}</h2>
+        <div class="toolbar">
+          <button id="addBtn">Agregar producto</button>
+          <button id="credBtn">Cambiar usuario/clave</button>
+        </div>
+        <table id="productsTable">
+          <thead>
+            <tr><th>Título</th><th>Precio</th><th>Acciones</th></tr>
+          </thead>
+          <tbody><tr><td colspan="3">Cargando...</td></tr></tbody>
+        </table>
+      `
+
+      document.getElementById('addBtn').addEventListener('click', crearProducto)
+      document.getElementById('credBtn').addEventListener('click', cambiarCredenciales)
+      await loadProductos()
+    }
+
+    async function loadProductos() {
+      const tbody = document.querySelector('#productsTable tbody')
+      try {
+        const res = await fetch(`${API}/products`, { credentials: 'include' })
+        const productos = await res.json()
+
+        if (!Array.isArray(productos) || !productos.length) {
+          tbody.innerHTML = '<tr><td colspan="3">Sin productos</td></tr>'
+          return
+        }
+
+        tbody.innerHTML = ''
+        productos.forEach(p => {
+          const tr = document.createElement('tr')
+          tr.innerHTML = `
+            <td>${p.title}</td>
+            <td>${p.price}</td>
+            <td>
+              <button data-slug="${p.slug}" data-sha="${p.sha}" class="editBtn">Editar</button>
+              <button data-slug="${p.slug}" data-sha="${p.sha}" class="delBtn">Eliminar</button>
+            </td>
+          `
+          tbody.appendChild(tr)
+        })
+
+        // Delegamos listeners
+        tbody
+          .querySelectorAll('.editBtn')
+          .forEach(btn => btn.addEventListener('click', e => editarProducto(e.target.dataset.slug, e.target.dataset.sha)))
+        tbody
+          .querySelectorAll('.delBtn')
+          .forEach(btn => btn.addEventListener('click', e => eliminarProducto(e.target.dataset.slug, e.target.dataset.sha)))
+      } catch (err) {
+        console.error(err)
+        tbody.innerHTML = '<tr><td colspan="3">Error al cargar productos</td></tr>'
+      }
+    }
+
+    /** CRUD productos --------------------------------------------------------*/
+    function crearProducto() {
+      openProductForm()
+    }
+
+    async function editarProducto(slug, sha) {
+      try {
+        const res = await fetch(`${API}/products/${slug}`, { credentials: 'include' })
+        if (!res.ok) throw new Error('Error al obtener producto')
+        const data = await res.json()
+        openProductForm({ ...data, slug, sha })
+      } catch (err) {
+        console.error(err)
+        alert('No fue posible cargar el producto para editar')
+      }
+    }
+
+    async function eliminarProducto(slug, sha) {
+      const confirmado = confirm('¿Seguro que quieres eliminar este producto?')
+      if (!confirmado) return
+
+      try {
+        const res = await fetch(`${API}/products/${slug}`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ sha }),
+        })
+        if (res.ok) {
+          alert('Producto eliminado')
+          loadProductos()
+        } else {
+          alert('Hubo un error al eliminar')
+        }
+      } catch (err) {
+        console.error(err)
+        alert('Error inesperado')
+      }
+    }
+
+    /** Formularios -----------------------------------------------------------*/
+    function openProductForm(datos = {}) {
+      const tpl = document.getElementById('productFormTemplate').content.cloneNode(true)
+      panel.innerHTML = ''
+      panel.appendChild(tpl)
+
+      const form = panel.querySelector('#productForm')
+      const formTitle = panel.querySelector('#formTitle')
+      formTitle.textContent = datos.slug ? 'Editar producto' : 'Nuevo producto'
+
+      // Pre‑rellenamos si existen datos
+      Object.entries(datos).forEach(([k, v]) => {
+        const el = form.elements[k]
+        if (!el) return
+        if (el.type === 'checkbox') el.checked = v
+        else el.value = v
+      })
+
+      panel.querySelector('#cancelForm').addEventListener('click', () => checkAuth())
+
+      form.addEventListener('submit', async e => {
+        e.preventDefault()
+        const formData = new FormData(form)
+        const json = Object.fromEntries(formData.entries())
+
+        // Transformaciones
+        json.price = parseFloat(json.price)
+        json.tags = json.tags ? json.tags.split(',').map(t => t.trim()) : []
+        json.featured = form.elements.featured.checked
+
+        // Imagen (opcional)
+        const file = form.elements.image.files[0]
+        if (file) {
+          json.imageName = file.name
+          json.imageBase64 = await toBase64(file)
+        }
+
+        const method = datos.slug ? 'PUT' : 'POST'
+        const endpoint = datos.slug ? `${API}/products/${datos.slug}` : `${API}/products`
+        try {
+          const res = await fetch(endpoint, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(json),
+          })
+          if (res.ok) {
+            alert('Guardado correctamente')
+            checkAuth()
+          } else {
+            const err = await res.json()
+            throw new Error(err.message || 'Error al guardar')
+          }
+        } catch (err) {
+          console.error(err)
+          alert(err.message)
+        }
+      })
+    }
+
+    /** Credenciales ----------------------------------------------------------*/
+    function cambiarCredenciales() {
+      const tpl = document.getElementById('credFormTemplate').content.cloneNode(true)
+      panel.innerHTML = ''
+      panel.appendChild(tpl)
+
+      const form = panel.querySelector('#credForm')
+      panel.querySelector('#cancelCred').addEventListener('click', () => checkAuth())
+
+      form.addEventListener('submit', async e => {
+        e.preventDefault()
+        const data = Object.fromEntries(new FormData(form).entries())
+        try {
+          const res = await fetch(`${API}/update`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(data),
+          })
+          if (res.ok) {
+            alert('Credenciales actualizadas')
+            checkAuth()
+          } else {
+            alert('Error al actualizar credenciales')
+          }
+        } catch (err) {
+          console.error(err)
+          alert('Error inesperado')
+        }
+      })
+    }
+
+    /** Login -----------------------------------------------------------------*/
     function showLoginForm(container) {
       container.innerHTML = `
         <h2>Iniciar sesión</h2>
-        <form id="loginForm">
-        <div class="usernameContainer">
-          <label for="username">Usuario:</label>
-          <input type="text" name="username" placeholder="Usuario" required />
-        </div>
-        <div class="passwordContainer">
-          <label for="password">Contraseña:</label>
-          <input type="password" name="password" placeholder="Contraseña" required />
-        </div>
-        <div class="buttonContainer">
-          <button type="submit">Entrar</button>
-        </div>
-        </form>
-      `
+        <form id="loginForm" class="loginForm">
+          <div class="usernameContainer">
+            <label for="username">Usuario:</label>
+            <input type="text" name="username" placeholder="Usuario" required />
+          </div>
+          <div class="passwordContainer">
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" placeholder="Contraseña" required />
+          </div>
+          <div class="buttonContainer">
+            <button type="submit">Entrar</button>
+          </div>
+        </form>`
+
       document.getElementById('loginForm').addEventListener('submit', async e => {
         e.preventDefault()
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData.entries())
 
-        const res = await fetch('http://localhost:4000/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify(data),
-        })
-        console.log(res)
-
-        const result = await res.json()
-        if (result.success) {
-          location.reload()
-        } else {
-          alert('Usuario o contraseña incorrectos')
+        try {
+          const res = await fetch(`${API}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(data),
+          })
+          const result = await res.json()
+          if (result.success) {
+            location.reload()
+          } else {
+            alert('Usuario o contraseña incorrectos')
+          }
+        } catch (err) {
+          console.error(err)
+          alert('Error al iniciar sesión')
         }
       })
     }
 
+    // Inicializamos todo
     checkAuth()
   </script>
 </Layout>
 
 <style global>
-  .loginForm {
+  /* Estilos generales */
+  .loginForm,
+  #productForm,
+  #credForm {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    margin: auto;
-  }
-
-  .usernameContainer,
-  .passwordContainer,
-  .buttonContainer {
-    margin-bottom: 15px;
+    width: 320px;
+    margin: 0 auto;
+    gap: 12px;
   }
 
   label {
-    display: block;
-    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
   }
 
-  input {
-    width: 100%;
+  input,
+  textarea {
     padding: 8px;
     box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
 
   button {
@@ -108,9 +379,41 @@ import Layout from '../layouts/Layout.astro'
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
+    font-weight: 600;
   }
 
   button:hover {
     background-color: #0056b3;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 24px;
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f4f4f4;
+  }
+
+  .toolbar {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .formActions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 12px;
   }
 </style>
