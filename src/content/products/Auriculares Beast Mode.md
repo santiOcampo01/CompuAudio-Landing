@@ -1,6 +1,6 @@
 ---
 title: 'Auriculares Beast Mode'
-image: /productsImages/undefined
+image: /productsImages/beast-mode.jpg
 price: 95000
 description: 'Auriculares con sonido envolvente, micrófono y diseño cómodo para largas sesiones de juego.'
 category: 'Auriculares'
