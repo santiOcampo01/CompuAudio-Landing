@@ -1,0 +1,43 @@
+---
+export const prerender = false
+---
+
+<section>
+  <h1>Login</h1>
+  <form id="LoggedInform" method="post" action="">
+    <label for="username">Username: </label>
+    <input type="text" id="username" name="username" required />
+    <label for="password">Password: </label>
+    <input type="password" id="password" name="password" required />
+    <button type="submit">Login</button>
+  </form>
+  <script>
+    const form = document.getElementById('LoggedInform')
+    form?.addEventListener('submit', async e => {
+      e.preventDefault()
+      const data = Object.fromEntries(new FormData(e.target as HTMLFormElement))
+      try {
+        const response = await fetch('http://localhost:4000/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+            credentials: 'include',
+          body: JSON.stringify(data),
+        })
+        if (response.ok) {
+          const res = await response.json()
+          console.log('Login successful:', res)
+        }
+      } catch (err) {
+        console.error('Error during login:', err)
+        const failedMessage = document.createElement('p')
+        failedMessage.textContent = 'Username or password incorrect'
+        form.appendChild(failedMessage)
+        setTimeout(() => {
+          failedMessage.remove()
+        }, 5000)
+      }
+    })
+  </script>
+</section>
