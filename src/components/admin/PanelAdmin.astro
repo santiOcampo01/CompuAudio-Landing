@@ -1,0 +1,84 @@
+<section>
+  <h1>Panel de Administración</h1>
+  <p>
+    Bienvenido al panel de administración <span class="usernameName"></span>. Aquí puedes gestionar los productos y cambiar tu usuario y
+    contraseña.
+    <ul>
+      <li><a href="/admin/productManagement">Gestionar Productos</a></li>
+      <li><a href="/admin/Credentials">Gestionar Usuarios</a></li>
+    </ul>
+    <p><a href="/logout">Cerrar sesión </a></p>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const usernameElement = document.querySelector('.usernameName')
+        userAuth().then(username => {
+          if (!username) {
+            usernameElement.innerHTML = 'Admin...'
+          } else {
+            usernameElement.innerHTML = ` ${username}`
+            console.log('Usuario autenticado:', username)
+          }
+        })
+      })
+      async function userAuth() {
+        try {
+          const adminAuth = fetch('http://localhost:4000/auth/validate', {
+            credentials: 'include',
+          })
+          const response = await adminAuth
+          if (!response.ok) {
+            throw new Error('Not authorized')
+          } else {
+            const data = await response.json()
+            return data.username
+          }
+        } catch (error) {
+          console.error('Error validating admin:', error)
+        }
+      }
+    </script>
+  </p>
+</section>
+
+<style>
+  section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin: auto;
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .usernameName {
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  li {
+    margin-bottom: 8px;
+  }
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

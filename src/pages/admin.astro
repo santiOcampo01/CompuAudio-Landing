@@ -1,12 +1,15 @@
 ---
+export const prerender = false
 import Layout from '../layouts/Layout.astro'
-import PanelAdmin from '../components/PanelAdmin.astro'
-import Login from '../components/LoginForm.astro'
-let isLoggedIn = Astro.cookies.has('tokenLogin')
+import Header from '../components/header.astro'
+import PanelAdmin from '../components/admin/PanelAdmin.astro'
+import Login from '../components/admin/LoginForm.astro'
+let isLoggedIn = Astro.cookies.get('tokenLogin')
 console.log('isLoggedIn:', isLoggedIn)
 ---
 
 <Layout title="Panel Admin" description="Administración de productos">
+  <Header title="Panel de Administración" description="Gestiona los productos y usuarios de tu tienda" />
   {isLoggedIn ? <PanelAdmin /> : <Login />}
 </Layout>
 

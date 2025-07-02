@@ -1,6 +1,3 @@
----
-export const prerender = false
----
 
 <section>
   <h1>Login</h1>
@@ -28,11 +25,18 @@ export const prerender = false
         if (response.ok) {
           const res = await response.json()
           console.log('Login successful:', res)
+          location.reload()
+        }else {
+          throw new Error('Login failed')
         }
       } catch (err) {
         console.error('Error during login:', err)
         const failedMessage = document.createElement('p')
         failedMessage.textContent = 'Username or password incorrect'
+        failedMessage.style.color = 'red'
+        failedMessage.style.fontWeight = 'bold'
+        failedMessage.style.textAlign = 'center'
+        failedMessage.style.marginTop = '10px'
         form.appendChild(failedMessage)
         setTimeout(() => {
           failedMessage.remove()
