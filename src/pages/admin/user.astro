@@ -1,0 +1,20 @@
+---
+export const prerender = false
+import Layout from '../../layouts/Layout.astro'
+import Header from '../../components/header.astro'
+import CredentialsUpdate from '../../components/admin/updateUserCredentials.astro'
+let isLoggedIn = Astro.cookies.get('tokenLogin')
+if (!isLoggedIn) {
+  return Astro.redirect('/admin')
+}
+---
+
+<Layout title="Panel Admin - Gestión de Usuarios" description="Administración de usuarios">
+  <Header title="Panel de Administración" description="Gestiona los productos y usuarios de tu tienda" />
+  <section>
+    <div class="titleContainer">
+      <h1>Gestion de Usuarios</h1>
+    </div>
+    <CredentialsUpdate />
+  </section>
+</Layout>

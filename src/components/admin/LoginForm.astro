@@ -1,7 +1,6 @@
-
 <section>
   <h1>Login</h1>
-  <form id="LoggedInform" method="post" action="">
+  <form id="LoginForm" method="post" action="">
     <label for="username">Username: </label>
     <input type="text" id="username" name="username" required />
     <label for="password">Password: </label>
@@ -9,7 +8,7 @@
     <button type="submit">Login</button>
   </form>
   <script>
-    const form = document.getElementById('LoggedInform')
+    const form = document.getElementById('LoginForm')
     form?.addEventListener('submit', async e => {
       e.preventDefault()
       const data = Object.fromEntries(new FormData(e.target as HTMLFormElement))
@@ -19,14 +18,14 @@
           headers: {
             'Content-Type': 'application/json',
           },
-            credentials: 'include',
+          credentials: 'include',
           body: JSON.stringify(data),
         })
         if (response.ok) {
           const res = await response.json()
           console.log('Login successful:', res)
           location.reload()
-        }else {
+        } else {
           throw new Error('Login failed')
         }
       } catch (err) {
@@ -45,3 +44,27 @@
     })
   </script>
 </section>
+
+<style>
+  section {
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 autp;
+    width: 100%;
+    padding: 10px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 3rem;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    margin: 0 auto;
+    gap: 12px;
+  }
+</style>
