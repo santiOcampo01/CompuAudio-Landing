@@ -1,0 +1,97 @@
+<section>
+    <form id="updateUserForm" method="POST" action="/api/admin/updateUserCredentials">
+        <label>
+        <span>Nombre de Usuario:</span>
+        <input type="text" name="username" required />
+        </label>
+        <label>
+        <span>Contraseña:</span>
+        <input type="password" name="password" required />
+        </label>
+        <button type="submit">Actualizar Credenciales</button>
+        <p id="messageElement"></p>
+    
+        <script>
+        document.getElementById('updateUserForm')?.addEventListener('submit', async (event) => {
+            event.preventDefault()
+            const formData = new FormData(event.target as HTMLFormElement)
+            const response = await fetch('/api/admin/updateUserCredentials', {
+            method: 'POST',
+            body: formData
+            })
+    
+            if (response.ok) {
+            addElement(document.body, 'Credenciales actualizadas con éxito.', 'sucess')
+            } else {
+            const errorText = await response.text()
+            addElement(document.body, `Error al actualizar las credenciales: ${errorText}`, 'error')
+            }
+        })
+    
+        function addElement(parent: HTMLElement, text: string, className: string) {
+            const element = document.getElementById('messageElement') as HTMLParagraphElement
+            element.innerHTML = text
+            element.classList.add(className)
+    
+            setTimeout(() => {
+            element.classList.remove(className)
+            element.innerHTML = ''
+            }, 5000)
+        }
+        </script>
+    </form>
+
+    <style>
+        section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        margin: auto;
+        width: 100%;
+        }
+    
+        .error {
+        display: block;
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+        }
+        .sucess {
+        display: block;
+        color: green;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+        }
+        form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        }
+    
+        label {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        }
+        input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+        }
+        button {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        }
+    </style>
+</section>

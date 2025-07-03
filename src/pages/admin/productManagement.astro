@@ -1,9 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import Header from '../../components/header.astro'
-import editProduct from '../../components/admin/editProduct.astro'
-import addProduct from '../../components/admin/addProduct.astro'
-import getAllProducts from '../../components/admin/getAllProducts.astro'
+import EditProducts from '../../components/admin/editProduct.astro'
+import AddProducts from '../../components/admin/addProduct.astro'
+import GetAllProducts from '../../components/admin/getAllProducts.astro'
 let renderComponents = 'all'
 ---
 
@@ -16,11 +16,9 @@ let renderComponents = 'all'
     </div>
     <div class="productsAdminContainer">
       <div class="buttonsContainer">
-        <button class="buttonEdit">Editar Producto {(renderComponents = 'edit')}</button>
-        <button class="buttonAdd">Agregar Producto {(renderComponents = 'edit')}</button>
-        {renderComponents === 'all' ? <getAllProducts client:idle /> : ''}
-        {renderComponents === 'edit' ? <editProduct client:idle /> : ''}
-        {renderComponents === 'add' ? <addProduct client:idle /> : ''}
+        <GetAllProducts />
+        <EditProducts />
+        <AddProducts />
       </div>
     </div>
   </section>
