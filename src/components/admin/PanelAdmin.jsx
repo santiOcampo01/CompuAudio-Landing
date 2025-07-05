@@ -1,18 +1,19 @@
-import Login from './LoginForm.jsx';
-import EditProducts from './editProduct.astro';
+import Login from './LoginForm.jsx'
+import ProductsDashboard from './productsDashboard.jsx'
+import { useState } from 'react'
 
-let isLoggedIn = Login;
-console.log('isLoggedIn:', isLoggedIn);
 export default function Admin() {
+  const [logged, setLogged] = useState(false)
+  const [userName, setUserName] = useState('Admin')
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-2xl font-bold mb-4">Panel de Administración</h1>
-      {isLoggedIn ? (
-        <EditProducts />
+      {logged ? (
+        <ProductsDashboard userName={userName} />
       ) : (
         <div className="flex flex-col items-center">
           <h2 className="text-xl mb-4">Por favor, inicia sesión</h2>
-          <Login />
+          <Login setLogged={setLogged} setUserName={setUserName} />
         </div>
       )}
     </div>
