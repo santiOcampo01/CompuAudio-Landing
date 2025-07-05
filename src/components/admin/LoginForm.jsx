@@ -1,53 +1,86 @@
-import react from 'react';
 import { useState } from 'react';
-
+import PanelAdmin from './PanelAdmin.jsx';
 
 export default function LoginForm() {
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
-  
-  return (
-    <form className="flex flex-col gap-4 p-4 bg-white rounded shadow-md" onSubmit={e => handleSubmit(e)}>
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      <label className="flex flex-col">
-        Username:
-        <input type="text" value={userName} onChange={e => setUserName(e.target.value)} className="p-2 border rounded" required />
-      </label>
-      <label className="flex flex-col">
-        Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="p-2 border rounded" required />
-      </label>
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-        Login
-      </button>
-      <p className="text-red-500 mt-2">Invalid username or password</p>
-    </form>
-  )
+const [error, setError] = useState(null);
+const [errorMessage, setErrorMessage] = useState('');
+const [userName, setUserName] = useState('Admin');
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError(false);
-    try {
-      const response = await fetch('http://localhost:4000/login/', {
+const handleSubmit = async e => {
+  e.preventDefault()
+  const data = Object.fromEntries(new FormData(e.target))
+  console.log('Form data:', data)
+  const userName = await sendToServer(data)
+  setUserName(userName.username)
+}
+
+const sendToServer = async (data) => {
+  console.log('Form submitted:', userName)
+  try {
+    const response = await fetch('http://localhost:4000/login/', 
+      {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userName, password }),
-      });
-      if (response.ok) {
-        console.log('Login successful');
-        const data = await response.json();
-        console.log('Token:', data.token);
-      } else {
-        setError(true);
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
       }
-    } catch {
-      setError(true);
+    )
+    let res = await response.json()
+    if (!res.success) {
+      console.log('Network response was not ok:', response)
+      setError(true)
+      throw new Error(res.message)
+    } else {
+      if (res.success) {
+        console.log('Login successful:', res)
+        return userName
+      } else {
+        setErrorMessage('Usuario o contraseña incorrectos')
+        setError(true)
+      }
     }
-
-    console.log(error)
+  }catch (error) {
+    setError(true);
+    setErrorMessage(error.message);
   }
+}
 
-  // Replace onSubmit in the form with handleSubmit
-  // Replace the error message paragraph with: {error && <p className='text-red-500 mt-2'>Invalid username or password</p>}
+if(error) {
+  return (
+    <div className='flex flex-col items-center justify-center h-screen'>
+      <h1 className='text-2xl font-bold text-red-500'>Error al iniciar sesión</h1>
+      <p className='text-red-500'>{errorMessage}</p>
+      <button onClick={() => setError(false)} className='bg-blue-500 text-white p-2 rounded mt-4'>
+        Volver a intentar
+      </button>
+    </div>
+  )}else {
+    return (
+  <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+    <h1 className='text-2xl font-bold'>Iniciar sesión</h1>
+    <label className='flex flex-col'>
+      Usuario:
+      <input
+        type='text'
+        name='username'
+        className='border p-2 rounded'
+        required
+      />
+    </label>
+    <label className='flex flex-col'>
+      Contraseña:
+      <input
+        type='password'
+        name='password'
+        className='border p-2 rounded'
+        required
+      />
+    </label>
+    <button type='submit' className='bg-blue-500 text-white p-2 rounded'>
+      Iniciar sesión
+    </button>
+  </form>
+  )}
 }
