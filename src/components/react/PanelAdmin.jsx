@@ -11,7 +11,7 @@ export default function Admin() {
     .then(data => {
       if (data.loggedIn) {
         setLogged(true)
-        setUserName('Admin')
+        setUserName(data.username)
       }
     })
   }
