@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import PanelAdmin from './PanelAdmin.jsx'
 
-export default function LoginForm({ setLogged, setUserName}) {
+export default function LoginForm({ setLogged, setUserName }) {
   const [error, setError] = useState(null)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -43,21 +42,21 @@ export default function LoginForm({ setLogged, setUserName}) {
     }
   }
 
-    return (
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold">Iniciar sesión</h1>
-        <label className="flex flex-col">
-          Usuario:
-          <input type="text" name="username" className="border p-2 rounded" required />
-        </label>
-        <label className="flex flex-col">
-          Contraseña:
-          <input type="password" name="password" className="border p-2 rounded" required />
-        </label>
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          Iniciar sesión
-        </button>
-        {error && <p>{errorMessage}</p>}
-      </form>
-    )
-  }
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <h1 className="text-2xl font-bold">Iniciar sesión</h1>
+      <label className="flex flex-col">
+        Usuario:
+        <input type="text" name="username" className="border p-2 rounded" required />
+      </label>
+      <label className="flex flex-col">
+        Contraseña:
+        <input type="password" name="password" className="border p-2 rounded" required />
+      </label>
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        Iniciar sesión
+      </button>
+      {error && <p>{errorMessage}</p>}
+    </form>
+  )
+}
