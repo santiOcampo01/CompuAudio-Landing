@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 export default function ProducstCards() {
-  const [stated, useStated] = useState('')
     const [products, setProducts] = useState([])
   useEffect(() => {
     fetch('http://localhost:4000/products/', {
@@ -13,7 +12,6 @@ export default function ProducstCards() {
   }, [])
 
   async function handleDelete(slug, sha, imageName) {
-    console.log(JSON.stringify({ sha: sha, imageName: imageName }))
     try {
       await fetch(`http://localhost:4000/products/${slug}`, {
         method: 'DELETE',
@@ -21,7 +19,7 @@ export default function ProducstCards() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({sha: sha}),
+        body: JSON.stringify({sha: sha, imageName: imageName}),
       })
         .then(res => res.json())
         .them(data => {
@@ -31,7 +29,6 @@ export default function ProducstCards() {
       alert('Mega error')
     }
   }
-console.log(stated)
   return (
     <section className="productContainer container px-4 flex ">
       {products.map(product => {
@@ -51,7 +48,8 @@ console.log(stated)
               <button
                 className="w-[50%] p-3"
                 onClick={e => {
-                  handleDelete(product.title, product.sha, product.image)
+                  let imageName = product.image.split('/')
+                  handleDelete(product.title, product.sha, imageName[2])
                 }}
               >
                 Eliminar
