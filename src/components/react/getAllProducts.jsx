@@ -1,5 +1,37 @@
-export default function ProducstCards({ products}) {
+import { useState, useEffect } from "react"
+export default function ProducstCards() {
+  const [stated, useStated] = useState('')
+    const [products, setProducts] = useState([])
+  useEffect(() => {
+    fetch('http://localhost:4000/products/', {
+      credentials: 'include',
+    })
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data)
+      })
+  }, [])
 
+  async function handleDelete(slug, sha, imageName) {
+    console.log(JSON.stringify({ sha: sha, imageName: imageName }))
+    try {
+      await fetch(`http://localhost:4000/products/${slug}`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({sha: sha}),
+      })
+        .then(res => res.json())
+        .them(data => {
+          console.log(data)
+        })
+    } catch (err) {
+      alert('Mega error')
+    }
+  }
+console.log(stated)
   return (
     <section className="productContainer container px-4 flex ">
       {products.map(product => {
@@ -16,7 +48,14 @@ export default function ProducstCards({ products}) {
             </div>
             <div className="productButton justify-center gap-2">
               <button className="w-[50%] p-3">Editar</button>
-              <button className="w-[50%] p-3">Eliminar</button>
+              <button
+                className="w-[50%] p-3"
+                onClick={e => {
+                  handleDelete(product.title, product.sha, product.image)
+                }}
+              >
+                Eliminar
+              </button>
             </div>
           </article>
         )

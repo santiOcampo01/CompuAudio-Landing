@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function FormFunction() {
   const [file, setFile] = useState(null)
   const [base64IMG, setBase64IMG] = useState('')
-  const [tags, setTags] = useState([])
+  const [featured, setfeatured] = useState(false)
+  const [state, setState] = useState(false)
 
   function handleFile(e) {
     const selected = e.target.files[0]
@@ -20,10 +21,27 @@ export default function FormFunction() {
   function handleSubmit(e) {
     e.preventDefault()
     const data = Object.fromEntries(new FormData(e.target))
-    console.log(data)
     data.imageName = data.imageName.name
-    data.tags = data.tags.slice(',')
-    console.log(data)
+    data.imageBase64 = base64IMG
+    data.tags = JSON.stringify(data.tags.split(', '))
+    data.caracteristicas = JSON.stringify(data.caracteristicas.split(', '))
+    data.featured = featured
+    validateLogin(data)
+  }
+
+  async function validateLogin(datos) {
+    await fetch('http://localhost:4000/products/', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(datos),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+      })
   }
 
   return (
@@ -45,20 +63,20 @@ export default function FormFunction() {
           Tags:
           <input type="text" name="tags" id="tags" required />
         </label>
-        <label htmlFor="tags">
+        <label htmlFor="featured">
           Destacado:
-          <input type="checkbox" name="tags" id="Destacado" />
+          <input onChange={(e) => {setfeatured(!featured)}} type="checkbox" name="featured" id="featured" />
         </label>
-        <label htmlFor="tags">
+        <label htmlFor="caracteristicas">
           Caracteristicas:
-          <input type="text" name="tags" id="Caracteristicas" required />
+          <input type="text" name="caracteristicas" id="caracteristicas" required />
         </label>
         <label htmlFor="content">
           Descripcion:
           <textarea defaultValue="Auriculares con sonido envolvente" id="content" name="content" required></textarea>
         </label>
         <div>
-          <button type="submit"> Enviar</button>
+          <button type="submit" > Enviar</button>
         </div>
       </form>
     </section>
