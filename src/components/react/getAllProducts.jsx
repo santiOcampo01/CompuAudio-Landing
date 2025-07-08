@@ -13,7 +13,7 @@ export default function ProducstCards() {
 
   async function handleDelete(slug, sha, imageName) {
     try {
-      await fetch(`http://localhost:4000/products/${slug}`, {
+      const response = await fetch(`http://localhost:4000/products/${slug}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
@@ -21,12 +21,13 @@ export default function ProducstCards() {
         },
         body: JSON.stringify({sha: sha, imageName: imageName}),
       })
-        .then(res => res.json())
-        .them(data => {
-          console.log(data)
-        })
+      let res = await response.json()
+      if(response.ok){
+        console.log(res)
+        alert('Todo fue un exito')
+      }
     } catch (err) {
-      alert('Mega error')
+      alert(err.message)
     }
   }
   return (
