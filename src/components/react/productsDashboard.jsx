@@ -1,29 +1,52 @@
 import ProducstCards from './getAllProducts.jsx'
+import UpdateForm from './updateCredentials.jsx'
+import AddProduct from './addProduct.jsx'
 import { useState, useEffect } from 'react'
 
 export default function ProductsDashboard({ userName }) {
+  const [render, setRender] = useState('products')
+  const [username, setUserName] = useState(userName)
+  const [products, setProducts] = useState([])
+  const [reload, setReload] = useState(false)
   useEffect(() => {
     fetch('http://localhost:4000/products/', {
       credentials: 'include',
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
       .then(data => {
         setProducts(data)
       })
   }, [])
-  const [products, setProducts] = useState([])
+
+  const handleProducts = () => {
+    setRender('products')
+  }
+  const handleCredentials = () => {
+    setRender('credentials')
+  }
+  const handleAdd = () => {
+    setReload(!reload)
+  }
+
+  const logout = () => {
+    fetch('http://localhost:4000/logout/', {
+      credentials: 'include',
+    })
+    window.location.reload()
+  }
   return (
     <section className="container">
       <aside className="navContainer">
         <nav>
           <ul>
             <li>
-              <button>Productos</button>
+              <button onClick={handleProducts}>Productos</button>
             </li>
             <li>
-              <button>Usuario</button>
+              <button onClick={handleCredentials}>Usuario</button>
             </li>
             <li>
-              <button>Cerrar Sesion</button>
+              <button onClick={logout}>Cerrar Sesion</button>
             </li>
           </ul>
         </nav>
@@ -33,11 +56,15 @@ export default function ProductsDashboard({ userName }) {
           <header>
             <h1>Panel de admistracion</h1>
             <p>
-              Hola, <span>{userName}</span>
+              Hola, <span>{username}</span>
             </p>
           </header>
+          <button onClick={handleAdd}>
+            Add product
+          </button>
         </div>
-          <ProducstCards products={products} />
+        {reload && <AddProduct />}
+        {render == 'products' ? <ProducstCards products={products} /> : <UpdateForm userName={username} setUserName={setUserName} />}
       </main>
     </section>
   )

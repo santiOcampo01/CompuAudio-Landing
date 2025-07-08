@@ -3,10 +3,8 @@ import { defineCollection, z } from "astro:content";
 const products = defineCollection({
   schema: z.object({
     title: z.string(),
-    description: z.string(),
     price: z.number(),
     image: z.string(),
-    category: z.string(),
     tags: z.array(z.string()),
     featured: z.boolean().optional(),
     caracteristicas: z.array(z.string()).optional(),

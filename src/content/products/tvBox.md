@@ -2,8 +2,6 @@
 title: 'TV Box 4K Android'
 image: /productsImages/TvBox.webp
 price: 139900
-description: 'Convierte cualquier televisor en un Smart TV con acceso a tus apps favoritas.'
-category: 'Smart TV'
 tags: ['TV Box', 'Android', 'Smart TV', 'Netflix', 'YouTube', 'Spotify', 'Prime Video', 'Bluetooth']
 featured: true
 caracteristicas:

@@ -3,6 +3,10 @@ import ProductsDashboard from './productsDashboard.jsx'
 import { useState, useEffect } from 'react'
 
 export default function Admin() {
+  useEffect(() => {
+    validateLogin()
+  }, [ProductsDashboard, Login])
+
   async function validateLogin() {
     await fetch('http://localhost:4000/auth/validate', {
       credentials: 'include',
@@ -10,15 +14,12 @@ export default function Admin() {
     .then(res => res.json())
     .then(data => {
       if (data.loggedIn) {
-        setLogged(true)
         setUserName(data.username)
+        setLogged(true)
       }
     })
   }
 
-  useEffect(() => {
-    validateLogin()
-  }, [])
 
   const [logged, setLogged] = useState(false)
   const [userName, setUserName] = useState('Admin')

@@ -25,20 +25,15 @@ export default function LoginForm({ setLogged, setUserName }) {
       let res = await response.json()
       if (!res.success) {
         setError(true)
-        throw new Error(res.message)
+        throw new Error('Usuario o contraseña incorrectos')
       } else {
-        if (res.success) {
           setLogged(res.success)
           setError(false)
           return res.userLogin
-        } else {
-          setErrorMessage('Usuario o contraseña incorrectos')
-          setError(true)
-        }
       }
     } catch (error) {
       setError(true)
-      setErrorMessage(error.message)
+      setErrorMessage('Usuario o contraseña incorrectos')
     }
   }
 
