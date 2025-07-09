@@ -1,6 +1,6 @@
 ---
 title: gfds
-image: /productsImages/WhatsApp Image 2025-06-06 at 1.33.27 AM.jpeg
+image: /productsImages/WhatsApp Image 2025-06-06 at 1.38.20 AM.jpeg
 price: 1
 tags: ["Parlante"," Bluetooth"," USB"," SD"," Auxiliar"," Radio FM"," Micrófono inalámbrico"," Bluetooth"]
 featured: false
