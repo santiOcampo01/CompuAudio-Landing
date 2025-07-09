@@ -14,7 +14,7 @@ export default function LoginForm({ setLogged, setUserName }) {
 
   const sendToServer = async data => {
     try {
-      const response = await fetch('http://localhost:4000/login/', {
+      const response = await fetch('https://backcompuaudio.onrender.com/login/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,9 +27,9 @@ export default function LoginForm({ setLogged, setUserName }) {
         setError(true)
         throw new Error('Usuario o contraseña incorrectos')
       } else {
-          setLogged(res.success)
-          setError(false)
-          return res.userLogin
+        setLogged(res.success)
+        setError(false)
+        return res.userLogin
       }
     } catch (error) {
       setError(true)

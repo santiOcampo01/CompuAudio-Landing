@@ -1,36 +1,36 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
 export default function UpdateForm({ userName, setUserName }) {
   const [error, setError] = useState(false)
   const [message, setMessage] = useState('')
-  
+
   async function sendToServer(data) {
-      try {
-        const response = await fetch('http://localhost:4000/update/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-          body: JSON.stringify(data),
-        })
-        let res = await response.json()
-        if(response.ok) {
-          setUserName(res.user.username)
-        }else{
-          throw new Error(res.message)
-        }
-      }catch (err) {
-        setMessage(err.message)
-        setError(true)
+    try {
+      const response = await fetch('https://backcompuaudio.onrender.com/update/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(data),
+      })
+      let res = await response.json()
+      if (response.ok) {
+        setUserName(res.user.username)
+      } else {
+        throw new Error(res.message)
       }
+    } catch (err) {
+      setMessage(err.message)
+      setError(true)
+    }
   }
 
-  const handleSubmit = async (e) => {
-      e.preventDefault()
-      const data = Object.fromEntries(new FormData(e.target))
-      data.username = userName
-      sendToServer(data)
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const data = Object.fromEntries(new FormData(e.target))
+    data.username = userName
+    sendToServer(data)
   }
   return (
     <form onSubmit={handleSubmit} className="container">
@@ -51,4 +51,3 @@ export default function UpdateForm({ userName, setUserName }) {
     </form>
   )
 }
-

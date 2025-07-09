@@ -11,7 +11,7 @@ export default function ProducstCards() {
   }
   async function geProducts() {
     try {
-      await fetch('http://localhost:4000/products/', {
+      await fetch('https://backcompuaudio.onrender.com/products/', {
         credentials: 'include',
       })
         .then(res => res.json())
@@ -25,7 +25,7 @@ export default function ProducstCards() {
 
   async function handleDelete(slug, sha, imageName) {
     try {
-      const response = await fetch(`http://localhost:4000/products/${slug}`, {
+      const response = await fetch(`https://backcompuaudio.onrender.com/products/${slug}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {

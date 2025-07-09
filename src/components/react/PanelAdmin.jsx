@@ -8,18 +8,17 @@ export default function Admin() {
   })
 
   async function validateLogin() {
-    await fetch('http://localhost:4000/auth/validate', {
+    await fetch('https://backcompuaudio.onrender.com/auth/validate', {
       credentials: 'include',
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.loggedIn) {
-        setUserName(data.username)
-        setLogged(true)
-      }
-    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.loggedIn) {
+          setUserName(data.username)
+          setLogged(true)
+        }
+      })
   }
-
 
   const [logged, setLogged] = useState(false)
   const [userName, setUserName] = useState('Admin')

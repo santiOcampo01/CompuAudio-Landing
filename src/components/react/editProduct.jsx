@@ -6,23 +6,22 @@ export default function EditProductComponent({ productEdit }) {
   async function updateProduct(data) {
     const slug = data.title
     console.log(JSON.stringify(data))
-    try{
-        await fetch(`http://localhost:4000/products/${slug}`, {
-            method: 'PUT',
-            credentials: 'include',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
+    try {
+      await fetch(`https://backcompuaudio.onrender.com/products/${slug}`, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+          console.log(data)
         })
-    }catch(err) {
-        alert(err.message)
+    } catch (err) {
+      alert(err.message)
     }
-    
   }
 
   function handleFile(e) {

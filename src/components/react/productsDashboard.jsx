@@ -8,7 +8,6 @@ export default function ProductsDashboard({ userName }) {
   const [username, setUserName] = useState(userName)
   const [reload, setReload] = useState(false)
 
-
   const handleProducts = () => {
     setRender('products')
   }
@@ -20,7 +19,7 @@ export default function ProductsDashboard({ userName }) {
   }
 
   const logout = () => {
-    fetch('http://localhost:4000/logout/', {
+    fetch('https://backcompuaudio.onrender.com/logout/', {
       credentials: 'include',
     })
     window.location.reload()
@@ -53,11 +52,7 @@ export default function ProductsDashboard({ userName }) {
           <button onClick={handleAdd}>Add product</button>
         </div>
         {reload && <AddProduct />}
-        {render == 'products' ? (
-          <ProducstCards />
-        ) : (
-          <UpdateForm userName={username} setUserName={setUserName} />
-        )}
+        {render == 'products' ? <ProducstCards /> : <UpdateForm userName={username} setUserName={setUserName} />}
       </main>
     </section>
   )

@@ -31,7 +31,7 @@ export default function FormFunction() {
   }
 
   async function addProduct(datos) {
-    await fetch('http://localhost:4000/products/', {
+    await fetch('https://backcompuaudio.onrender.com/products/', {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -66,7 +66,14 @@ export default function FormFunction() {
         </label>
         <label htmlFor="featured">
           Destacado:
-          <input onChange={(e) => {setfeatured(!featured)}} type="checkbox" name="featured" id="featured" />
+          <input
+            onChange={e => {
+              setfeatured(!featured)
+            }}
+            type="checkbox"
+            name="featured"
+            id="featured"
+          />
         </label>
         <label htmlFor="caracteristicas">
           Caracteristicas:
@@ -77,7 +84,7 @@ export default function FormFunction() {
           <textarea defaultValue="Auriculares con sonido envolvente" id="content" name="content" required></textarea>
         </label>
         <div>
-          <button type="submit" > Enviar</button>
+          <button type="submit"> Enviar</button>
         </div>
       </form>
     </section>
