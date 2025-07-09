@@ -4,7 +4,6 @@ export default function FormFunction() {
   const [file, setFile] = useState(null)
   const [base64IMG, setBase64IMG] = useState('')
   const [featured, setfeatured] = useState(false)
-  const [state, setState] = useState(false)
 
   function handleFile(e) {
     const selected = e.target.files[0]
@@ -21,15 +20,17 @@ export default function FormFunction() {
   function handleSubmit(e) {
     e.preventDefault()
     const data = Object.fromEntries(new FormData(e.target))
+    console.log(data)
     data.imageName = data.imageName.name
     data.imageBase64 = base64IMG
-    data.tags = JSON.stringify(data.tags.split(', '))
-    data.caracteristicas = JSON.stringify(data.caracteristicas.split(', '))
+    data.tags = JSON.stringify(data.tags.split(','))
+    data.caracteristicas = JSON.stringify(data.caracteristicas.split(','))
     data.featured = featured
-    validateLogin(data)
+    console.log(data)
+    // addProduct(data)
   }
 
-  async function validateLogin(datos) {
+  async function addProduct(datos) {
     await fetch('http://localhost:4000/products/', {
       method: 'POST',
       credentials: 'include',
@@ -52,7 +53,7 @@ export default function FormFunction() {
           <input type="text" name="title" id="title" required />
         </label>
         <label htmlFor="imageName">
-          Nombre del producto:
+          Imagen:
           <input onChange={handleFile} type="file" name="imageName" id="imageName" accept="image/png, image/jpeg, image/webp" required />
         </label>
         <label htmlFor="price">

@@ -1,15 +1,27 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
+import EditProductComponent from './editProduct'
 export default function ProducstCards() {
-    const [products, setProducts] = useState([])
-  useEffect(() => {
-    fetch('http://localhost:4000/products/', {
-      credentials: 'include',
-    })
-      .then(res => res.json())
-      .then(data => {
-        setProducts(data)
+  const [products, setProducts] = useState([])
+  const [editProduct, setEditProduct] = useState()
+  const [render, setRender] = useState(false)
+  const [buttonClicked, setButtonClicked] = useState('')
+
+  if (products.length < 1) {
+    geProducts()
+  }
+  async function geProducts() {
+    try {
+      await fetch('http://localhost:4000/products/', {
+        credentials: 'include',
       })
-  }, [])
+        .then(res => res.json())
+        .then(data => {
+          setProducts(data)
+        })
+    } catch (err) {
+      alert(err.message)
+    }
+  }
 
   async function handleDelete(slug, sha, imageName) {
     try {
@@ -19,10 +31,10 @@ export default function ProducstCards() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({sha: sha, imageName: imageName}),
+        body: JSON.stringify({ sha: sha, imageName: imageName }),
       })
       let res = await response.json()
-      if(response.ok){
+      if (response.ok) {
         console.log(res)
         alert('Todo fue un exito')
       }
@@ -30,6 +42,7 @@ export default function ProducstCards() {
       alert(err.message)
     }
   }
+
   return (
     <section className="productContainer container px-4 flex ">
       {products.map(product => {
@@ -45,7 +58,21 @@ export default function ProducstCards() {
               <span>{product.price}</span>
             </div>
             <div className="productButton justify-center gap-2">
-              <button className="w-[50%] p-3">Editar</button>
+              <button
+                id={product.sha}
+                className="w-[50%] p-3"
+                onClick={e => {
+                  if (e.target.id == buttonClicked) {
+                    setRender(!render)
+                  } else {
+                    setEditProduct(product)
+                    setRender(true)
+                  }
+                  setButtonClicked(e.target.id)
+                }}
+              >
+                Editar
+              </button>
               <button
                 className="w-[50%] p-3"
                 onClick={e => {
@@ -59,7 +86,7 @@ export default function ProducstCards() {
           </article>
         )
       })}
+      {render && <EditProductComponent productEdit={editProduct} />}
     </section>
   )
 }
-

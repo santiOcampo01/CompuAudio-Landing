@@ -1,10 +1,20 @@
 ---
-title: 'Parlante Niatec'
-image: undefined
-price: 170000
-tags: ["Parlante","Bluetooth","USB","SD","Auxiliar","Radio FM","Micrófono inalámbrico","Bluetooth"]
+title: Parlante Niatec
+image: /productsImages/Parlante_niatec.webp
+price: 150000
+tags: ['Parlante', 'Bluetooth', 'USB', 'SD', 'Auxiliar', 'Radio FM', 'Micrófono inalámbrico', 'Bluetooth']
 featured: true
-caracteristicas: ["Conexión Bluetooth","Reproducción de música a través de tarjeta SD o USB","Salida Auxiliar","Radio FM","Incluye micrófono inalámbrico","Ideal para karaoke o perifoneo","Posibilidad de adaptar en una base o trípode","Potencia: 30W RMS"]
+caracteristicas:
+  [
+    'Conexión Bluetooth',
+    'Reproducción de música a través de tarjeta SD o USB',
+    'Salida Auxiliar',
+    'Radio FM',
+    'Incluye micrófono inalámbrico',
+    'Ideal para karaoke o perifoneo',
+    'Posibilidad de adaptar en una base o trípode',
+    'Potencia: 30W RMS',
+  ]
 ---
 
 Esta espectacular cabina con conexión Bluetooth,
