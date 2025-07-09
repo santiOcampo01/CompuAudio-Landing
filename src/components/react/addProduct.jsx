@@ -27,7 +27,7 @@ export default function FormFunction() {
     data.caracteristicas = JSON.stringify(data.caracteristicas.split(','))
     data.featured = featured
     console.log(data)
-    // addProduct(data)
+    addProduct(data)
   }
 
   async function addProduct(datos) {
