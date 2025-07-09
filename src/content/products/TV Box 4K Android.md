@@ -1,6 +1,6 @@
 ---
 title: TV Box 4K Android
-image: /productsImages/ChatGPT Image 6 jul 2025, 22_38_38.png
+image: /productsImages/TvBox.webp
 price: 400000
 tags: ["TV Box","Android","Smart TV","Netflix","YouTube","Spotify","Prime Video","Bluetooth"]
 featured: true

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 export default function Admin() {
   useEffect(() => {
     validateLogin()
-  }, [ProductsDashboard, Login])
+  })
 
   async function validateLogin() {
     await fetch('http://localhost:4000/auth/validate', {
