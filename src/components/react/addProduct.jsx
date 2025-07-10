@@ -5,7 +5,7 @@ export default function FormFunction() {
   const [file, setFile] = useState(null)
   const [base64IMG, setBase64IMG] = useState('')
   const [featured, setfeatured] = useState(false)
-
+  
   function handleFile(e) {
     const selected = e.target.files[0]
     setFile(selected)
@@ -59,7 +59,7 @@ export default function FormFunction() {
         </label>
         <label htmlFor="price">
           Precio:
-          <input type="number" name="price" id="price" required />
+          <input type="number" name="price" id="price" min="1" required />
         </label>
         <label htmlFor="tags">
           Tags:
