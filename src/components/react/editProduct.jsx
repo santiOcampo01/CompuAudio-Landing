@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react'
+const url = import.meta.env.PUBLIC_URL
+
 export default function EditProductComponent({ productEdit }) {
   const [featured, setfeatured] = useState(productEdit.featured)
   const [base64IMG, setBase64IMG] = useState('')
 
   async function updateProduct(data) {
     const slug = data.title
-    console.log(JSON.stringify(data))
     try {
-      await fetch(`https://backcompuaudio.onrender.com/products/${slug}`, {
+      await fetch(`${url}/products/${slug}`, {
         method: 'PUT',
         credentials: 'include',
         headers: {

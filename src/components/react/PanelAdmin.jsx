@@ -1,6 +1,7 @@
 import Login from './LoginForm.jsx'
 import ProductsDashboard from './productsDashboard.jsx'
 import { useState, useEffect } from 'react'
+const url = import.meta.env.PUBLIC_URL
 
 export default function Admin() {
   useEffect(() => {
@@ -8,7 +9,7 @@ export default function Admin() {
   })
 
   async function validateLogin() {
-    await fetch('https://backcompuaudio.onrender.com/auth/validate', {
+    await fetch(`${url}/auth/validate`, {
       credentials: 'include',
     })
       .then(res => res.json())

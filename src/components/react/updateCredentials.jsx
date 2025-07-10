@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+const url = import.meta.env.PUBLIC_URL
 
 export default function UpdateForm({ userName, setUserName }) {
   const [error, setError] = useState(false)
@@ -6,7 +7,7 @@ export default function UpdateForm({ userName, setUserName }) {
 
   async function sendToServer(data) {
     try {
-      const response = await fetch('https://backcompuaudio.onrender.com/update/', {
+      const response = await fetch(`${url}/update/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

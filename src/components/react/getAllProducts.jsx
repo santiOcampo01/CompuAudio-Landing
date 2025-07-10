@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 import EditProductComponent from './editProduct'
+const url = import.meta.env.PUBLIC_URL
+
 export default function ProducstCards() {
   const [products, setProducts] = useState([])
   const [editProduct, setEditProduct] = useState()
@@ -11,7 +13,7 @@ export default function ProducstCards() {
   }
   async function geProducts() {
     try {
-      await fetch('https://backcompuaudio.onrender.com/products/', {
+      await fetch(`${url}/products/`, {
         credentials: 'include',
       })
         .then(res => res.json())
@@ -25,7 +27,7 @@ export default function ProducstCards() {
 
   async function handleDelete(slug, sha, imageName) {
     try {
-      const response = await fetch(`https://backcompuaudio.onrender.com/products/${slug}`, {
+      const response = await fetch(`${url}/products/${slug}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {

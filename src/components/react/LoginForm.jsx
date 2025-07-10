@@ -1,4 +1,5 @@
 import { useState } from 'react'
+const url = import.meta.env.PUBLIC_URL
 
 export default function LoginForm({ setLogged, setUserName }) {
   const [error, setError] = useState(null)
@@ -14,7 +15,7 @@ export default function LoginForm({ setLogged, setUserName }) {
 
   const sendToServer = async data => {
     try {
-      const response = await fetch('https://backcompuaudio.onrender.com/login/', {
+      const response = await fetch(`${url}/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

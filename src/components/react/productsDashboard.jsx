@@ -2,6 +2,7 @@ import ProducstCards from './getAllProducts.jsx'
 import UpdateForm from './updateCredentials.jsx'
 import AddProduct from './addProduct.jsx'
 import { useState, useEffect } from 'react'
+const url = import.meta.env.PUBLIC_URL
 
 export default function ProductsDashboard({ userName }) {
   const [render, setRender] = useState('products')
@@ -19,7 +20,7 @@ export default function ProductsDashboard({ userName }) {
   }
 
   const logout = () => {
-    fetch('https://backcompuaudio.onrender.com/logout/', {
+    fetch(`${url}/logout/`, {
       credentials: 'include',
     })
     window.location.reload()

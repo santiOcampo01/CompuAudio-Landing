@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+const url = import.meta.env.PUBLIC_URL
 
 export default function FormFunction() {
   const [file, setFile] = useState(null)
@@ -31,7 +32,7 @@ export default function FormFunction() {
   }
 
   async function addProduct(datos) {
-    await fetch('https://backcompuaudio.onrender.com/products/', {
+    await fetch(`${url}/products/`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -41,7 +42,7 @@ export default function FormFunction() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        alert(data)
       })
   }
 
