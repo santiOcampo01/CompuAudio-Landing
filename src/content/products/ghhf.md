@@ -1,6 +1,6 @@
 ---
 title: ghhf
-image: /productsImages/WhatsApp Image 2025-06-06 at 1.33.27 AM.jpeg
+image: /productsImages/ChatGPT Image 6 jul 2025, 22_38_38.png
 price: 1
 tags: ["TV Box","Android","Smart TV","Netflix","YouTube","Spotify","Prime Video","Bluetooth"]
 featured: true
