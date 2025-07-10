@@ -12,9 +12,9 @@ export default function EditProductComponent({ productEdit }) {
   } = useForm({
     defaultValues: {
       title: productEdit.title,
-      price: productEdit.price,
-      tags: productEdit.tags,
-      caracteristicas: productEdit.caracteristicas,
+      price: productEdit.price.toLocaleString('es-CO'),
+      tags: productEdit.tags.toString(),
+      caracteristicas: productEdit.caracteristicas.toString(),
       content: productEdit.content,
     },
   })
@@ -53,25 +53,22 @@ export default function EditProductComponent({ productEdit }) {
     }
   }
 
-  const onSubmit = data => console.log(data)
-
-  // function handleSubmit(e) {
-  //   e.preventDefault()
-  //   const data = Object.fromEntries(new FormData(e.target))
-  //   console.log(data)
-  //   if (data.imageName.size == 0) {
-  //     delete data.imageName
-  //   } else {
-  //     data.imageName = data.imageName.name
-  //     data.imageBase64 = base64IMG
-  //   }
-  //   data.tags = JSON.stringify(data.tags.split(','))
-  //   data.caracteristicas = JSON.stringify(data.caracteristicas.split(','))
-  //   data.featured = featured
-  //   data.sha = productEdit.sha
-  //   console.log(data)
-  //   // updateProduct(data)
-  // }
+  const onSubmit = data => {
+    console.log(data)
+    data.price = parseInt(data.price.replace(/\./g, ''), 10)
+    if (data.imageName.length == 0) {
+      delete data.imageName
+    } else {
+      data.imageName = data.imageName.name
+      data.imageBase64 = base64IMG
+    }
+    data.tags = JSON.stringify(data.tags.split(/, |,/g))
+    data.caracteristicas = JSON.stringify(data.caracteristicas.split(/, |,/g))
+    data.featured = featured
+    data.sha = productEdit.sha
+    console.log(data)
+    // updateProduct(data)
+  }
 
   return (
     <div className="container absolute z-10 top-50 left-50 w-80 h-80 bg-amber-300">
@@ -81,8 +78,7 @@ export default function EditProductComponent({ productEdit }) {
           <input
             {...register('title', {
               required: { value: true, message: 'El producto debe de tener un nombre' },
-              validate: value =>
-                value.trim().length > 0 || 'El nombre no puede ser solo espacios',
+              validate: value => value.trim().length > 0 || 'El nombre no puede ser solo espacios',
             })}
             type="text"
             name="title"
@@ -114,12 +110,22 @@ export default function EditProductComponent({ productEdit }) {
               },
               min: {
                 value: 1,
-                message: 'El precio del producto no puede ser negativo',
-              }       
+                message: 'El precio del producto no puede ser negativo ni cero',
+              },
+              validate: value => {
+                const raw = parseInt(value.replace(/\./g, ''), 10)
+                return !isNaN(raw) || 'El precio debe ser un número válido'
+              },
             })}
-            type="number"
+            type="text"
             name="price"
             id="price"
+            inputMode="numeric"
+            onChange={e => {
+              let raw = e.target.value.replace(/\D/g, '') // elimina todo lo que no sea número
+              const formateado = new Intl.NumberFormat('es-CO').format(raw)
+              setValue('price', formateado, { shouldValidate: true })
+            }}
           />
           {errors.price?.type == 'required' && <span>{errors.price.message}</span>}
           {errors.price?.type == 'min' && <span>{errors.price.message}</span>}
@@ -127,7 +133,36 @@ export default function EditProductComponent({ productEdit }) {
 
         <label htmlFor="tags">
           Tags:
-          <input {...register('tags')} type="text" name="tags" id="tags" />
+          <input
+            {...register('tags', {
+              required: {
+                value: true,
+                message: 'El producto debe de tener tags',
+              },
+              minLength: {
+                value: 1,
+                message: 'El producto debe de contener al menos un tag',
+              },
+              validate: value => {
+                if (value.trim().length === 0) {
+                  return 'Los tags no pueden ser solo espacios'
+                }
+                if (/^(,|\s*,\s*,|,,)/.test(value)) {
+                  return 'Los tags no pueden comenzar con comas ni tener comas consecutivas'
+                }
+                if (!/^([^\s,][^,]*)(,\s*[^\s,][^,]*)*$/.test(value)) {
+                  return 'Los tags deben estar separados por comas, ejemplo: tecnologia, sonido, computadores y dispositivos, memoria'
+                }
+                return true
+              },
+            })}
+            type="text"
+            name="tags"
+            id="tags"
+          />
+          {errors.tags?.type == 'required' && <span>{errors.tags.message}</span>}
+          {errors.tags?.type == 'minLength' && <span>{errors.tags.message}</span>}
+          {errors.tags?.type == 'validate' && <span>{errors.tags.message}</span>}
         </label>
 
         <label htmlFor="featured">
@@ -138,6 +173,7 @@ export default function EditProductComponent({ productEdit }) {
             onChange={e => {
               setfeatured(!featured)
             }}
+            defaultValue={productEdit.tags}
             type="checkbox"
             name="featured"
             id="featured"
@@ -146,12 +182,53 @@ export default function EditProductComponent({ productEdit }) {
 
         <label htmlFor="caracteristicas">
           Caracteristicas:
-          <input {...register('caracteristicas')} type="text" name="caracteristicas" id="caracteristicas" />
+          <input
+            {...register('caracteristicas', {
+              required: {
+                value: true,
+                message: 'El producto debe de tener caracteristicas',
+              },
+              minLength: {
+                value: 1,
+                message: 'El producto debe de contener al menos una caracteristicas',
+              },
+              validate: value => {
+                if (value.trim().length === 0) {
+                  return 'Los caracteristicas no pueden ser solo espacios'
+                }
+                if (/^(,|\s*,\s*,|,,)/.test(value)) {
+                  return 'Los caracteristicas no pueden comenzar con comas ni tener comas consecutivas'
+                }
+                if (!/^([^\s,][^,]*)(,\s*[^\s,][^,]*)*$/.test(value)) {
+                  return 'Los caracteristicas deben estar separados por comas, ejemplo: cable tipo c, carga rápida'
+                }
+                return true
+              },
+            })}
+            type="text"
+            name="caracteristicas"
+            id="caracteristicas"
+          />
+          {errors.caracteristicas?.type == 'required' && <span>{errors.caracteristicas.message}</span>}
+          {errors.caracteristicas?.type == 'minLength' && <span>{errors.caracteristicas.message}</span>}
+          {errors.caracteristicas?.type == 'validate' && <span>{errors.caracteristicas.message}</span>}
         </label>
 
         <label htmlFor="content">
           Descripcion:
-          <textarea {...register('content')} id="content" name="content"></textarea>
+          <textarea
+            {...register('content', {
+              required: {
+                value: true,
+                message: 'La descripcion del producto es requerida',
+              },
+              validate: value => value.trim().length > 0 || 'La descripcion no pueden ser solo espacios',
+            })}
+            id="content"
+            name="content"
+          ></textarea>
+          {errors.content?.type == 'required' && <span>{errors.content.message}</span>}
+          {errors.content?.type == 'validate' && <span>{errors.content.message}</span>}
         </label>
 
         <div>

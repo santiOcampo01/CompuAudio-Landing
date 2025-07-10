@@ -1,48 +1,55 @@
-# Astro Starter Kit: Basics
+# CompuAudio
 
-```sh
-npm create astro@latest -- --template basics
-```
+CompuAudio es una tienda online de productos de audio y tecnología, desarrollada con un enfoque moderno y eficiente tanto en frontend como en backend.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Características principales
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- **Frontend:**
+  - Construido con [Astro](https://astro.build/) y JavaScript para una experiencia rápida y responsiva.
+  - Sección de administración desarrollada con React para facilitar la gestión de productos.
+  - Visualización de productos, carrito de compras, testimonios, contacto y más.
+  - Cada producto se almacena como un archivo Markdown individual en `src/content/products`, y su imagen correspondiente en `public/productsImages`.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- **Backend:**
+  - Desarrollado en Node.js.
+  - Maneja la autenticación del administrador y las peticiones para crear, editar o eliminar productos.
+  - Conexión con la API de GitHub: los productos se gestionan como archivos Markdown en el repositorio, permitiendo un control de versiones y edición colaborativa.
 
-## 🚀 Project Structure
+## Estructura del proyecto
 
-Inside of your Astro project, you'll see the following folders and files:
+- `compuAudio/`: Frontend (Astro, JS, React para admin)
+- `backCompuAudio/`: Backend (Node.js, API REST, conexión GitHub)
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## ¿Cómo se gestionan los productos?
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+1. **Agregar producto:**
+   - Se crea un nuevo archivo Markdown en `src/content/products` con la información del producto.
+   - Se sube la imagen correspondiente a `public/productsImages`.
+   - El backend actualiza el repositorio de GitHub para reflejar los cambios.
 
-## 🧞 Commands
+2. **Editar producto:**
+   - Se modifica el archivo Markdown correspondiente y/o la imagen.
+   - El backend sincroniza los cambios con GitHub.
 
-All commands are run from the root of the project, from a terminal:
+## Instalación y uso
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+1. Clona el repositorio y navega a las carpetas `compuAudio` y `backCompuAudio` para instalar dependencias:
+   ```bash
+   cd compuAudio
+   npm install
+   cd ../backCompuAudio
+   npm install
+   ```
+2. Configura las variables de entorno necesarias para la conexión con GitHub y la autenticación.
+3. Inicia ambos servidores (frontend y backend) según la documentación interna de cada carpeta.
 
-## 👀 Want to learn more?
+## Tecnologías utilizadas
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Astro
+- JavaScript
+- React (admin)
+- Node.js
+- GitHub API
+
+---
+Desarrollado por Santi. Para dudas o sugerencias, contacta al autor.
