@@ -1,6 +1,5 @@
 import ProducstCards from './getAllProducts.jsx'
 import UpdateForm from './updateCredentials.jsx'
-import AddProduct from './addProduct.jsx'
 import { useState, useEffect } from 'react'
 const url = import.meta.env.PUBLIC_URL
 
@@ -14,9 +13,6 @@ export default function ProductsDashboard({ userName }) {
   }
   const handleCredentials = () => {
     setRender('credentials')
-  }
-  const handleAdd = () => {
-    setReload(!reload)
   }
 
   const logout = () => {
@@ -50,9 +46,7 @@ export default function ProductsDashboard({ userName }) {
               Hola, <span>{username}</span>
             </p>
           </header>
-          <button onClick={handleAdd}>Add product</button>
         </div>
-        {reload && <AddProduct />}
         {render == 'products' ? <ProducstCards /> : <UpdateForm userName={username} setUserName={setUserName} />}
       </main>
     </section>

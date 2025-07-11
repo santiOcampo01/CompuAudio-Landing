@@ -6,7 +6,6 @@ export default function EditProductComponent({ productEdit }) {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     setValue,
   } = useForm({
@@ -54,20 +53,18 @@ export default function EditProductComponent({ productEdit }) {
   }
 
   const onSubmit = data => {
-    console.log(data)
     data.price = parseInt(data.price.replace(/\./g, ''), 10)
     if (data.imageName.length == 0) {
       delete data.imageName
     } else {
-      data.imageName = data.imageName.name
+      data.imageName = data.imageName[0].name
       data.imageBase64 = base64IMG
     }
     data.tags = JSON.stringify(data.tags.split(/, |,/g))
     data.caracteristicas = JSON.stringify(data.caracteristicas.split(/, |,/g))
     data.featured = featured
     data.sha = productEdit.sha
-    console.log(data)
-    // updateProduct(data)
+    updateProduct(data)
   }
 
   return (
@@ -84,10 +81,8 @@ export default function EditProductComponent({ productEdit }) {
             name="title"
             id="title"
           />
-          {errors.title?.type == 'required' && <span>{errors.title.message}</span>}
-          {errors.title?.type == 'validate' && <span>{errors.title.message}</span>}
+          {errors.title && <span>{errors.title.message}</span>}
         </label>
-
         <label htmlFor="imageName">
           Imagen:
           <input
@@ -99,7 +94,6 @@ export default function EditProductComponent({ productEdit }) {
             accept="image/png, image/jpeg, image/webp"
           />
         </label>
-
         <label htmlFor="price">
           Precio:
           <input
@@ -127,10 +121,8 @@ export default function EditProductComponent({ productEdit }) {
               setValue('price', formateado, { shouldValidate: true })
             }}
           />
-          {errors.price?.type == 'required' && <span>{errors.price.message}</span>}
-          {errors.price?.type == 'min' && <span>{errors.price.message}</span>}
+          {errors.price && <span>{errors.price.message}</span>}
         </label>
-
         <label htmlFor="tags">
           Tags:
           <input
@@ -160,11 +152,8 @@ export default function EditProductComponent({ productEdit }) {
             name="tags"
             id="tags"
           />
-          {errors.tags?.type == 'required' && <span>{errors.tags.message}</span>}
-          {errors.tags?.type == 'minLength' && <span>{errors.tags.message}</span>}
-          {errors.tags?.type == 'validate' && <span>{errors.tags.message}</span>}
+          {errors.tags && <span>{errors.tags.message}</span>}
         </label>
-
         <label htmlFor="featured">
           Destacado:
           <input
@@ -179,7 +168,6 @@ export default function EditProductComponent({ productEdit }) {
             id="featured"
           />
         </label>
-
         <label htmlFor="caracteristicas">
           Caracteristicas:
           <input
@@ -209,11 +197,8 @@ export default function EditProductComponent({ productEdit }) {
             name="caracteristicas"
             id="caracteristicas"
           />
-          {errors.caracteristicas?.type == 'required' && <span>{errors.caracteristicas.message}</span>}
-          {errors.caracteristicas?.type == 'minLength' && <span>{errors.caracteristicas.message}</span>}
-          {errors.caracteristicas?.type == 'validate' && <span>{errors.caracteristicas.message}</span>}
+          {errors.caracteristicas && <span>{errors.caracteristicas.message}</span>}
         </label>
-
         <label htmlFor="content">
           Descripcion:
           <textarea
@@ -227,10 +212,8 @@ export default function EditProductComponent({ productEdit }) {
             id="content"
             name="content"
           ></textarea>
-          {errors.content?.type == 'required' && <span>{errors.content.message}</span>}
-          {errors.content?.type == 'validate' && <span>{errors.content.message}</span>}
+          {errors.content && <span>{errors.content.message}</span>}
         </label>
-
         <div>
           <button> Enviar</button>
         </div>

@@ -1,13 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 const url = import.meta.env.PUBLIC_URL
 
 export default function UpdateForm({ userName, setUserName }) {
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
   const [error, setError] = useState(false)
   const [message, setMessage] = useState('')
 
   async function sendToServer(data) {
     try {
-      const response = await fetch(`${url}/update/`, {
+      return await fetch(`${url}/update/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -15,37 +23,60 @@ export default function UpdateForm({ userName, setUserName }) {
         credentials: 'include',
         body: JSON.stringify(data),
       })
-      let res = await response.json()
-      if (response.ok) {
-        setUserName(res.user.username)
-      } else {
-        throw new Error(res.message)
-      }
+        .then(res => res.json())
+        .then(data => {
+          setUserName(data.user.username)
+          reset()
+        })
     } catch (err) {
-      setMessage(err.message)
+      setMessage('Error al actualizar las credenciales')
       setError(true)
     }
   }
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.target))
+  const sendData = data => {
     data.username = userName
     sendToServer(data)
   }
   return (
-    <form onSubmit={handleSubmit} className="container">
+    <form onSubmit={handleSubmit(sendData)} className="container">
       <label htmlFor="newUserName">
         Nuevo nombre de Usuario:
-        <input type="text" id="newUserName" name="newUserName" required />
+        <input
+          type="text"
+          id="newUserName"
+          {...register('newUserName', {
+            required: 'El nombre de usuario es obligatorio',
+            minLength: { value: 3, message: 'Mínimo 3 caracteres' },
+            validate: (value) => value !== userName || 'El nuevo nombre de usuario debe de ser distinto al anterior',
+          })}
+        />
+        {errors.newUserName && <span>{errors.newUserName.message}</span>}
       </label>
       <label htmlFor="password">
         Nueva contraseña:
-        <input type="password" id="password" name="password" required />
+        <input
+          type="password"
+          id="password"
+          {...register('password', {
+            required: 'La contraseña es obligatoria',
+            minLength: { value: 5, message: 'La contraseña debe de ser de almenos 5 caracteres' },
+            validate: (value, { newUserName }) => value !== newUserName || 'La contraseña no puede ser la misma que el nombre de usuario'
+          })}
+        />
+        {errors.password && <span>{errors.password.message}</span>}
       </label>
       <label htmlFor="confirmPassword">
-        Conrima La Contraseña
-        <input type="password" id="confirmPassword" name="confirmPassword" required />
+        Confirma La Contraseña
+        <input
+          type="password"
+          id="confirmPassword"
+          {...register('confirmPassword', {
+            required: 'Confirma la contraseña',
+            validate: (value, { password }) => value === password || 'Las contraseñas no coinciden',
+          })}
+        />
+        {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
       </label>
       <button type="submit">Guardar</button>
       {error && <p>{message}</p>}
