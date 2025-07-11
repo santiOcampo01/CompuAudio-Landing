@@ -10,12 +10,11 @@ export default function UpdateForm({ userName, setUserName }) {
     formState: { errors },
   } = useForm()
 
-  const [error, setError] = useState(false)
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState({ message: '', type: '' })
 
   async function sendToServer(data) {
     try {
-      return await fetch(`${url}/update/`, {
+      await fetch(`${url}/update/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,12 +24,16 @@ export default function UpdateForm({ userName, setUserName }) {
       })
         .then(res => res.json())
         .then(data => {
-          setUserName(data.user.username)
-          reset()
+          if (data.success) {
+            setMessage({ message: 'La actualizacion fue exitosa', type: 'success' })
+            setUserName(data.user.username)
+            reset()
+          } else {
+            setMessage({ message: data.message, type: 'error' })
+          }
         })
-    } catch (err) {
-      setMessage('Error al actualizar las credenciales')
-      setError(true)
+    } catch (error) {
+      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
     }
   }
 
@@ -48,7 +51,7 @@ export default function UpdateForm({ userName, setUserName }) {
           {...register('newUserName', {
             required: 'El nombre de usuario es obligatorio',
             minLength: { value: 3, message: 'Mínimo 3 caracteres' },
-            validate: (value) => value !== userName || 'El nuevo nombre de usuario debe de ser distinto al anterior',
+            validate: value => value !== userName || 'El nuevo nombre de usuario debe de ser distinto al anterior',
           })}
         />
         {errors.newUserName && <span>{errors.newUserName.message}</span>}
@@ -61,7 +64,7 @@ export default function UpdateForm({ userName, setUserName }) {
           {...register('password', {
             required: 'La contraseña es obligatoria',
             minLength: { value: 5, message: 'La contraseña debe de ser de almenos 5 caracteres' },
-            validate: (value, { newUserName }) => value !== newUserName || 'La contraseña no puede ser la misma que el nombre de usuario'
+            validate: (value, { newUserName }) => value !== newUserName || 'La contraseña no puede ser la misma que el nombre de usuario',
           })}
         />
         {errors.password && <span>{errors.password.message}</span>}
@@ -79,7 +82,16 @@ export default function UpdateForm({ userName, setUserName }) {
         {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
       </label>
       <button type="submit">Guardar</button>
-      {error && <p>{message}</p>}
+      {message && <p className={message.type}>{message.message}</p>}
+      <style>
+        {`
+          .success {
+          color: green;
+          }
+          .error {
+          color: red;}
+          `}
+      </style>
     </form>
   )
 }

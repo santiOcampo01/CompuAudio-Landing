@@ -1,12 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Header from '../components/header.astro'
-import Hero from '../components/hero.astro'
-import Map from '../components/map.astro'
-import Footer from '../components/footer.astro'
-import ProductosDestacados from '../components/productosDestacados.astro'
-import Testimonios from '../components/testimonios.astro'
-import SeviciosDestacados from '../components/serviciosDestacados.astro'
+import Header from '../components/astro/header.astro'
+import Hero from '../components/astro/hero.astro'
+import Map from '../components/astro/map.astro'
+import Footer from '../components/astro/footer.astro'
+import ProductosDestacados from '../components/astro/productosDestacados.astro'
+import Testimonios from '../components/astro/testimonios.astro'
+import SeviciosDestacados from '../components/astro/serviciosDestacados.astro'
 import { getCollection } from 'astro:content'
 
 const destacados = await getCollection('products', product => {

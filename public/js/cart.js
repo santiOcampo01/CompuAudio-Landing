@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
   let cart = []
-  if(sessionStorage.getItem('cart') === null) {
+  if (sessionStorage.getItem('cart') === null) {
     cart = sessionStorage.setItem('cart', JSON.stringify([]))
-  }else {
-    cart = JSON.parse(sessionStorage.getItem('cart'));
+  } else {
+    cart = JSON.parse(sessionStorage.getItem('cart'))
     if (window.location.pathname.includes('/carrito')) {
-      renderCart(cart) 
+      renderCart(cart)
     }
   }
-});
+})
 
 function saveCart(cart) {
   sessionStorage.setItem('cart', JSON.stringify(cart))
@@ -71,19 +71,18 @@ function createOrUpdateItem(slug, cart) {
 
 function addToCart(slug) {
   let carrito = JSON.parse(sessionStorage.getItem('cart')) || []
-    const item = carrito.find(i => i.slug === slug)
-    if (item) {
-      item.quantity++
-    }
-   else {
+  const item = carrito.find(i => i.slug === slug)
+  if (item) {
+    item.quantity++
+  } else {
     carrito.push({ slug, quantity: 1 })
   }
-  saveCart(carrito)  
+  saveCart(carrito)
   if (!window.location.pathname.includes('/carrito')) {
     showConfirmationMessage()
   }
   if (window.location.pathname.includes('/carrito')) {
-  createOrUpdateItem(slug, carrito)
+    createOrUpdateItem(slug, carrito)
   }
   updateTotal(carrito)
 }
@@ -111,7 +110,6 @@ function removeFromCart(slug) {
   saveCart(carrito)
   updateTotal(carrito)
 }
-
 
 function updateTotal(cart) {
   const totalContainer = document.getElementById('valor-total')
@@ -173,8 +171,6 @@ function alertCartEmpty() {
     alert.remove()
   }, 2000)
 }
-
-
 
 window.sendToCart = addToCart
 window.enviarPorWhatsApp = enviarPorWhatsApp

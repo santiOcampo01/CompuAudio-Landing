@@ -9,8 +9,7 @@ export default function LoginForm({ setLogged, setUserName }) {
     formState: { errors },
   } = useForm()
 
-  const [error, setError] = useState(null)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState({ message: '', type: '' })
 
   const sendToServer = async data => {
     try {
@@ -24,17 +23,24 @@ export default function LoginForm({ setLogged, setUserName }) {
       })
         .then(res => res.json())
         .then(data => {
-          setLogged(data.success)
-          return data.userLogin.username
+          if (data.success) {
+            setMessage({ message: 'Inicio de sesion exitoso', type: 'success' })
+            setTimeout(() => {
+              setLogged(data.success)
+            }, 3000)
+            return data.userLogin.username
+          } else {
+            setMessage({ message: 'Usuario o contraseña incorrectos', type: 'error' })
+            setLogged(data.success)
+          }
         })
     } catch (error) {
-      setErrorMessage('Usuario o contraseña incorrectos')
-      setError(true)
+      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
+      setLogged(false)
     }
   }
 
   const manageData = async data => {
-    setError(false)
     const userName = await sendToServer(data)
     setUserName(userName)
   }
@@ -69,7 +75,16 @@ export default function LoginForm({ setLogged, setUserName }) {
       <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         Iniciar sesión
       </button>
-      {error && <p>{errorMessage}</p>}
+      {message && <p className={message.type}>{message.message}</p>}
+      <style>
+        {`
+          .success {
+          color: green;
+          }
+          .error {
+          color: red;}
+          `}
+      </style>
     </form>
   )
 }

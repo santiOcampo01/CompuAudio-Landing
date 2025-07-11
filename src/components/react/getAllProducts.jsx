@@ -8,22 +8,37 @@ export default function ProducstCards() {
   const [editProduct, setEditProduct] = useState()
   const [render, setRender] = useState(false)
   const [buttonClicked, setButtonClicked] = useState('')
-  const [reload, setReload] = useState(false)
+  const [reload, setReload] = useState(false);
+  const [renderDelete, setRenderDelete] = useState(false);
+  const [message, setMessage] = useState({ message: '', type: '' })
 
-  if (products.length < 1) {
-    geProducts()
-  }
-  async function geProducts() {
+  useEffect(() => {
+    if (sessionStorage.getItem('products')) {
+      setProducts(JSON.parse(sessionStorage.getItem('products')))
+    } else {
+      getProducts()
+    }
+  }, [render, reload, renderDelete])
+  async function getProducts() {
     try {
       await fetch(`${url}/products/`, {
         credentials: 'include',
       })
         .then(res => res.json())
         .then(data => {
-          setProducts(data)
+          if (data.success) {
+            setMessage({ message: 'Productos cargados exitosamente', type: 'success' })
+            setProducts(data.productos)
+            sessionStorage.setItem('products', JSON.stringify(data.productos))
+            setTimeout(() => {
+              setMessage()
+            }, 2000)
+          } else {
+            setMessage({ message: 'Error al cargar los productos', type: 'error' })
+          }
         })
     } catch (err) {
-      alert(err.message)
+      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
     }
   }
 
@@ -38,12 +53,14 @@ export default function ProducstCards() {
         body: JSON.stringify({ sha: sha, imageName: imageName }),
       })
       let res = await response.json()
-      if (response.ok) {
-        console.log(res)
-        alert('Todo fue un exito')
+      if (res.success) {
+        setMessage({ message: 'El producto se elimino exitosamente', type: 'success' })
+        setRenderDelete(!renderDelete)
+      } else {
+        setMessage({ message: 'Hubo un error al eliminar el producto', type: 'error' })
       }
     } catch (err) {
-      alert(err.message)
+      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
     }
   }
 
@@ -51,9 +68,18 @@ export default function ProducstCards() {
     setReload(!reload)
   }
 
-
   return (
     <section className="productContainer container px-4 flex flex-col">
+      {message && <p className={message.type}>{message.message}</p>}
+      <style>
+        {`
+          .success {
+          color: green;
+          }
+          .error {
+          color: red;}
+          `}
+      </style>
       <div>
         <button onClick={handleAdd}>Add product</button>
       </div>
@@ -107,8 +133,8 @@ export default function ProducstCards() {
           )
         })}
       </div>
-      {reload && <AddProduct />}
-      {render && <EditProductComponent productEdit={editProduct} />}
+      {reload && <AddProduct setReload={setReload} />}
+      {render && <EditProductComponent productEdit={editProduct} setRender={setRender} />}
     </section>
   )
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 const url = import.meta.env.PUBLIC_URL
 
-export default function EditProductComponent({ productEdit }) {
+export default function EditProductComponent({ productEdit, setRender }) {
   const {
     register,
     handleSubmit,
@@ -20,6 +20,7 @@ export default function EditProductComponent({ productEdit }) {
 
   const [featured, setfeatured] = useState(productEdit.featured)
   const [base64IMG, setBase64IMG] = useState('')
+  const [message, setMessage] = useState({ message: '', type: '' })
 
   async function updateProduct(data) {
     const slug = data.title
@@ -34,10 +35,16 @@ export default function EditProductComponent({ productEdit }) {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data)
+          if (data.success) {
+            setMessage({ message: 'Producto editado exitosamente', type: 'success' })
+            sessionStorage.removeItem('products')
+            setRender(false)
+          } else {
+            setMessage({ message: 'Hubo un error al editar el producto', type: 'error' })
+          }
         })
     } catch (err) {
-      alert(err.message)
+      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
     }
   }
 
@@ -69,6 +76,16 @@ export default function EditProductComponent({ productEdit }) {
 
   return (
     <div className="container absolute z-10 top-50 left-50 w-80 h-80 bg-amber-300">
+      {message && <p className={message.type}>{message.message}</p>}
+      <style>
+        {`
+          .success {
+          color: green;
+          }
+          .error {
+          color: red;}
+          `}
+      </style>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="title">
           Nombre del producto:

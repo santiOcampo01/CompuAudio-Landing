@@ -6,8 +6,6 @@ const url = import.meta.env.PUBLIC_URL
 export default function ProductsDashboard({ userName }) {
   const [render, setRender] = useState('products')
   const [username, setUserName] = useState(userName)
-  const [reload, setReload] = useState(false)
-
   const handleProducts = () => {
     setRender('products')
   }

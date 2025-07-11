@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import imageLogo from '../assets/imgs/logo.webp'
+import imageLogo from '../../assets/imgs/logo.webp'
 ---
 
 <script>
@@ -28,9 +28,7 @@ import imageLogo from '../assets/imgs/logo.webp'
         <a href="/productos" class="products">Productos</a>
       </li>
       <li>
-        <a href="/carrito" class="carrito"
-          >Carrito</a
-        >
+        <a href="/carrito" class="carrito">Carrito</a>
       </li>
     </ul>
   </nav>
@@ -149,7 +147,6 @@ import imageLogo from '../assets/imgs/logo.webp'
   .header .containerRight ul li .carrito:hover {
     background-color: #a84400;
   }
-
 
   @media (max-width: 868px) {
     .header {

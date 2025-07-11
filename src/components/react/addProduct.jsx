@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 const url = import.meta.env.PUBLIC_URL
 
-export default function FormFunction() {
+export default function FormFunction({ setReload }) {
   const {
     register,
     handleSubmit,
@@ -12,6 +12,7 @@ export default function FormFunction() {
   const [file, setFile] = useState(null)
   const [base64IMG, setBase64IMG] = useState('')
   const [featured, setfeatured] = useState(false)
+  const [message, setMessage] = useState({ message: '', type: '' })
 
   function handleFile(e) {
     const selected = e.target.files[0]
@@ -26,18 +27,28 @@ export default function FormFunction() {
   }
 
   async function addProduct(datos) {
-    await fetch(`${url}/products/`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(datos),
-    })
-      .then(res => res.json())
-      .then(data => {
-        alert(data)
+    try {
+      await fetch(`${url}/products/`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos),
       })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            setMessage({ message: 'Producto agregado exitosamente', type: 'success' })
+            sessionStorage.removeItem('products')
+            setReload(false)
+          } else {
+            setMessage({ message: 'Hubo un error al agregar el producto', type: 'error' })
+          }
+        })
+    } catch (error) {
+      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
+    }
   }
 
   const onSubmit = data => {
@@ -52,6 +63,16 @@ export default function FormFunction() {
 
   return (
     <section className="container absolute z-10 top-50 left-50 w-80 h-80 bg-amber-300">
+      {message && <p className={message.type}>{message.message}</p>}
+      <style>
+        {`
+          .success {
+          color: green;
+          }
+          .error {
+          color: red;}
+          `}
+      </style>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="title">
           Nombre del producto:
