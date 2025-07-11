@@ -46,36 +46,92 @@ export default function LoginForm({ setLogged, setUserName }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(manageData)} className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold">Iniciar sesión</h1>
-      <label htmlFor="username" className="flex flex-col">
-        Usuario:
+    <form onSubmit={handleSubmit(manageData)} className="flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
+      <div className="w-full relative mb-5">
         <input
           {...register('username', {
-            required: 'Proporcione el modo de usuario',
+            required: 'Proporcione el nombre de usuario',
+            validate: value => value.trim().length > 0 || 'El nombre de usuario no debe de ser solo espacios',
           })}
           type="text"
+          id="username"
           name="username"
-          className="border p-2 rounded"
+          className="
+          peer border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+        focus:ring-gray-400 
+          focus:border-transparent"
+          placeholder=" "
         />
-        {errors.username && <span>{errors.username.message}</span>}
-      </label>
-      <label htmlFor="password" className="flex flex-col">
-        Contraseña:
+        <label
+          htmlFor="username"
+          className="absolute -top-6 left-1 
+          text-base font-bold text-gray-500 
+          transition-all 
+          peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-2 
+          peer-placeholder-shown:font-normal 
+        peer-placeholder-shown:text-gray-400
+          peer-focus:-top-6 
+          peer-focus:text-base  
+          peer-focus:font-bold 
+          peer-focus:text-gray-800"
+        >
+          Nombre de usuario:
+        </label>
+      </div>
+      {errors.username && <span className="text-red-800 font-bold">{errors.username.message}</span>}
+      <div className="w-full relative">
         <input
           {...register('password', {
-            required: 'La contraseña es obligatoria',
+            required: 'Proporcione la contraseña',
           })}
           type="password"
           name="password"
-          className="border p-2 rounded"
+          id="password"
+          className="
+          peer border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+        focus:ring-gray-400 
+          focus:border-transparent"
+          placeholder=" "
         />
-        {errors.password && <span>{errors.password.message}</span>}
-      </label>
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+        <label
+          htmlFor="password"
+          className="absolute -top-6 left-1 
+          text-base font-bold text-gray-500 
+          transition-all 
+          peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-2 
+          peer-placeholder-shown:font-normal 
+        peer-placeholder-shown:text-gray-400
+          peer-focus:-top-6 
+          peer-focus:text-base  
+          peer-focus:font-bold 
+          peer-focus:text-gray-800"
+        >
+          Contraseña:
+        </label>
+      </div>
+      {errors.password && <span className="text-red-800 font-bold">{errors.password.message}</span>}
+      <button
+        type="submit"
+        className="
+        bg-orange-500 
+        text-white p-2 
+        rounded-lg 
+        cursor-pointer 
+        hover:bg-orange-400"
+      >
         Iniciar sesión
       </button>
-      {message && <p className={message.type}>{message.message}</p>}
+      {message && <p className={`font-bold ${message.type}`}>{message.message}</p>}
       <style>
         {`
           .success {

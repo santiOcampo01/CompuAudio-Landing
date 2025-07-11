@@ -20,9 +20,9 @@ export default function ProductsDashboard({ userName }) {
     window.location.reload()
   }
   return (
-    <section className="container">
-      <aside className="navContainer">
-        <nav>
+    <section className="w-full flex bg-amber-100">
+      <aside className="flex flex-col bg-amber-600 flex-1 items-center">
+        <nav className='pt-10'>
           <ul>
             <li>
               <button onClick={handleProducts}>Productos</button>
@@ -36,7 +36,7 @@ export default function ProductsDashboard({ userName }) {
           </ul>
         </nav>
       </aside>
-      <main className="mainContainer">
+      <main className="mainContainer flex-6 ">
         <div className="headerContainer">
           <header>
             <h1>Panel de admistracion</h1>
