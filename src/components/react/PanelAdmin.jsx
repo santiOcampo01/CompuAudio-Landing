@@ -30,7 +30,7 @@ export default function Admin() {
         <ProductsDashboard userName={userName} />
       ) : (
         <div className="flex flex-col items-center w-full max-w-sm sm:max-w-md md:max-w-lg mx-auto mt-10 shadow-xl p-6 sm:p-10 bg-gray-100 rounded-xl">
-          <img className="my-2 w-16 h-auto rounded-xl" src="/public/favicon/logoCompuAudio-Copy.png" alt="Logo Admin" />
+          <img className="my-2 w-16 h-auto rounded-xl" src="/favicon/logoCompuAudio-Copy.png" alt="Logo Admin" />
           <h2 className="text-2xl font-bold cursor-default">Admin</h2>
           <Login setLogged={setLogged} setUserName={setUserName} />
         </div>
