@@ -22,7 +22,7 @@ const recomendados = destacados.filter(p => p.slug !== slug && p.data.tags?.some
         recomendados.map((producto, index) => {
           const { slug, data } = producto
           return (
-            <div class="productoCard" key={index}>
+            <div class="productoCard">
               <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
               <span class="precio">${data.price.toLocaleString()}</span>

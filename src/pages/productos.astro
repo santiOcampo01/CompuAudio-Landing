@@ -22,9 +22,8 @@ const destacados = await getCollection('products')
       {
         destacados.map((producto: { slug: any; data: any }) => {
           const { slug, data } = producto
-          let key = destacados.indexOf(producto)
           return (
-            <div class="productoCard" key={key}>
+            <div class="productoCard">
               <button onclick={`sendToCart('${slug}')`} class="iconoCarrito">
                 <img class="svg" src="/assets/cart-shopping-svgrepo-com.svg" alt="Carrito de compras" loading="lazy" />
               </button>
