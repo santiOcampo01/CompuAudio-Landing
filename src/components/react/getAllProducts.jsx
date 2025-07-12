@@ -67,46 +67,43 @@ export default function ProducstCards() {
   const handleAdd = () => {
     setReload(!reload)
   }
-
   return (
-    <section className="productContainer container px-4 flex flex-col">
+    <section className="productContainer px-4 py-4 flex flex-col w-full">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
-          .success {
-          color: green;
-          }
-          .error {
-          color: red;}
-          `}
+      .success { color: green; }
+      .error { color: red; }
+    `}
       </style>
-      <div>
-        <button onClick={handleAdd}>Add product</button>
+
+      <div className="mb-5">
+        <button
+          className="w-full sm:max-w-44 py-3 px-6 font-bold bg-amber-700 text-gray-100 text-center cursor-pointer hover:bg-amber-600"
+          onClick={handleAdd}
+        >
+          Add product
+        </button>
       </div>
-      <div className="container flex">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map(product => {
           let key = products.indexOf(product)
           return (
-            <article className="productCard gap-5 p-5" key={key + 1}>
-              <div className="productInfo">
-                <div className="h-[300px]">
-                  <img
-                    className="h-[100%]"
-                    src={`${product.image}`}
-                    loading="lazy"
-                    width="100%"
-                    height="100%"
-                    alt={`imagen de ${product.title}`}
-                  />
-                </div>
-                <h3>{product.title}</h3>
-                <p>{product.description}</p>
-                <span>{product.price}</span>
+            <article className="flex flex-col rounded-xl p-4 bg-gray-50 shadow" key={key + 1}>
+              <img
+                className="w-full h-48 max-h-[250px] rounded-xl object-cover"
+                src={`${product.image}`}
+                loading="lazy"
+                alt={`imagen de ${product.title}`}
+              />
+              <div className="pt-4 pb-2 px-2 min-h-28">
+                <h3 className="font-bold text-lg line-clamp-2">{product.title}</h3>
+                <span className="font-bold text-amber-600">${product.price}</span>
               </div>
-              <div className="productButton justify-center gap-2">
+              <div className="flex flex-col sm:flex-row justify-between gap-2 mt-2">
                 <button
                   id={product.sha}
-                  className="w-[50%] p-3"
+                  className="bg-amber-700 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-600"
                   onClick={e => {
                     if (e.target.id == buttonClicked) {
                       setRender(!render)
@@ -120,8 +117,8 @@ export default function ProducstCards() {
                   Editar
                 </button>
                 <button
-                  className="w-[50%] p-3"
-                  onClick={e => {
+                  className="bg-gray-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-gray-600"
+                  onClick={() => {
                     let imageName = product.image.split('/')
                     handleDelete(product.title, product.sha, imageName[2])
                   }}

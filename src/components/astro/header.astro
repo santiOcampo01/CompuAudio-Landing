@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import imageLogo from '../../assets/imgs/logo.webp'
+import imageLogo from '../../../public/favicon/logoCompuAudio-Copy.png'
 ---
 
 <script>
@@ -61,22 +61,18 @@ import imageLogo from '../../assets/imgs/logo.webp'
 
   .header .containerLeft::after {
     content: 'CompuAudio Pereira';
-    display: none;
-    width: 0;
+    width: 100%;
+    display: block;
+    color: #ffffff;
     background: #050505;
     font-size: 2rem;
     transition: width 0.4s ease;
-    padding: 10px;
+    padding: 10px 10px 10px 0;
     overflow: hidden;
     white-space: nowrap;
   }
 
-  .header .containerLeft:hover::after {
-    width: 100%;
-    display: block;
-    color: #ffffff;
-    animation: expandWidth 0.4s ease forwards;
-  }
+
 
   @keyframes expandWidth {
     from {

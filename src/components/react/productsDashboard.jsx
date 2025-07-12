@@ -20,31 +20,45 @@ export default function ProductsDashboard({ userName }) {
     window.location.reload()
   }
   return (
-    <section className="w-full flex bg-amber-100">
-      <aside className="flex flex-col bg-amber-600 flex-1 items-center">
-        <nav className='pt-10'>
-          <ul>
+    <section className="w-full flex flex-col md:flex-row bg-gray-100 mt-5 min-h-screen">
+      <aside className="bg-gray-100 w-full md:w-64 p-4 font-bold  border-gray-300">
+        <nav className="w-full">
+          <ul className="flex  flex-col  justify-around md:gap-2 gap-1">
             <li>
-              <button onClick={handleProducts}>Productos</button>
+              <button
+                className="w-full p-3 bg-gray-800 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-gray-700"
+                onClick={handleProducts}
+              >
+                Productos
+              </button>
             </li>
             <li>
-              <button onClick={handleCredentials}>Usuario</button>
+              <button
+                className="w-full p-3 bg-gray-800 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-gray-700"
+                onClick={handleCredentials}
+              >
+                Usuario
+              </button>
             </li>
             <li>
-              <button onClick={logout}>Cerrar Sesion</button>
+              <button
+                className="w-full p-3 bg-gray-800 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-gray-700"
+                onClick={logout}
+              >
+                Cerrar Sesión
+              </button>
             </li>
           </ul>
         </nav>
       </aside>
-      <main className="mainContainer flex-6 ">
-        <div className="headerContainer">
-          <header>
-            <h1>Panel de admistracion</h1>
-            <p>
-              Hola, <span>{username}</span>
-            </p>
-          </header>
-        </div>
+
+      <main className="flex-1 w-full p-4">
+        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-2 pb-4">
+          <h1 className="text-xl font-bold">{render == 'products' ? 'Panel de administración' : 'Actualizar credenciales'}</h1>
+          <p className="text-xl">
+            Bienvenido, <span className="font-bold  text-amber-700">{username}</span>
+          </p>
+        </header>
         {render == 'products' ? <ProducstCards /> : <UpdateForm userName={username} setUserName={setUserName} />}
       </main>
     </section>
