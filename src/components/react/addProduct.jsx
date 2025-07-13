@@ -62,7 +62,7 @@ export default function FormFunction({ setReload }) {
   }
 
   return (
-    <section className="container absolute z-10 top-50 left-50 w-80 h-80 bg-amber-300">
+    <section className="absolute inset-2/4 flex flex-col justify-center items-center w-[350px]">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
@@ -73,9 +73,9 @@ export default function FormFunction({ setReload }) {
           color: red;}
           `}
       </style>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="title">
-          Nombre del producto:
+      {/* <button className="p-6 text-2xl inline-block">x</button> */}
+      <form className="bg-white opacity-100 flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+        <div className="w-full relative mb-5">
           <input
             {...register('title', {
               required: { value: true, message: 'El producto debe de tener un nombre' },
@@ -84,11 +84,35 @@ export default function FormFunction({ setReload }) {
             type="text"
             name="title"
             id="title"
+            className="
+          peer border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+        focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder=" "
           />
+          <label
+            htmlFor="title"
+            className="absolute -top-6 left-1 
+            text-base font-bold text-gray-500 
+            transition-all 
+            peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-2 
+          peer-placeholder-shown:font-normal 
+        peer-placeholder-shown:text-gray-400
+          peer-focus:-top-6 
+          peer-focus:text-base  
+          peer-focus:font-bold 
+          peer-focus:text-gray-800"
+          >
+            Nombre del producto:
+          </label>
           {errors.title && <span>{errors.title.message}</span>}
-        </label>
-        <label htmlFor="imageName">
-          Imagen:
+        </div>
+        <div className="w-full relative mb-5">
           <input
             {...register('imageName', {
               required: {
@@ -101,11 +125,35 @@ export default function FormFunction({ setReload }) {
             name="imageName"
             id="imageName"
             accept="image/png, image/jpeg, image/webp"
+            className="
+          peer border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+          focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder=" "
           />
-          {errors.imageName && <span>{errors.imageName.message}</span>}
-        </label>
-        <label htmlFor="price">
-          Precio:
+          <label
+            htmlFor="imageName"
+            className="absolute -top-6 left-1 
+          text-base font-bold text-gray-500 
+          transition-all 
+          peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-2 
+          peer-placeholder-shown:font-normal 
+        peer-placeholder-shown:text-gray-400
+          peer-focus:-top-6 
+          peer-focus:text-base  
+          peer-focus:font-bold 
+          peer-focus:text-gray-800"
+          >
+            Imagen del producto:
+            {errors.imageName && <span>{errors.imageName.message}</span>}
+          </label>
+        </div>
+        <div className="w-full relative mb-5">
           <input
             {...register('price', {
               required: {
@@ -130,11 +178,30 @@ export default function FormFunction({ setReload }) {
               const formateado = new Intl.NumberFormat('es-CO').format(raw)
               setValue('price', formateado, { shouldValidate: true })
             }}
+            className=" peer border h-10 w-full border-gray-400 p-2 rounded placeholder-shown:border-b-gray-400 focus:outline-none
+            focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+            placeholder=" "
           />
+          <label
+            htmlFor="price"
+            className="absolute -top-6 left-1 
+            text-base font-bold text-gray-500 
+            transition-all 
+            peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-2 
+          peer-placeholder-shown:font-normal 
+        peer-placeholder-shown:text-gray-400
+          peer-focus:-top-6 
+          peer-focus:text-base  
+          peer-focus:font-bold 
+          peer-focus:text-gray-800"
+          >
+            Precio:
+          </label>
           {errors.price && <span>{errors.price.message}</span>}
-        </label>
-        <label htmlFor="tags">
-          Tags:
+        </div>
+
+        <div className="w-full relative mb-5">
           <input
             {...register('tags', {
               required: {
@@ -161,11 +228,40 @@ export default function FormFunction({ setReload }) {
             type="text"
             name="tags"
             id="tags"
+            className="
+          peer border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+        focus:outline-none 
+          focus:ring-2 
+          focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder=" "
           />
+          <label
+            htmlFor="tags"
+            className="absolute -top-6 left-1 
+            text-base font-bold text-gray-500 
+            transition-all 
+            peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-2 
+          peer-placeholder-shown:font-normal 
+        peer-placeholder-shown:text-gray-400
+          peer-focus:-top-6 
+          peer-focus:text-base  
+          peer-focus:font-bold 
+          peer-focus:text-gray-800"
+          >
+            Tags:
+          </label>
           {errors.tags && <span>{errors.tags.message}</span>}
-        </label>
-        <label htmlFor="featured">
-          Destacado:
+        </div>
+        <div className="w-full relative mb-5 flex flex-col">
+          <label
+            htmlFor="title"
+            className='flex-col'
+            >
+              Destacado:
           <input
             {...register('featured')}
             checked={featured}
@@ -176,9 +272,9 @@ export default function FormFunction({ setReload }) {
             name="featured"
             id="featured"
           />
-        </label>
-        <label htmlFor="caracteristicas">
-          Caracteristicas:
+          </label>
+        </div>
+        <div className="w-full relative mb-5 flex flex-col">
           <input
             {...register('caracteristicas', {
               required: {
@@ -205,11 +301,35 @@ export default function FormFunction({ setReload }) {
             type="text"
             name="caracteristicas"
             id="caracteristicas"
+            className="
+          peer border h-10 w-full 
+          border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+        focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder=" "
           />
+          <label
+            htmlFor="title"
+            className="absolute -top-6 left-1 
+            text-base font-bold text-gray-500 
+            transition-all 
+            peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-2 
+          peer-placeholder-shown:font-normal 
+        peer-placeholder-shown:text-gray-400
+          peer-focus:-top-6 
+          peer-focus:text-base  
+          peer-focus:font-bold 
+          peer-focus:text-gray-800"
+          >
+            Caracteristicas:
+          </label>
           {errors.caracteristicas && <span>{errors.caracteristicas.message}</span>}
-        </label>
-        <label htmlFor="content">
-          Descripcion:
+        </div>
+          <div className="w-full relative mb-5 flex flex-col">
           <textarea
             {...register('content', {
               required: {
@@ -220,11 +340,36 @@ export default function FormFunction({ setReload }) {
             })}
             id="content"
             name="content"
+                      className="
+          peer border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+        focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder=" "
           ></textarea>
+          <label
+            htmlFor="title"
+            className="absolute -top-6 left-1 
+            text-base font-bold text-gray-500 
+            transition-all 
+            peer-placeholder-shown:text-base 
+          peer-placeholder-shown:top-2 
+          peer-placeholder-shown:font-normal 
+        peer-placeholder-shown:text-gray-400
+          peer-focus:-top-6 
+          peer-focus:text-base  
+          peer-focus:font-bold 
+          peer-focus:text-gray-800"
+          >
+            Descripcion:
+          </label>
           {errors.content && <span>{errors.content.message}</span>}
-        </label>
+        </div>
         <div>
-          <button> Enviar</button>
+          <button className='p-4 bg-amber-600 w-full text-gray-50'> Enviar</button>
         </div>
       </form>
     </section>
