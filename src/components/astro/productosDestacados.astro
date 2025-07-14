@@ -17,9 +17,11 @@ import { Image } from 'astro:assets'
               <button onclick={`sendToCart('${slug}')`} class="iconoCarrito">
                 <img class="svg" src="/assets/cart-shopping-svgrepo-com.svg" alt="Carrito de compras" loading="lazy" />
               </button>
-              <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
-              <h3>{data.title}</h3>
-              <span class="precio text-orange-500">${data.price.toLocaleString()}</span>
+              <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} fetchpriority="high" />
+              <div class="pb-2 px-2 min-h-28">
+                <h3 class="font-bold text-lg line-clamp-2">{data.title}</h3>
+                <span class="precio font-bold text-orange-600">${data.price.toLocaleString()}</span>
+              </div>
               <a href={`/productos/${slug}`} class="buttonSeeProducts bg-orange-500 hover:bg-amber-500">
                 Ver productos
               </a>
@@ -102,7 +104,7 @@ import { Image } from 'astro:assets'
 
   .productoCard img {
     width: 100%;
-    height: auto;
+    height: 20rem;
     max-height: 250px;
     object-fit: cover;
     margin-bottom: 1rem;

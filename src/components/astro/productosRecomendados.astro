@@ -24,8 +24,10 @@ const recomendados = destacados.filter(p => p.slug !== slug && p.data.tags?.some
           return (
             <div class="productoCard">
               <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
-              <h3>{data.title}</h3>
-              <span class="precio text-orange-500">${data.price.toLocaleString()}</span>
+              <div class="pb-2 px-2 min-h-28">
+                <h3 class="font-bold text-lg line-clamp-2">{data.title}</h3>
+                <span class="precio font-bold text-orange-600">${data.price.toLocaleString()}</span>
+              </div>
               <a href={`/productos/${slug}`} class="buttonSeeProducts bg-orange-500 hover:bg-amber-500">
                 Ver producto
               </a>
@@ -87,7 +89,8 @@ const recomendados = destacados.filter(p => p.slug !== slug && p.data.tags?.some
 
   .productoCard img {
     width: 100%;
-    height: 200px;
+    height: 20rem;
+    max-height: 250px;
     margin-bottom: 0.5rem;
     border-radius: 6px;
   }

@@ -28,8 +28,10 @@ const destacados = await getCollection('products')
                 <img class="svg" src="/assets/cart-shopping-svgrepo-com.svg" alt="Carrito de compras" loading="lazy" />
               </button>
               <Image class="producImage" src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
-              <h3>{data.title}</h3>
-              <span class="precio text-orange-500">${data.price.toLocaleString()}</span>
+              <div class="pb-2 px-2 min-h-28">
+                <h3 class="font-bold text-lg line-clamp-2">{data.title}</h3>
+                <span class="precio font-bold text-orange-600">${data.price.toLocaleString()}</span>
+              </div>
               <a href={`/productos/${slug}`} class="buttonSeeProducts bg-orange-500 hover:bg-amber-500">
                 Ver productos
               </a>
@@ -103,7 +105,8 @@ const destacados = await getCollection('products')
 
   .productsPage .productoCard .producImage {
     width: 100%;
-    height: 250px; /* fuerza una altura uniforme */
+    height: 20rem;
+    max-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
