@@ -27,13 +27,22 @@ export default function UpdateForm({ userName, setUserName }) {
           if (data.success) {
             setMessage({ message: 'La actualizacion fue exitosa', type: 'success' })
             setUserName(data.user.username)
+            setTimeout(() => {
+              setLogged(data.success)
+            }, 3000)
             reset()
           } else {
             setMessage({ message: data.message, type: 'error' })
+            setTimeout(() => {
+              setLogged(data.success)
+            }, 3000)
           }
         })
     } catch (error) {
       setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
+      setTimeout(() => {
+        setLogged(data.success)
+      }, 3000)
     }
   }
 
@@ -42,7 +51,7 @@ export default function UpdateForm({ userName, setUserName }) {
     sendToServer(data)
   }
   return (
-    <form onSubmit={handleSubmit(sendData)} className="flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
+    <form onSubmit={handleSubmit(sendData)} className="relative flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
       <div className="w-full relative mb-5">
         <input
           type="text"
@@ -169,9 +178,27 @@ export default function UpdateForm({ userName, setUserName }) {
         {`
           .success {
           color: green;
+          padding-top: 0.5rem;
+          background-color: white;
+          position: absolute;
+          left: 25%;
+          top: 100%
+          }
+
+          .success:before {
+          content: '👍';
           }
           .error {
-          color: red;}
+          color: red;
+          padding-top: 0.5rem;
+          background-color: white;
+          position: absolute;
+          left: 25%;
+          top: 100%}
+
+          .error:before {
+          content: '✖️';
+          }
           `}
       </style>
     </form>

@@ -28,27 +28,34 @@ export default function LoginForm({ setLogged, setUserName }) {
             setTimeout(() => {
               setLogged(data.success)
             }, 3000)
+            setTimeout(() => {
+              setMessage({ message: '', type: '' })
+            }, 3000)
             return data.userLogin.username
           } else {
             setMessage({ message: 'Usuario o contraseña incorrectos', type: 'error' })
             setLogged(data.success)
+            setTimeout(() => {
+              setMessage({ message: '', type: '' })
+            }, 3000)
           }
         })
     } catch (error) {
-      alert(`${url}/login/`)
       setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
+      setTimeout(() => {
+        setMessage({ message: '', type: '' })
+      }, 3000)
       setLogged(false)
     }
   }
 
   const manageData = async data => {
-    alert(JSON.stringify(data))
     const userName = await sendToServer(data)
     setUserName(userName)
   }
 
   return (
-    <form onSubmit={handleSubmit(manageData)} className="flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
+    <form onSubmit={handleSubmit(manageData)} className="relative flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
       <div className="w-full relative mb-5">
         <input
           {...register('username', {
@@ -138,9 +145,27 @@ export default function LoginForm({ setLogged, setUserName }) {
         {`
           .success {
           color: green;
+          padding-top: 0.5rem;
+          background-color: white;
+          position: absolute;
+          left: 25%;
+          top: 100%
+          }
+
+          .success:before {
+          content: '👍';
           }
           .error {
-          color: red;}
+          color: red;
+          padding-top: 0.5rem;
+          background-color: white;
+          position: absolute;
+          left: 25%;
+          top: 100%}
+
+          .error:before {
+          content: '✖️';
+          }
           `}
       </style>
     </form>

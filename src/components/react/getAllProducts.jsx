@@ -69,7 +69,7 @@ export default function ProducstCards() {
   }
   return (
     <section
-      className="productContainer px-4 py-4 flex flex-col w-full">
+      className="productContainer px-4 py-4 flex flex-col w-full" >
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`

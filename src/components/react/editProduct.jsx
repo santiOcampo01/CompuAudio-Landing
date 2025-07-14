@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 const url = import.meta.env.PUBLIC_URL
 
 export default function EditProductComponent({ productEdit, setRender }) {
-  console.log('rendered')
   const {
     register,
     handleSubmit,
@@ -40,12 +39,21 @@ export default function EditProductComponent({ productEdit, setRender }) {
             setMessage({ message: 'Producto editado exitosamente', type: 'success' })
             sessionStorage.removeItem('products')
             setRender(false)
+            setTimeout(() => {
+              setMessage({ message: '', type: '' })
+            }, 3000)
           } else {
             setMessage({ message: 'Hubo un error al editar el producto', type: 'error' })
+            setTimeout(() => {
+              setMessage({ message: '', type: '' })
+            }, 3000)
           }
         })
     } catch (err) {
       setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
+      setTimeout(() => {
+        setMessage({ message: '', type: '' })
+      }, 3000)
     }
   }
 
@@ -82,9 +90,27 @@ export default function EditProductComponent({ productEdit, setRender }) {
         {`
           .success {
           color: green;
+          padding-top: 0.5rem;
+          background-color: white;
+          position: absolute;
+          left: 25%;
+          top: 50%
+          }
+
+          .success:before {
+          content: '👍';
           }
           .error {
-          color: red;}
+          color: red;
+          padding-top: 0.5rem;
+          background-color: white;
+          position: absolute;
+          left: 25%;
+          top: 50%}
+
+          .error:before {
+          content: '✖️';
+          }
           `}
       </style>
       <h2 className="font-bold font-lg self-start px-5 pt-5">Editar {productEdit.title}</h2>
@@ -113,7 +139,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
         focus:ring-gray-400"
             placeholder="TV Box"
           />
-          {errors.title && <span>{errors.title.message}</span>}
+          {errors.title && <span className="text-red-800 font-bold">{errors.title.message}</span>}
         </div>
         {/* input imagen */}
         <div className="w-full relative">
@@ -140,7 +166,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
           focus:border-transparent"
             placeholder=" "
           />
-          {errors.imageName && <span>{errors.imageName.message}</span>}
+          {errors.imageName && <span className="text-red-800 font-bold">{errors.imageName.message}</span>}
         </div>
         {/* input precio */}
         <div className="w-full relative">
@@ -176,39 +202,8 @@ export default function EditProductComponent({ productEdit, setRender }) {
             placeholder="100.000"
           />
 
-          {errors.price && <span>{errors.price.message}</span>}
+          {errors.price && <span className="text-red-800 font-bold">{errors.price.message}</span>}
         </div>
-        <label htmlFor="tags">
-          Tags:
-          <input
-            {...register('tags', {
-              required: {
-                value: true,
-                message: 'El producto debe de tener tags',
-              },
-              minLength: {
-                value: 1,
-                message: 'El producto debe de contener al menos un tag',
-              },
-              validate: value => {
-                if (value.trim().length === 0) {
-                  return 'Los tags no pueden ser solo espacios'
-                }
-                if (/^(,|\s*,\s*,|,,)/.test(value)) {
-                  return 'Los tags no pueden comenzar con comas ni tener comas consecutivas'
-                }
-                if (!/^([^\s,][^,]*)(,\s*[^\s,][^,]*)*$/.test(value)) {
-                  return 'Los tags deben estar separados por comas, ejemplo: tecnologia, sonido, computadores y dispositivos, memoria'
-                }
-                return true
-              },
-            })}
-            type="text"
-            name="tags"
-            id="tags"
-          />
-          {errors.tags && <span>{errors.tags.message}</span>}
-        </label>
         {/* input tags */}
         <div className="w-full relative">
           <label
@@ -254,7 +249,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
           focus:border-transparent"
             placeholder="TV Box, Android, Smart TV, Netflix, YouTube, Spotify, Prime Video, Bluetooth"
           />
-          {errors.tags && <span>{errors.tags.message}</span>}
+          {errors.tags && <span className="text-red-800 font-bold">{errors.tags.message}</span>}
         </div>
         {/* input featured */}
         <div className="w-full relative flex flex-col">
@@ -317,7 +312,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
           focus:border-transparent"
             placeholder="Convierte cualquier televisor en Smart TV, Compatible con Netflix, YouTube, Prime Video, Spotify, entre otras apps, Conexión HDMI y WiFi, Incluye control remoto multifunción, Interfaz Android fácil de usar, Soporte de 2GB RAM y 16GB almacenamiento"
           />
-          {errors.caracteristicas && <span>{errors.caracteristicas.message}</span>}
+          {errors.caracteristicas && <span className="text-red-800 font-bold">{errors.caracteristicas.message}</span>}
         </div>
         {/* input content */}
         <div className="w-full relative">
@@ -348,10 +343,10 @@ export default function EditProductComponent({ productEdit, setRender }) {
           focus:border-transparent"
             placeholder="Disfruta de tus plataformas favoritas directamente en tu televisor con esta TV Box Android. Accede a aplicaciones como Netflix, YouTube, Prime Video, Spotify y más. Fácil de instalar y usar, ideal para modernizar tu entretenimiento."
           ></textarea>
-          {errors.content && <span>{errors.content.message}</span>}
+          {errors.content && <span className="text-red-800 font-bold">{errors.content.message}</span>}
         </div>
         <div>
-          <button> Enviar</button>
+          <button className="py-2 px-4 bg-amber-600 w-full text-gray-50"> Enviar</button>
         </div>
       </form>
     </div>
