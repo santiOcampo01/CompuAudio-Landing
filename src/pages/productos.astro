@@ -29,7 +29,7 @@ const destacados = await getCollection('products')
               </button>
               <Image class="producImage" src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <div class="pb-2 px-2 min-h-28">
-                <h3 class="font-bold text-lg line-clamp-2">{data.title}</h3>
+                <p class="font-bold text-2xl  line-clamp-2">{data.title}</p>
                 <span class="precio font-bold text-orange-600">${data.price.toLocaleString()}</span>
               </div>
               <a href={`/productos/${slug}`} class="buttonSeeProducts bg-orange-500 hover:bg-amber-500">
@@ -114,13 +114,6 @@ const destacados = await getCollection('products')
     border-radius: 8px;
     margin-bottom: 1rem;
     background-color: #fff;
-  }
-
-  .productsPage .productoCard h3 {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin: 0.5rem 0;
-    color: #1a1a1a;
   }
 
   .productsPage .productoCard .precio {

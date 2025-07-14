@@ -25,7 +25,7 @@ const recomendados = destacados.filter(p => p.slug !== slug && p.data.tags?.some
             <div class="productoCard">
               <Image src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <div class="pb-2 px-2 min-h-28">
-                <h3 class="font-bold text-lg line-clamp-2">{data.title}</h3>
+                <p class="font-bold text-xl  line-clamp-2">{data.title}</p>
                 <span class="precio font-bold text-orange-600">${data.price.toLocaleString()}</span>
               </div>
               <a href={`/productos/${slug}`} class="buttonSeeProducts bg-orange-500 hover:bg-amber-500">
@@ -95,11 +95,6 @@ const recomendados = destacados.filter(p => p.slug !== slug && p.data.tags?.some
     border-radius: 6px;
   }
 
-  .productoCard h3 {
-    font-size: 1rem;
-    margin: 0.5rem 0;
-    font-weight: 600;
-  }
 
   .precio {
     font-weight: bold;
