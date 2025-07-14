@@ -68,8 +68,7 @@ export default function ProducstCards() {
     setReload(!reload)
   }
   return (
-    <section
-      className="productContainer px-4 py-4 flex flex-col w-full" >
+    <section className="productContainer px-4 py-4 flex flex-col w-full">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
@@ -107,13 +106,8 @@ export default function ProducstCards() {
                   id={product.sha}
                   className=" bg-orange-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-500"
                   onClick={e => {
-                    if (e.target.id == buttonClicked) {
-                      setRender(!render)
-                    } else {
                       setEditProduct(product)
                       setRender(!render)
-                    }
-                    setButtonClicked(e.target.id)
                   }}
                 >
                   Editar

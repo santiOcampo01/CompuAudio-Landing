@@ -56,7 +56,7 @@ export default function ProductsDashboard({ userName }) {
         <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center px-2 pb-4">
           <h1 className="text-xl font-bold">{render == 'products' ? 'Panel de administración' : 'Actualizar credenciales'}</h1>
           <p className="text-xl">
-            Bienvenido, <span className="font-bold  text-amber-700">{username}</span>
+            Bienvenido, <span className="font-bold  text-orange-600">{username}</span>
           </p>
         </header>
         {render == 'products' ? <ProducstCards /> : <UpdateForm userName={username} setUserName={setUserName} />}
