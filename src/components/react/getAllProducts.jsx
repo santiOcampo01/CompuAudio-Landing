@@ -7,7 +7,7 @@ export default function ProducstCards() {
   const [products, setProducts] = useState([])
   const [editProduct, setEditProduct] = useState()
   const [render, setRender] = useState(false)
-  const [buttonClicked, setButtonClicked] = useState('')
+  const [buttonClicked, setButtonClicked] = useState()
   const [reload, setReload] = useState(false)
   const [renderDelete, setRenderDelete] = useState(false)
   const [message, setMessage] = useState({ message: '', type: '' })
@@ -69,8 +69,7 @@ export default function ProducstCards() {
   }
   return (
     <section
-      className="productContainer px-4 py-4 flex flex-col w-full"
-    >
+      className="productContainer px-4 py-4 flex flex-col w-full">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
@@ -92,7 +91,7 @@ export default function ProducstCards() {
         {products.map(product => {
           let key = products.indexOf(product)
           return (
-            <article className="flex flex-col rounded-xl p-4 bg-gray-50 shadow" key={key + 1}>
+            <article className="relative flex flex-col rounded-xl p-4 bg-gray-50 shadow" key={key + 1}>
               <img
                 className="w-full h-48 max-h-[250px] rounded-xl object-cover"
                 src={`${product.image}`}
@@ -106,13 +105,13 @@ export default function ProducstCards() {
               <div className="flex flex-col sm:flex-row justify-between gap-2 mt-2">
                 <button
                   id={product.sha}
-                  className="bg-orange-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-500"
+                  className=" bg-orange-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-500"
                   onClick={e => {
                     if (e.target.id == buttonClicked) {
                       setRender(!render)
                     } else {
                       setEditProduct(product)
-                      setRender(true)
+                      setRender(!render)
                     }
                     setButtonClicked(e.target.id)
                   }}

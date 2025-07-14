@@ -62,7 +62,8 @@ export default function FormFunction({ setReload }) {
   }
 
   return (
-    <section className="absolute z-50 left-1/2 -translate-x-1/2 top-[4rem] sm:top-[-2rem] w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl">
+    <section
+      className="absolute z-50 left-2/4 -translate-x-1/2 top-[100%] sm:top-[-5rem] w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`

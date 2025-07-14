@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 const url = import.meta.env.PUBLIC_URL
 
 export default function EditProductComponent({ productEdit, setRender }) {
+  console.log('rendered')
   const {
     register,
     handleSubmit,
@@ -75,7 +76,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
   }
 
   return (
-    <div className="container absolute z-10 top-50 left-50 w-80 h-80 bg-amber-300">
+    <div className="absolute z-50 left-60 -translate-x-1/2 top-[50%] sm:top-[50%] w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
@@ -86,9 +87,16 @@ export default function EditProductComponent({ productEdit, setRender }) {
           color: red;}
           `}
       </style>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="title">
-          Nombre del producto:
+      <h2 className="font-bold font-lg self-start px-5 pt-5">Editar {productEdit.title}</h2>
+      <form className="flex flex-col gap-5 p-5 overflow-y-auto max-h-[70vh] sm:max-h-[60vh]" onSubmit={handleSubmit(onSubmit)}>
+        <div className="w-full relative">
+          <label
+            htmlFor="title"
+            className="
+            text-base font-bold text-gray-900 "
+          >
+            Nombre del producto:
+          </label>
           <input
             {...register('title', {
               required: { value: true, message: 'El producto debe de tener un nombre' },
@@ -97,11 +105,25 @@ export default function EditProductComponent({ productEdit, setRender }) {
             type="text"
             name="title"
             id="title"
+            className="border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+        focus:ring-gray-400"
+            placeholder="TV Box"
           />
           {errors.title && <span>{errors.title.message}</span>}
-        </label>
-        <label htmlFor="imageName">
-          Imagen:
+        </div>
+        {/* input imagen */}
+        <div className="w-full relative">
+          <label
+            htmlFor="imageName"
+            className="
+          text-base font-bold text-gray-900"
+          >
+            Imagen del producto:
+          </label>
           <input
             {...register('imageName')}
             onChange={handleFile}
@@ -109,10 +131,22 @@ export default function EditProductComponent({ productEdit, setRender }) {
             name="imageName"
             id="imageName"
             accept="image/png, image/jpeg, image/webp"
+            className=" border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+          focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder=" "
           />
-        </label>
-        <label htmlFor="price">
-          Precio:
+          {errors.imageName && <span>{errors.imageName.message}</span>}
+        </div>
+        {/* input precio */}
+        <div className="w-full relative">
+          <label htmlFor="price" className="text-base font-bold text-gray-900">
+            Precio:
+          </label>
           <input
             {...register('price', {
               required: {
@@ -137,9 +171,13 @@ export default function EditProductComponent({ productEdit, setRender }) {
               const formateado = new Intl.NumberFormat('es-CO').format(raw)
               setValue('price', formateado, { shouldValidate: true })
             }}
+            className=" peer border h-10 w-full border-gray-400 p-2 rounded placeholder-shown:border-b-gray-400 focus:outline-none
+            focus:ring-2 focus:ring-gray-400 focus:border-transparent"
+            placeholder="100.000"
           />
+
           {errors.price && <span>{errors.price.message}</span>}
-        </label>
+        </div>
         <label htmlFor="tags">
           Tags:
           <input
@@ -171,22 +209,78 @@ export default function EditProductComponent({ productEdit, setRender }) {
           />
           {errors.tags && <span>{errors.tags.message}</span>}
         </label>
-        <label htmlFor="featured">
-          Destacado:
+        {/* input tags */}
+        <div className="w-full relative">
+          <label
+            htmlFor="tags"
+            className="
+            text-base font-bold text-gray-900"
+          >
+            Tags:
+          </label>
+          <input
+            {...register('tags', {
+              required: {
+                value: true,
+                message: 'El producto debe de tener tags',
+              },
+              minLength: {
+                value: 1,
+                message: 'El producto debe de contener al menos un tag',
+              },
+              validate: value => {
+                if (value.trim().length === 0) {
+                  return 'Los tags no pueden ser solo espacios'
+                }
+                if (/^(,|\s*,\s*,|,,)/.test(value)) {
+                  return 'Los tags no pueden comenzar con comas ni tener comas consecutivas'
+                }
+                if (!/^([^\s,][^,]*)(,\s*[^\s,][^,]*)*$/.test(value)) {
+                  return 'Los tags deben estar separados por comas, ejemplo: tecnologia, sonido, computadores y dispositivos, memoria'
+                }
+                return true
+              },
+            })}
+            type="text"
+            name="tags"
+            id="tags"
+            className="
+          peer border h-10 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+        focus:outline-none 
+          focus:ring-2 
+          focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder="TV Box, Android, Smart TV, Netflix, YouTube, Spotify, Prime Video, Bluetooth"
+          />
+          {errors.tags && <span>{errors.tags.message}</span>}
+        </div>
+        {/* input featured */}
+        <div className="w-full relative flex flex-col">
+          <label htmlFor="featured" className="text-base font-bold text-gray-900">
+            Destacado:
+          </label>
           <input
             {...register('featured')}
             checked={featured}
             onChange={e => {
               setfeatured(!featured)
             }}
-            defaultValue={productEdit.tags}
             type="checkbox"
             name="featured"
             id="featured"
           />
-        </label>
-        <label htmlFor="caracteristicas">
-          Caracteristicas:
+        </div>
+        {/* input caracteristicas */}
+        <div className="w-full relative">
+          <label
+            htmlFor="caracteristicas"
+            className="
+            text-base font-bold text-gray-900"
+          >
+            Caracteristicas:
+          </label>
           <input
             {...register('caracteristicas', {
               required: {
@@ -213,11 +307,27 @@ export default function EditProductComponent({ productEdit, setRender }) {
             type="text"
             name="caracteristicas"
             id="caracteristicas"
+            className="
+          peer border h-10 w-full 
+          border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+        focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder="Convierte cualquier televisor en Smart TV, Compatible con Netflix, YouTube, Prime Video, Spotify, entre otras apps, Conexión HDMI y WiFi, Incluye control remoto multifunción, Interfaz Android fácil de usar, Soporte de 2GB RAM y 16GB almacenamiento"
           />
           {errors.caracteristicas && <span>{errors.caracteristicas.message}</span>}
-        </label>
-        <label htmlFor="content">
-          Descripcion:
+        </div>
+        {/* input content */}
+        <div className="w-full relative">
+          <label
+            htmlFor="content"
+            className="
+            text-base font-bold text-gray-900 "
+          >
+            Descripcion:
+          </label>
           <textarea
             {...register('content', {
               required: {
@@ -228,9 +338,18 @@ export default function EditProductComponent({ productEdit, setRender }) {
             })}
             id="content"
             name="content"
+            className="
+          peer border h-20 w-full 
+        border-gray-400 p-2 rounded
+        placeholder-shown:border-b-gray-400 
+          focus:outline-none 
+          focus:ring-2 
+        focus:ring-gray-400 
+          focus:border-transparent"
+            placeholder="Disfruta de tus plataformas favoritas directamente en tu televisor con esta TV Box Android. Accede a aplicaciones como Netflix, YouTube, Prime Video, Spotify y más. Fácil de instalar y usar, ideal para modernizar tu entretenimiento."
           ></textarea>
           {errors.content && <span>{errors.content.message}</span>}
-        </label>
+        </div>
         <div>
           <button> Enviar</button>
         </div>
