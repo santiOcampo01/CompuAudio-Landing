@@ -62,7 +62,7 @@ export default function FormFunction({ setReload }) {
   }
 
   return (
-    <section className="absolute inset-2/4 flex flex-col justify-center items-center w-[350px]">
+    <section className="absolute z-50 left-1/2 -translate-x-1/2 top-[4rem] sm:top-[-2rem] w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
@@ -73,9 +73,17 @@ export default function FormFunction({ setReload }) {
           color: red;}
           `}
       </style>
-      {/* <button className="p-6 text-2xl inline-block">x</button> */}
-      <form className="bg-white opacity-100 flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-full relative mb-5">
+      <h2 className="font-bold font-lg self-start px-5 pt-5">Añadir un producto</h2>
+      <form className="flex flex-col gap-5 p-5 overflow-y-auto max-h-[70vh] sm:max-h-[60vh]" onSubmit={handleSubmit(onSubmit)}>
+        {/* input titulo */}
+        <div className="w-full relative">
+          <label
+            htmlFor="title"
+            className="
+            text-base font-bold text-gray-900 "
+          >
+            Nombre del producto:
+          </label>
           <input
             {...register('title', {
               required: { value: true, message: 'El producto debe de tener un nombre' },
@@ -84,35 +92,25 @@ export default function FormFunction({ setReload }) {
             type="text"
             name="title"
             id="title"
-            className="
-          peer border h-10 w-full 
+            className="border h-10 w-full 
         border-gray-400 p-2 rounded
         placeholder-shown:border-b-gray-400 
           focus:outline-none 
           focus:ring-2 
-        focus:ring-gray-400 
-          focus:border-transparent"
-            placeholder=" "
+        focus:ring-gray-400"
+            placeholder="TV Box"
           />
-          <label
-            htmlFor="title"
-            className="absolute -top-6 left-1 
-            text-base font-bold text-gray-500 
-            transition-all 
-            peer-placeholder-shown:text-base 
-          peer-placeholder-shown:top-2 
-          peer-placeholder-shown:font-normal 
-        peer-placeholder-shown:text-gray-400
-          peer-focus:-top-6 
-          peer-focus:text-base  
-          peer-focus:font-bold 
-          peer-focus:text-gray-800"
-          >
-            Nombre del producto:
-          </label>
           {errors.title && <span>{errors.title.message}</span>}
         </div>
-        <div className="w-full relative mb-5">
+        {/* input imagen */}
+        <div className="w-full relative">
+          <label
+            htmlFor="imageName"
+            className="
+          text-base font-bold text-gray-900"
+          >
+            Imagen del producto:
+          </label>
           <input
             {...register('imageName', {
               required: {
@@ -125,8 +123,7 @@ export default function FormFunction({ setReload }) {
             name="imageName"
             id="imageName"
             accept="image/png, image/jpeg, image/webp"
-            className="
-          peer border h-10 w-full 
+            className=" border h-10 w-full 
         border-gray-400 p-2 rounded
         placeholder-shown:border-b-gray-400 
           focus:outline-none 
@@ -135,25 +132,13 @@ export default function FormFunction({ setReload }) {
           focus:border-transparent"
             placeholder=" "
           />
-          <label
-            htmlFor="imageName"
-            className="absolute -top-6 left-1 
-          text-base font-bold text-gray-500 
-          transition-all 
-          peer-placeholder-shown:text-base 
-          peer-placeholder-shown:top-2 
-          peer-placeholder-shown:font-normal 
-        peer-placeholder-shown:text-gray-400
-          peer-focus:-top-6 
-          peer-focus:text-base  
-          peer-focus:font-bold 
-          peer-focus:text-gray-800"
-          >
-            Imagen del producto:
-            {errors.imageName && <span>{errors.imageName.message}</span>}
-          </label>
+          {errors.imageName && <span>{errors.imageName.message}</span>}
         </div>
-        <div className="w-full relative mb-5">
+        {/* input precio */}
+        <div className="w-full relative">
+          <label htmlFor="price" className="text-base font-bold text-gray-900">
+            Precio:
+          </label>
           <input
             {...register('price', {
               required: {
@@ -180,28 +165,20 @@ export default function FormFunction({ setReload }) {
             }}
             className=" peer border h-10 w-full border-gray-400 p-2 rounded placeholder-shown:border-b-gray-400 focus:outline-none
             focus:ring-2 focus:ring-gray-400 focus:border-transparent"
-            placeholder=" "
+            placeholder="100.000"
           />
-          <label
-            htmlFor="price"
-            className="absolute -top-6 left-1 
-            text-base font-bold text-gray-500 
-            transition-all 
-            peer-placeholder-shown:text-base 
-          peer-placeholder-shown:top-2 
-          peer-placeholder-shown:font-normal 
-        peer-placeholder-shown:text-gray-400
-          peer-focus:-top-6 
-          peer-focus:text-base  
-          peer-focus:font-bold 
-          peer-focus:text-gray-800"
-          >
-            Precio:
-          </label>
+
           {errors.price && <span>{errors.price.message}</span>}
         </div>
-
-        <div className="w-full relative mb-5">
+        {/* input tags */}
+        <div className="w-full relative">
+          <label
+            htmlFor="tags"
+            className="
+            text-base font-bold text-gray-900"
+          >
+            Tags:
+          </label>
           <input
             {...register('tags', {
               required: {
@@ -236,32 +213,15 @@ export default function FormFunction({ setReload }) {
           focus:ring-2 
           focus:ring-gray-400 
           focus:border-transparent"
-            placeholder=" "
+            placeholder="TV Box, Android, Smart TV, Netflix, YouTube, Spotify, Prime Video, Bluetooth"
           />
-          <label
-            htmlFor="tags"
-            className="absolute -top-6 left-1 
-            text-base font-bold text-gray-500 
-            transition-all 
-            peer-placeholder-shown:text-base 
-          peer-placeholder-shown:top-2 
-          peer-placeholder-shown:font-normal 
-        peer-placeholder-shown:text-gray-400
-          peer-focus:-top-6 
-          peer-focus:text-base  
-          peer-focus:font-bold 
-          peer-focus:text-gray-800"
-          >
-            Tags:
-          </label>
           {errors.tags && <span>{errors.tags.message}</span>}
         </div>
-        <div className="w-full relative mb-5 flex flex-col">
-          <label
-            htmlFor="title"
-            className='flex-col'
-            >
-              Destacado:
+        {/* input featured */}
+        <div className="w-full relative flex flex-col">
+          <label htmlFor="featured" className="text-base font-bold text-gray-900">
+            Destacado:
+          </label>
           <input
             {...register('featured')}
             checked={featured}
@@ -272,9 +232,16 @@ export default function FormFunction({ setReload }) {
             name="featured"
             id="featured"
           />
-          </label>
         </div>
-        <div className="w-full relative mb-5 flex flex-col">
+        {/* input caracteristicas */}
+        <div className="w-full relative">
+          <label
+            htmlFor="caracteristicas"
+            className="
+            text-base font-bold text-gray-900"
+          >
+            Caracteristicas:
+          </label>
           <input
             {...register('caracteristicas', {
               required: {
@@ -309,27 +276,19 @@ export default function FormFunction({ setReload }) {
           focus:ring-2 
         focus:ring-gray-400 
           focus:border-transparent"
-            placeholder=" "
+            placeholder="Convierte cualquier televisor en Smart TV, Compatible con Netflix, YouTube, Prime Video, Spotify, entre otras apps, Conexión HDMI y WiFi, Incluye control remoto multifunción, Interfaz Android fácil de usar, Soporte de 2GB RAM y 16GB almacenamiento"
           />
-          <label
-            htmlFor="title"
-            className="absolute -top-6 left-1 
-            text-base font-bold text-gray-500 
-            transition-all 
-            peer-placeholder-shown:text-base 
-          peer-placeholder-shown:top-2 
-          peer-placeholder-shown:font-normal 
-        peer-placeholder-shown:text-gray-400
-          peer-focus:-top-6 
-          peer-focus:text-base  
-          peer-focus:font-bold 
-          peer-focus:text-gray-800"
-          >
-            Caracteristicas:
-          </label>
           {errors.caracteristicas && <span>{errors.caracteristicas.message}</span>}
         </div>
-          <div className="w-full relative mb-5 flex flex-col">
+        {/* input content */}
+        <div className="w-full relative">
+          <label
+            htmlFor="content"
+            className="
+            text-base font-bold text-gray-900 "
+          >
+            Descripcion:
+          </label>
           <textarea
             {...register('content', {
               required: {
@@ -340,36 +299,20 @@ export default function FormFunction({ setReload }) {
             })}
             id="content"
             name="content"
-                      className="
-          peer border h-10 w-full 
+            className="
+          peer border h-20 w-full 
         border-gray-400 p-2 rounded
         placeholder-shown:border-b-gray-400 
           focus:outline-none 
           focus:ring-2 
         focus:ring-gray-400 
           focus:border-transparent"
-            placeholder=" "
+            placeholder="Disfruta de tus plataformas favoritas directamente en tu televisor con esta TV Box Android. Accede a aplicaciones como Netflix, YouTube, Prime Video, Spotify y más. Fácil de instalar y usar, ideal para modernizar tu entretenimiento."
           ></textarea>
-          <label
-            htmlFor="title"
-            className="absolute -top-6 left-1 
-            text-base font-bold text-gray-500 
-            transition-all 
-            peer-placeholder-shown:text-base 
-          peer-placeholder-shown:top-2 
-          peer-placeholder-shown:font-normal 
-        peer-placeholder-shown:text-gray-400
-          peer-focus:-top-6 
-          peer-focus:text-base  
-          peer-focus:font-bold 
-          peer-focus:text-gray-800"
-          >
-            Descripcion:
-          </label>
           {errors.content && <span>{errors.content.message}</span>}
         </div>
         <div>
-          <button className='p-4 bg-amber-600 w-full text-gray-50'> Enviar</button>
+          <button className="py-2 px-4 bg-amber-600 w-full text-gray-50"> Enviar</button>
         </div>
       </form>
     </section>

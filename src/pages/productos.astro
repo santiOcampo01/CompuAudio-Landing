@@ -29,8 +29,8 @@ const destacados = await getCollection('products')
               </button>
               <Image class="producImage" src={data.image} alt={data.title} loading="lazy" inferSize={true} width={80} height={80} />
               <h3>{data.title}</h3>
-              <span class="precio">${data.price.toLocaleString()}</span>
-              <a href={`/productos/${slug}`} class="buttonSeeProducts">
+              <span class="precio text-orange-500">${data.price.toLocaleString()}</span>
+              <a href={`/productos/${slug}`} class="buttonSeeProducts bg-orange-500 hover:bg-amber-500">
                 Ver productos
               </a>
             </div>
@@ -122,24 +122,18 @@ const destacados = await getCollection('products')
 
   .productsPage .productoCard .precio {
     font-weight: bold;
-    color: #444;
     margin-bottom: 0.8rem;
     display: block;
   }
 
   .productsPage .productoCard .buttonSeeProducts {
     display: inline-block;
-    background-color: #c55600;
     color: white;
     padding: 0.6rem 1.2rem;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
     transition: background 0.3s ease;
-  }
-
-  .productsPage .productoCard .buttonSeeProducts:hover {
-    background-color: #a84400;
   }
 
   .productsPage .productoCard .iconoCarrito {

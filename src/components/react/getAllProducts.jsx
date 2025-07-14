@@ -8,8 +8,8 @@ export default function ProducstCards() {
   const [editProduct, setEditProduct] = useState()
   const [render, setRender] = useState(false)
   const [buttonClicked, setButtonClicked] = useState('')
-  const [reload, setReload] = useState(false);
-  const [renderDelete, setRenderDelete] = useState(false);
+  const [reload, setReload] = useState(false)
+  const [renderDelete, setRenderDelete] = useState(false)
   const [message, setMessage] = useState({ message: '', type: '' })
 
   useEffect(() => {
@@ -68,7 +68,9 @@ export default function ProducstCards() {
     setReload(!reload)
   }
   return (
-    <section className="productContainer px-4 py-4 flex flex-col w-full">
+    <section
+      className="productContainer px-4 py-4 flex flex-col w-full"
+    >
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
@@ -77,15 +79,16 @@ export default function ProducstCards() {
     `}
       </style>
 
-      <div className="mb-5">
+      <div className="relative mb-5">
         <button
-          className="w-full sm:max-w-44 py-3 px-6 font-bold bg-amber-700 text-gray-100 text-center cursor-pointer hover:bg-amber-600"
+          className="w-full sm:max-w-44 py-3 px-6 font-bold bg-orange-500 text-gray-100 text-center cursor-pointer hover:bg-amber-500"
           onClick={handleAdd}
         >
           Add product
         </button>
+        {reload && <AddProduct setReload={setReload} />}
       </div>
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map(product => {
           let key = products.indexOf(product)
           return (
@@ -98,12 +101,12 @@ export default function ProducstCards() {
               />
               <div className="pt-4 pb-2 px-2 min-h-28">
                 <h3 className="font-bold text-lg line-clamp-2">{product.title}</h3>
-                <span className="font-bold text-amber-600">${product.price}</span>
+                <span className="font-bold text-orange-600">${product.price.toLocaleString('es-CO')}</span>
               </div>
               <div className="flex flex-col sm:flex-row justify-between gap-2 mt-2">
                 <button
                   id={product.sha}
-                  className="bg-amber-700 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-600"
+                  className="bg-orange-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-500"
                   onClick={e => {
                     if (e.target.id == buttonClicked) {
                       setRender(!render)
@@ -117,7 +120,7 @@ export default function ProducstCards() {
                   Editar
                 </button>
                 <button
-                  className="bg-gray-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-gray-600"
+                  className="bg-gray-700 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-gray-600"
                   onClick={() => {
                     let imageName = product.image.split('/')
                     handleDelete(product.title, product.sha, imageName[2])
@@ -130,7 +133,6 @@ export default function ProducstCards() {
           )
         })}
       </div>
-      {reload && <AddProduct setReload={setReload} />}
       {render && <EditProductComponent productEdit={editProduct} setRender={setRender} />}
     </section>
   )

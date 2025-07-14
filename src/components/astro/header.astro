@@ -18,7 +18,7 @@ import imageLogo from '../../../public/favicon/logoCompuAudio-Copy.png'
   <a class="containerLeft" id="containerLeft" href="/" aria-label="Ir a inicio">
     <Image src={imageLogo} alt="Logo de CompuAudio" loading="eager" />
   </a>
-  <button class="hamburger" aria-label="Menú" aria-expanded="false"> ☰ </button>
+  <button class="hamburger text-orange-500" aria-label="Menú" aria-expanded="false"> ☰ </button>
   <nav class="containerRight" aria-label="Menú principal">
     <ul>
       <li>
@@ -28,7 +28,7 @@ import imageLogo from '../../../public/favicon/logoCompuAudio-Copy.png'
         <a href="/productos" class="products">Productos</a>
       </li>
       <li>
-        <a href="/carrito" class="carrito">Carrito</a>
+        <a href="/carrito" class="carrito bg-orange-500 hover:bg-amber-500">Carrito</a>
       </li>
     </ul>
   </nav>
@@ -72,8 +72,6 @@ import imageLogo from '../../../public/favicon/logoCompuAudio-Copy.png'
     white-space: nowrap;
   }
 
-
-
   @keyframes expandWidth {
     from {
       width: 0;
@@ -89,7 +87,6 @@ import imageLogo from '../../../public/favicon/logoCompuAudio-Copy.png'
     background: none;
     border: none;
     cursor: pointer;
-    color: #c55600;
   }
 
   .containerRight {
@@ -134,14 +131,9 @@ import imageLogo from '../../../public/favicon/logoCompuAudio-Copy.png'
   .header .containerRight ul li .carrito {
     color: #ffffff;
     padding: 0.5rem 2rem;
-    background-color: #c55600;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-
-  .header .containerRight ul li .carrito:hover {
-    background-color: #a84400;
   }
 
   @media (max-width: 868px) {

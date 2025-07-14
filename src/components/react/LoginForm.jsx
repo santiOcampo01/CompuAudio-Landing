@@ -35,12 +35,14 @@ export default function LoginForm({ setLogged, setUserName }) {
           }
         })
     } catch (error) {
+      alert(`${url}/login/`)
       setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
       setLogged(false)
     }
   }
 
   const manageData = async data => {
+    alert(JSON.stringify(data))
     const userName = await sendToServer(data)
     setUserName(userName)
   }
@@ -127,7 +129,7 @@ export default function LoginForm({ setLogged, setUserName }) {
         text-white p-2 
         rounded-lg 
         cursor-pointer 
-        hover:bg-orange-400"
+        hover:bg-amber-500"
       >
         Iniciar sesión
       </button>

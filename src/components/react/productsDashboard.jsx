@@ -26,7 +26,7 @@ export default function ProductsDashboard({ userName }) {
           <ul className="flex  flex-col  justify-around md:gap-2 gap-1">
             <li>
               <button
-                className="w-full p-3 bg-gray-800 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-gray-700"
+                className="w-full p-3 bg-orange-500 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-amber-500"
                 onClick={handleProducts}
               >
                 Productos
@@ -34,7 +34,7 @@ export default function ProductsDashboard({ userName }) {
             </li>
             <li>
               <button
-                className="w-full p-3 bg-gray-800 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-gray-700"
+                className="w-full p-3 bg-orange-500 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-amber-500"
                 onClick={handleCredentials}
               >
                 Usuario
@@ -42,7 +42,7 @@ export default function ProductsDashboard({ userName }) {
             </li>
             <li>
               <button
-                className="w-full p-3 bg-gray-800 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-gray-700"
+                className="w-full p-3 bg-orange-500 rounded-xl text-gray-100 text-center cursor-pointer hover:bg-amber-500"
                 onClick={logout}
               >
                 Cerrar Sesión

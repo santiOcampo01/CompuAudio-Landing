@@ -42,7 +42,9 @@ function createOrUpdateItem(slug, cart) {
   let li = list.querySelector(`[data-item="${slug}"]`)
 
   if (li) {
-    li.querySelector('.cantidad-precio').innerHTML = `x${item.quantity} – <span class="precio">$${subtotal.toLocaleString()}</span>`
+    li.querySelector('.cantidad-precio').innerHTML = `x${
+      item.quantity
+    } – <span class="precio text-orange-500 ">$${subtotal.toLocaleString()}</span>`
   } else {
     li = document.createElement('li')
     li.classList.add('item-carrito')
@@ -52,11 +54,11 @@ function createOrUpdateItem(slug, cart) {
         <img src="${producto.imagen}" alt="${producto.nombre}" class="img-producto" />
         <div class="detalles-producto">
           <h4>${producto.nombre}</h4>
-          <p class="cantidad-precio">x${item.quantity} – <span class="precio">$${subtotal.toLocaleString()}</span></p>
+          <p class="cantidad-precio">x${item.quantity} – <span class="precio text-orange-500">$${subtotal.toLocaleString()}</span></p>
           <div class="acciones">
-            <button class="btn-add" data-slug="${slug}">+</button>
-            <button class="btn-sub" data-slug="${slug}">−</button>
-            <button class="btn-remove" data-slug="${slug}">Eliminar</button>
+            <button class="btn-add bg-orange-500 hover:bg-amber-500" data-slug="${slug}">+</button>
+            <button class="btn-sub bg-orange-500 hover:bg-amber-500" data-slug="${slug}">−</button>
+            <button class="btn-remove bg-orange-500 hover:bg-amber-500" data-slug="${slug}">Eliminar</button>
           </div>
         </div>
       </div>

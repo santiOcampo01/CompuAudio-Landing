@@ -160,7 +160,7 @@ export default function UpdateForm({ userName, setUserName }) {
         text-white p-2 
         rounded-lg 
         cursor-pointer 
-        hover:bg-orange-400"
+        hover:bg-orange-600"
       >
         Guardar
       </button>
