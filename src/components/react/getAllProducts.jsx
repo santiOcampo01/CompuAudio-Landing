@@ -11,6 +11,7 @@ export default function ProducstCards() {
   const [reload, setReload] = useState(false)
   const [renderDelete, setRenderDelete] = useState(false)
   const [message, setMessage] = useState({ message: '', type: '' })
+  const [positionComponent, setPositionComponent] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     if (sessionStorage.getItem('products')) {
@@ -67,6 +68,13 @@ export default function ProducstCards() {
   const handleAdd = () => {
     setReload(!reload)
   }
+
+  const handleEdit = (product, positionX, positionY) => {
+    console.log('position', positionX, positionY)
+    setEditProduct(product)
+    setPositionComponent({ x: positionX, y: positionY })
+    setRender(!render)
+  }
   return (
     <section className="productContainer px-4 py-4 flex flex-col w-full">
       {message && <p className={message.type}>{message.message}</p>}
@@ -106,8 +114,7 @@ export default function ProducstCards() {
                   id={product.sha}
                   className=" bg-orange-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-500"
                   onClick={e => {
-                      setEditProduct(product)
-                      setRender(!render)
+                    handleEdit(product, e.clientX, e.clientY)
                   }}
                 >
                   Editar
@@ -126,7 +133,11 @@ export default function ProducstCards() {
           )
         })}
       </div>
-      {render && <EditProductComponent productEdit={editProduct} setRender={setRender} />}
+      {render && (
+        <div className="absolute z-50 bg-white shadow-lg rounded-lg p-4" style={{ left: positionComponent.x, top: positionComponent.y }}>
+          <EditProductComponent productEdit={editProduct} setRender={setRender} />
+        </div>
+      )}
     </section>
   )
 }
