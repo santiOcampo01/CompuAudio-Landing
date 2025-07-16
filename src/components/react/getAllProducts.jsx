@@ -69,14 +69,13 @@ export default function ProducstCards() {
     setReload(!reload)
   }
 
-  const handleEdit = (product, positionX, positionY) => {
-    console.log('position', positionX, positionY)
+  const handleEdit = (product, positionx, positiony) => {
     setEditProduct(product)
-    setPositionComponent({ x: positionX, y: positionY })
+    setPositionComponent({ x: positionx, y: positiony })
     setRender(!render)
   }
   return (
-    <section className="productContainer px-4 py-4 flex flex-col w-full">
+    <section className="relative productContainer px-4 py-4 flex flex-col w-full">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
@@ -94,11 +93,11 @@ export default function ProducstCards() {
         </button>
         {reload && <AddProduct setReload={setReload} />}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {products.map(product => {
-          let key = products.indexOf(product)
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {products.map((product, index) => {
+          let key = index
           return (
-            <article className="relative flex flex-col rounded-xl p-4 bg-gray-50 shadow" key={key + 1}>
+            <article id={index} className="flex flex-col rounded-xl p-4 bg-gray-50 shadow" key={index}>
               <img
                 className="w-full h-48 max-h-[250px] rounded-xl object-cover"
                 src={`${product.image}`}
@@ -114,7 +113,13 @@ export default function ProducstCards() {
                   id={product.sha}
                   className=" bg-orange-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-500"
                   onClick={e => {
-                    handleEdit(product, e.clientX, e.clientY)
+                    console.log('hum,', e.currentTarget.closest('article').offsetLeft)
+                    console.log(e.currentTarget.parentElement.getBoundingClientRect().height)
+                    handleEdit(
+                      product,
+                      e.currentTarget.closest('article').offsetLeft - 30,
+                      e.currentTarget.closest('article').offsetTop - e.currentTarget.parentElement.getBoundingClientRect().height * 3,
+                    )
                   }}
                 >
                   Editar
@@ -132,12 +137,12 @@ export default function ProducstCards() {
             </article>
           )
         })}
-      </div>
       {render && (
-        <div className="absolute z-50 bg-white shadow-lg rounded-lg p-4" style={{ left: positionComponent.x, top: positionComponent.y }}>
+        <div className="absolute" style={{ left: positionComponent.x, top: positionComponent.y }}>
           <EditProductComponent productEdit={editProduct} setRender={setRender} />
         </div>
       )}
+      </div>
     </section>
   )
 }

@@ -84,7 +84,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
   }
 
   return (
-    <div className="absolute z-50 left-60 -translate-x-1/2 top-[50%] sm:top-[50%] w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl">
+    <div className="absolute  z-50   top-[0] sm:top-[0] w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
