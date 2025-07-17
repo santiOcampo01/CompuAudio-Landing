@@ -116,8 +116,11 @@ export default function ProducstCards() {
                     console.log('hum,', e.currentTarget.closest('article').offsetLeft)
                     console.log(e.currentTarget.parentElement.getBoundingClientRect().height)
                     handleEdit(
+                      //le pasamos todo el product a handle
                       product,
+                      //calcula la posicion de el formulario de editar respescto a la posicion del articule
                       e.currentTarget.closest('article').offsetLeft - 30,
+                      // calcula la posicion de el formulario de editar respescto a la posicion del articule
                       e.currentTarget.closest('article').offsetTop - e.currentTarget.parentElement.getBoundingClientRect().height * 3,
                     )
                   }}
