@@ -113,23 +113,29 @@ export default function ProducstCards() {
                   id={product.sha}
                   className=" bg-orange-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-500"
                   onClick={e => {
-                    console.log('hum,', e.currentTarget.closest('article').offsetLeft)
-                    console.log(e.currentTarget.parentElement.getBoundingClientRect().height)
-                    handleEdit(
-                      //le pasamos todo el product a handle
-                      product,
-                      //calcula la posicion de el formulario de editar respescto a la posicion del articule
-                      e.currentTarget.closest('article').offsetLeft - 30,
-                      // calcula la posicion de el formulario de editar respescto a la posicion del articule
-                      e.currentTarget.closest('article').offsetTop - e.currentTarget.parentElement.getBoundingClientRect().height * 3,
-                    )
-                    }}
-                  >
-                    {render && editProduct?.sha === product.sha ? 'Cerrar' : 'Editar'}
-                  </button>
-                  <button
-                    className="bg-gray-700 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-gray-600"
-                    onClick={() => {
+                    let productX = e.currentTarget.closest('article').offsetLeft - 30
+                    let productY =
+                      e.currentTarget.closest('article').offsetTop - e.currentTarget.parentElement.getBoundingClientRect().height - 70
+                    console.log(e.currentTarget.closest('article').getBoundingClientRect())
+                    if (e.target.getBoundingClientRect().top < window.innerHeight / 2) {
+                      productY = e.currentTarget.closest('div').offsetTop + e.currentTarget.parentElement.getBoundingClientRect().height
+                    }
+
+                      handleEdit(
+                        //le pasamos todo el product a handle
+                        product,
+                        //calcula la posicion de el formulario de editar respescto a la posicion del articule
+                        productX,
+                        // calcula la posicion de el formulario de editar respescto a la posicion del articule
+                        productY,
+                      )
+                  }}
+                >
+                  {render && editProduct?.sha === product.sha ? 'Cerrar' : 'Editar'}
+                </button>
+                <button
+                  className="bg-gray-700 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-gray-600"
+                  onClick={() => {
                     let imageName = product.image.split('/')
                     handleDelete(product.title, product.sha, imageName[2])
                   }}
@@ -140,11 +146,11 @@ export default function ProducstCards() {
             </article>
           )
         })}
-      {render && (
-        <div className="absolute" style={{ left: positionComponent.x, top: positionComponent.y }}>
-          <EditProductComponent productEdit={editProduct} setRender={setRender} />
-        </div>
-      )}
+        {render && (
+          <div className="absolute" style={{ left: positionComponent.x, top: positionComponent.y }}>
+            <EditProductComponent productEdit={editProduct} setRender={setRender} />
+          </div>
+        )}
       </div>
     </section>
   )
