@@ -89,7 +89,7 @@ export default function ProducstCards() {
           className="w-full sm:max-w-44 py-3 px-6 font-bold bg-orange-500 text-gray-100 text-center cursor-pointer hover:bg-amber-500"
           onClick={handleAdd}
         >
-          Add product
+          {reload ? 'Cerrar' : 'Agregar'}
         </button>
         {reload && <AddProduct setReload={setReload} />}
       </div>
@@ -120,13 +120,13 @@ export default function ProducstCards() {
                       e.currentTarget.closest('article').offsetLeft - 30,
                       e.currentTarget.closest('article').offsetTop - e.currentTarget.parentElement.getBoundingClientRect().height * 3,
                     )
-                  }}
-                >
-                  Editar
-                </button>
-                <button
-                  className="bg-gray-700 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-gray-600"
-                  onClick={() => {
+                    }}
+                  >
+                    {render && editProduct?.sha === product.sha ? 'Cerrar' : 'Editar'}
+                  </button>
+                  <button
+                    className="bg-gray-700 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-gray-600"
+                    onClick={() => {
                     let imageName = product.image.split('/')
                     handleDelete(product.title, product.sha, imageName[2])
                   }}
