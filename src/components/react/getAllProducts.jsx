@@ -113,22 +113,85 @@ export default function ProducstCards() {
                   id={product.sha}
                   className=" bg-orange-500 w-full sm:flex-1 py-2 font-bold text-white cursor-pointer hover:bg-amber-500"
                   onClick={e => {
-                    let productX = e.currentTarget.closest('article').offsetLeft - 30
+                    const article = e.currentTarget.closest('article')
+                    const articleRect = article.getBoundingClientRect()
+                    const container = e.currentTarget.closest('.productContainer')
+
+                    // Dimensiones aproximadas del formulario
+                    const formWidth = {
+                      mobile: window.innerWidth * 0.9, // 90vw
+                      tablet: window.innerWidth * 0.85, // 85vw
+                      desktop: 450, // md:w-[450px]
+                      large: 350, // lg:w-[350px]
+                    }
+                    // Determinar el ancho del formulario según el tamaño de la ventana
+                    let currentFormWidth = formWidth.mobile
+                    if (window.innerWidth >= 1024) {
+                      currentFormWidth = formWidth.large
+                    } else if (window.innerWidth >= 768) {
+                      currentFormWidth = formWidth.desktop
+                    } else if (window.innerWidth >= 640) {
+                      currentFormWidth = formWidth.tablet
+                    }
+
+                    // Calcular posición X relativa al contenedor
+                    const containerRect = container.getBoundingClientRect()
+                    let productX = 0
+                    
+                    // Posición del artículo relativa al contenedor
+                    const articleRelativeX = articleRect.left - containerRect.left
+                    const articleCenterX = articleRelativeX + articleRect.width / 2
+                    const formHalfWidth = currentFormWidth / 2
+                    
+                    // Ancho disponible del contenedor
+                    const containerWidth = containerRect.width
+                    
+                    // Verificar si el formulario se sale por la derecha
+                    if (articleCenterX + formHalfWidth > containerWidth - 20) {
+                      // Posicionar a la izquierda del artículo
+                      productX = articleRelativeX - currentFormWidth - 20
+                      // Si aún se sale por la izquierda, ajustar
+                      if (productX < 20) {
+                        productX = 20
+                      }
+                    } else if (articleCenterX - formHalfWidth < 20) {
+                      // Posicionar a la derecha del artículo si se sale por la izquierda
+                      productX = articleRelativeX + articleRect.width + 20
+                      // Si se sale por la derecha, ajustar
+                      if (productX + currentFormWidth > containerWidth - 20) {
+                        productX = containerWidth - currentFormWidth - 20
+                      }
+                    } else {
+                      // Centrar el formulario respecto al artículo
+                      productX = articleCenterX - formHalfWidth
+                    }
+                    
+                    // Verificación final para asegurar que no se salga de los límites
+                    if (productX < 20) {
+                      productX = 20
+                    } else if (productX + currentFormWidth > containerWidth - 20) {
+                      productX = containerWidth - currentFormWidth - 20
+                    }
+
+                    // Calcular posición Y
                     let productY =
                       e.currentTarget.closest('article').offsetTop - e.currentTarget.parentElement.getBoundingClientRect().height - 70
-                    console.log(e.currentTarget.closest('article').getBoundingClientRect())
                     if (e.target.getBoundingClientRect().top < window.innerHeight / 2) {
                       productY = e.currentTarget.closest('div').offsetTop + e.currentTarget.parentElement.getBoundingClientRect().height
                     }
+                    
+                    // Convertir a píxeles para el posicionamiento
+                    productX = `${productX}px`
+                    productY = `${productY}px`
 
-                      handleEdit(
-                        //le pasamos todo el product a handle
-                        product,
-                        //calcula la posicion de el formulario de editar respescto a la posicion del articule
-                        productX,
-                        // calcula la posicion de el formulario de editar respescto a la posicion del articule
-                        productY,
-                      )
+                    handleEdit(
+                      //le pasamos todo el product a handle
+                      product,
+                      //calcula la posicion de el formulario de editar respescto a la posicion del articule
+                      productX,
+                      // calcula la posicion de el formulario de editar respescto a la posicion del articule
+                      productY,
+                    )
                   }}
                 >
                   {render && editProduct?.sha === product.sha ? 'Cerrar' : 'Editar'}

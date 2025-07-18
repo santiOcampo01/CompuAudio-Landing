@@ -84,7 +84,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
   }
 
   return (
-    <div className="absolute  z-50  w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl">
+    <div className="absolute z-50 w-[90vw] sm:w-[85vw] md:w-[450px] lg:w-[350px] bg-white rounded-xl shadow-2xl">
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
@@ -114,7 +114,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
           `}
       </style>
       <h2 className="font-bold font-lg self-start px-5 pt-5">Editar {productEdit.title}</h2>
-      <form className="flex flex-col gap-5 p-5 overflow-y-auto max-h-[70vh] sm:max-h-[60vh]" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col gap-5 p-5 overflow-y-auto max-h-[70vh] sm:max-h-[60vh] w-full" onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full relative">
           <label
             htmlFor="title"
