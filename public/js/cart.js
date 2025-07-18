@@ -156,7 +156,7 @@ function enviarPorWhatsApp(slug) {
   })
 
   mensaje += `\n Total: $${total.toLocaleString()}`
-  const telefono = '573229651762'
+  const telefono = '573114009116'
   window.open(`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`, '_blank')
 }
 

@@ -175,7 +175,7 @@ export default function ProducstCards() {
 
                     // Calcular posición Y
                     let productY =
-                      e.currentTarget.closest('article').offsetTop - e.currentTarget.parentElement.getBoundingClientRect().height - 120
+                      e.currentTarget.closest('article').offsetTop - e.currentTarget.parentElement.getBoundingClientRect().height - 150
                     if (e.target.getBoundingClientRect().top < window.innerHeight / 2) {
                       productY = e.currentTarget.closest('div').offsetTop + e.currentTarget.parentElement.getBoundingClientRect().height
                     }
