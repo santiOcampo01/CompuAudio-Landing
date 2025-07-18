@@ -37,8 +37,6 @@ CompuAudio es una tienda online de productos de audio y tecnología, desarrollad
    ```bash
    cd compuAudio
    npm install
-   cd ../backCompuAudio
-   npm install
    ```
 2. Configura las variables de entorno necesarias para la conexión con GitHub y la autenticación.
 3. Inicia ambos servidores (frontend y backend) según la documentación interna de cada carpeta.
