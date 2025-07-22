@@ -1,5 +1,16 @@
 import { useState } from 'react'
 
+const useNotification = () => {
+    const [message, setMessage] = useState({message: '', type: ''})
+    const showNotification = (msg, type) => {
+        setMessage({ message: msg, type: type });
+        setTimeout(() => {
+            setMessage({ message: '', type: '' });
+        }, 3000); // Clear message after 3 seconds
+    }
+    return { message, showNotification };
+}
+
 export default function Notification() {
         const [message, setMessage] = useState({ message: '', type: '' })
     return (
