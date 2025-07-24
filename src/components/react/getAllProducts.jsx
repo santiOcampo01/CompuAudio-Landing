@@ -7,7 +7,6 @@ export default function ProducstCards() {
   const [products, setProducts] = useState([])
   const [editProduct, setEditProduct] = useState()
   const [render, setRender] = useState(false)
-  const [buttonClicked, setButtonClicked] = useState()
   const [reload, setReload] = useState(false)
   const [renderDelete, setRenderDelete] = useState(false)
   const [message, setMessage] = useState({ message: '', type: '' })

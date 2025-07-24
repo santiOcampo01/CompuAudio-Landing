@@ -54,7 +54,7 @@ export default function UpdateForm({ userName, setUserName }) {
   }
   return (
     <form onSubmit={handleSubmit(sendData)} className="relative flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
-      {showNotification}
+      {showNotification()}
       <div className="w-full relative mb-5">
         <input
           type="text"
