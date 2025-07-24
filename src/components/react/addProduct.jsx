@@ -43,7 +43,9 @@ export default function FormFunction({ setReload }) {
           if (data.success) {
             Notification({ message: 'Producto agregado exitosamente', type: 'success' })
             sessionStorage.removeItem('products')
-            setReload(false)
+            setTimeout(() => {
+              setReload(true)
+            }, 2000)
           } else {
             Notification({ message: 'Hubo un error al agregar el producto', type: 'error' })
           }

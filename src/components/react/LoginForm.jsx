@@ -49,7 +49,7 @@ export default function LoginForm({ setLogged, setUserName }) {
 
   return (
     <form onSubmit={handleSubmit(manageData)} className="relative flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
-      {showNotification}
+      {showNotification()}
       <div className="w-full relative mb-5">
         <input
           {...register('username', {

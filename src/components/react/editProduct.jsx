@@ -22,32 +22,43 @@ export default function EditProductComponent({ productEdit, setRender }) {
 
   const [featured, setfeatured] = useState(productEdit.featured)
   const [base64IMG, setBase64IMG] = useState('')
-  const [message, setMessage] = useState({ message: '', type: '' })
 
   async function updateProduct(data) {
-    const slug = data.title
+    const slug = data.title;
+    const endpoint = `${url}/produ/${slug}`;
+    const options = {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+
     try {
-      await fetch(`${url}/products/${slug}`, {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            Notification({ message: 'Producto editado exitosamente', type: 'success' })
-            sessionStorage.removeItem('products')
-            setRender(false)
-          } else {
-            Notification({ message: 'Hubo un error al editar el producto', type: 'error' })
-          }
-        })
-    } catch (err) {
-      Notification({ message: 'Error al conectar con el servidor', type: 'error' })
+      const response = await fetch(endpoint, options);
+      const result = await response.json();
+
+      if (result.success) {
+        handleSuccess();
+      } else {
+        handleError('Hubo un error al editar el producto');
+      }
+    } catch (error) {
+      handleError('Error al conectar con el servidor');
     }
+  }
+
+  function handleSuccess() {
+    Notification({ message: 'Producto editado exitosamente', type: 'success' });
+    sessionStorage.removeItem('products');
+    setTimeout(() => {
+      setRender(false);
+    }, 2000);
+  }
+
+  function handleError(message) {
+    Notification({ message, type: 'error' });
   }
 
   function handleFile(e) {
@@ -79,7 +90,6 @@ export default function EditProductComponent({ productEdit, setRender }) {
   return (
     <div className="absolute z-50 w-[90vw] sm:w-[85vw] md:w-[450px] lg:w-[350px] bg-white rounded-xl shadow-2xl">
       {showNotification()}
-      {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
           .success {

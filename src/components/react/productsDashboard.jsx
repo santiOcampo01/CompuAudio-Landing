@@ -15,6 +15,7 @@ export default function ProductsDashboard({ userName }) {
 
   const logout = () => {
     fetch(`${url}/logout/`, {
+      method: 'GET',
       credentials: 'include',
     })
     window.location.reload()
