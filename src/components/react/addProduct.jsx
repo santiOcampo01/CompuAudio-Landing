@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import useNotification from '../notification'
 const url = import.meta.env.PUBLIC_URL
 
 export default function FormFunction({ setReload }) {
+  const { Notification, showNotification } = useNotification()
   const {
     register,
     handleSubmit,
@@ -39,24 +41,15 @@ export default function FormFunction({ setReload }) {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            setMessage({ message: 'Producto agregado exitosamente', type: 'success' })
+            Notification({ message: 'Producto agregado exitosamente', type: 'success' })
             sessionStorage.removeItem('products')
             setReload(false)
-            setTimeout(() => {
-              setMessage({ message: '', type: '' })
-            }, 3000)
           } else {
-            setMessage({ message: 'Hubo un error al agregar el producto', type: 'error' })
-            setTimeout(() => {
-              setMessage({ message: '', type: '' })
-            }, 3000)
+            Notification({ message: 'Hubo un error al agregar el producto', type: 'error' })
           }
         })
     } catch (error) {
-      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
-      setTimeout(() => {
-        setMessage({ message: '', type: '' })
-      }, 3000)
+      Notification({ message: 'Error al conectar con el servidor', type: 'error' })
     }
   }
 
@@ -71,9 +64,8 @@ export default function FormFunction({ setReload }) {
   }
 
   return (
-    <section
-      className="absolute z-50 left-2/4 -translate-x-1/2 top-[100%] sm:top-[-5rem] w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl"
-    >
+    <section className="absolute z-50 left-2/4 -translate-x-1/2 top-[100%] sm:top-[-5rem] w-[95vw] sm:w-[90vw] md:w-[500px] lg:w-[400px] bg-white rounded-xl shadow-2xl">
+      {showNotification}
       <h2 className="font-bold font-lg self-start px-5 pt-5">Añadir un producto</h2>
       <form className="relative flex flex-col gap-5 p-5 overflow-y-auto max-h-[70vh] sm:max-h-[60vh]" onSubmit={handleSubmit(onSubmit)}>
         {/* input titulo */}

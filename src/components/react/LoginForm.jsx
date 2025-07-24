@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import useNotification from '../notification'
 const url = import.meta.env.PUBLIC_URL
 
 export default function LoginForm({ setLogged, setUserName }) {
+  const { Notification, showNotification } = useNotification()
   const {
     register,
     handleSubmit,
@@ -24,27 +26,18 @@ export default function LoginForm({ setLogged, setUserName }) {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            setMessage({ message: 'Inicio de sesion exitoso', type: 'success' })
+            Notification({ message: 'Inicio de sesion exitoso', type: 'success' })
             setTimeout(() => {
               setLogged(data.success)
             }, 3000)
-            setTimeout(() => {
-              setMessage({ message: '', type: '' })
-            }, 3000)
             return data.userLogin.username
           } else {
-            setMessage({ message: 'Usuario o contraseña incorrectos', type: 'error' })
+            Notification({ message: 'Usuario o contraseña incorrectos', type: 'error' })
             setLogged(data.success)
-            setTimeout(() => {
-              setMessage({ message: '', type: '' })
-            }, 3000)
           }
         })
     } catch (error) {
-      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
-      setTimeout(() => {
-        setMessage({ message: '', type: '' })
-      }, 3000)
+      Notification({ message: 'Error al conectar con el servidor', type: 'error' })
       setLogged(false)
     }
   }
@@ -56,6 +49,7 @@ export default function LoginForm({ setLogged, setUserName }) {
 
   return (
     <form onSubmit={handleSubmit(manageData)} className="relative flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
+      {showNotification}
       <div className="w-full relative mb-5">
         <input
           {...register('username', {

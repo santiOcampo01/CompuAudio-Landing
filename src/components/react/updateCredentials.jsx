@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import useNotification from '../notification'
 const url = import.meta.env.PUBLIC_URL
 
 export default function UpdateForm({ userName, setUserName }) {
+  const { Notification, showNotification } = useNotification()
   const {
     reset,
     register,
@@ -25,21 +27,21 @@ export default function UpdateForm({ userName, setUserName }) {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            setMessage({ message: 'La actualizacion fue exitosa', type: 'success' })
+            Notification({ message: 'La actualizacion fue exitosa', type: 'success' })
             setUserName(data.user.username)
             setTimeout(() => {
               setLogged(data.success)
             }, 3000)
             reset()
           } else {
-            setMessage({ message: data.message, type: 'error' })
+            Notification({ message: data.message, type: 'error' })
             setTimeout(() => {
               setLogged(data.success)
             }, 3000)
           }
         })
     } catch (error) {
-      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
+      Notification({ message: 'Error al conectar con el servidor', type: 'error' })
       setTimeout(() => {
         setLogged(data.success)
       }, 3000)
@@ -52,6 +54,7 @@ export default function UpdateForm({ userName, setUserName }) {
   }
   return (
     <form onSubmit={handleSubmit(sendData)} className="relative flex flex-col w-full gap-4 shadow px-5 pt-8 rounded-2xl">
+      {showNotification}
       <div className="w-full relative mb-5">
         <input
           type="text"
