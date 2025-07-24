@@ -2,7 +2,7 @@
 title: Audífonos A9 Pro
 image: /productsImages/Audífonos_inalámbricos_A9pro.webp
 price: 79900
-tags: ["Audífonos","Bluetooth","Cancelación de ruido","Batería larga","Pantalla táctil"]
+tags: ["Audífonos","Bluetooth","   Cancelación de ruido","Batería larga","Pantalla táctil"]
 featured: true
 caracteristicas: ["Pantalla táctil","Sonido de calidad","Cancelación de ruido (ANC)","Larga batería","Ambient Sound","carga rápida","compatible con dispositivos iOS y Android"]
 ---
