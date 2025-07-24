@@ -2,7 +2,7 @@
 title: Audífonos Inalámbricos M26
 image: /productsImages/Audífonos Inalámbricos M26.webp
 price: 69900
-tags: ["Audífonos","Bluetooth","Inalámbricos","Estuche cargador","Diseño moderno","Alta fidelidad","Compactos"]
+tags: ["Audífonos","Bluetooth","    Inalámbricos","Estuche cargador","Diseño moderno","Alta fidelidad","Compactos"]
 featured: false
 caracteristicas: ["Diseño elegante en blanco o negro","Conexión Bluetooth para mayor libertad","Estuche con indicador tipo velocímetro","Sonido de alta fidelidad y bajos profundos","Buena cancelación de ruido exterior","Cómodos para uso prolongado","Ideal para llamadas","música y uso diario"]
 ---
