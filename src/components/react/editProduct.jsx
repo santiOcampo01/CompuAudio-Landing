@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import useNotification from '../notification.jsx'
 const url = import.meta.env.PUBLIC_URL
 
 export default function EditProductComponent({ productEdit, setRender }) {
+  const { showNotification, Notification } = useNotification()
   const {
     register,
     handleSubmit,
@@ -36,24 +38,15 @@ export default function EditProductComponent({ productEdit, setRender }) {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            setMessage({ message: 'Producto editado exitosamente', type: 'success' })
+            Notification({ message: 'Producto editado exitosamente', type: 'success' })
             sessionStorage.removeItem('products')
             setRender(false)
-            setTimeout(() => {
-              setMessage({ message: '', type: '' })
-            }, 3000)
           } else {
-            setMessage({ message: 'Hubo un error al editar el producto', type: 'error' })
-            setTimeout(() => {
-              setMessage({ message: '', type: '' })
-            }, 3000)
+            Notification({ message: 'Hubo un error al editar el producto', type: 'error' })
           }
         })
     } catch (err) {
-      setMessage({ message: 'Error al conectar con el servidor', type: 'error' })
-      setTimeout(() => {
-        setMessage({ message: '', type: '' })
-      }, 3000)
+      Notification({ message: 'Error al conectar con el servidor', type: 'error' })
     }
   }
 
@@ -85,6 +78,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
 
   return (
     <div className="absolute z-50 w-[90vw] sm:w-[85vw] md:w-[450px] lg:w-[350px] bg-white rounded-xl shadow-2xl">
+      {showNotification()}
       {message && <p className={message.type}>{message.message}</p>}
       <style>
         {`
