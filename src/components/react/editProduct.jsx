@@ -25,7 +25,7 @@ export default function EditProductComponent({ productEdit, setRender }) {
 
   async function updateProduct(data) {
     const slug = data.title;
-    const endpoint = `${url}/produ/${slug}`;
+    const endpoint = `${url}/products/${slug}`;
     const options = {
       method: 'PUT',
       credentials: 'include',
