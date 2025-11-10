@@ -1,45 +1,60 @@
 ---
-const { title } = Astro.props
+const {
+  title = 'CompuAudio Pereira | Tienda de Tecnología y Soporte Técnico',
+  description = 'Tienda de tecnología en Pereira. Equipos de cómputo, audio y accesorios con garantía y soporte técnico local.',
+} = Astro.props
+
 import '../styles/global.css'
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
-    <!--Meta datos -->
-    <meta name="google-site-verification" content="_INDjU3B2pVcXc2gsYHzjpPOI0UK3FGFB1t8cf6uXXo" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Descubre tecnología de calidad y precio competitivo en Pereira. Disfruta de soporte técnico experto para tus dispositivos."
-    />
-    <meta name="keywords" content="producto, landing page, ejemplo" />
     <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="CompuAudio Productos de Tecnología de Vanguardia" />
-    <meta
-      property="og:description"
-      content="Descubre tecnología de calidad y precio competitivo en Pereira. Disfruta de soporte técnico experto para tus dispositivos."
-    />
-    <meta property="og:image" content="../assets/imgs/logo.webp" />
-    <meta property="og:url" content="https://tusitio.com/" />
-    <!--Poner domino al final -->
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="tecnología, tienda de tecnología, Pereira, computadores, audio, soporte técnico, CompuAudio" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/assets/imgs/logo.webp" />
+    <meta property="og:url" content="https://compu-audio-landing.vercel.app/" />
     <meta property="og:type" content="website" />
-    <!--iconos en distintos formatos para los dispositivos -->
+
+    <!-- Schema JSON-LD para SEO local -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ElectronicsStore",
+        "name": "CompuAudio Pereira",
+        "image": "https://compu-audio-landing.vercel.app/assets/imgs/logo.webp",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Carrera 7 #15-73 Local 1",
+          "addressLocality": "Pereira",
+          "addressRegion": "Risaralda",
+          "addressCountry": "CO"
+        },
+        "telephone": "+57 3114009116",
+        "url": "https://compu-audio-landing.vercel.app"
+      }
+    </script>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon/logoCompuAudio-Copy.webp" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
     <link rel="shortcut icon" href="/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-    <!-- <link rel="manifest" href="/favicon/site.webmanifest" /> -->
-    <!--importacion de las fuentes -->
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap"
       rel="stylesheet"
     />
-
-    <title>{title}</title>
   </head>
   <body>
     <slot />
